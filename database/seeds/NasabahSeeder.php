@@ -16,7 +16,7 @@ class NasabahSeeder extends Seeder
             "id"                    => 101,
             "nama"                  => "I Made Wira Darma",
             "nik"                   => "517104260800012",
-            "tanggal_lahir"         => "26-08-2000",
+            "tanggal_lahir"         => "2000-08-26",
             "alamat"                => "Jl. Tunggul Ametung I Nomor 11",
             "telp"                  => "081239952314",
         ]);

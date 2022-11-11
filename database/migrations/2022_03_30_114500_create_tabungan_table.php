@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAyamsTable extends Migration
+class CreateTabunganTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateAyamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ayams', function (Blueprint $table) {
+        Schema::create('tabungan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_jenis_kandang');
-            $table->integer('jumlah');
+            $table->unsignedBigInteger('id_nasabah');
+            $table->bigInteger('saldo');
             $table->timestamps();
+
+            
+            $table->foreign('id_nasabah')->references('id')->on('nasabah')->onDelete('cascade');
         });
     }
 
@@ -28,6 +31,6 @@ class CreateAyamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ayams');
+        Schema::dropIfExists('tabungan');
     }
 }

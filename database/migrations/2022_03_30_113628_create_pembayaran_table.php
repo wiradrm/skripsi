@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHargasTable extends Migration
+class CreatePembayaranTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,17 @@ class CreateHargasTable extends Migration
      */
     public function up()
     {
-        Schema::create('hargas', function (Blueprint $table) {
+        Schema::create('pembayaran', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_user');
-            $table->integer('id_toko_gudang');
-            $table->integer('id_jenis_telur');
-            $table->integer('harga_jual_per_tray');
-            $table->integer('harga_gudang_per_tray');
+            $table->integer('no_pinjam');
+            $table->unsignedBigInteger('id_nasabah');
+            $table->date('tanggal');
+            $table->bigInteger('jumlah');
             $table->timestamps();
+
+
+            $table->foreign('id_nasabah')->references('id')->on('nasabah')->onDelete('cascade');
+
         });
     }
 
@@ -31,6 +34,6 @@ class CreateHargasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hargas');
+        Schema::dropIfExists('pembayaran');
     }
 }

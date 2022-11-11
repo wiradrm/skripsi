@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTokoGudangsTable extends Migration
+class CreateNasabahTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateTokoGudangsTable extends Migration
      */
     public function up()
     {
-        Schema::create('toko_gudangs', function (Blueprint $table) {
+        Schema::create('nasabah', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nik')->unique();
             $table->string('nama');
-            $table->longText('alamat');
-            $table->integer('type');
+            $table->date('tanggal_lahir');
+            $table->string('alamat');
+            $table->string('telp');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateTokoGudangsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('toko_gudangs');
+        Schema::dropIfExists('nasabah');
     }
 }

@@ -6,9 +6,9 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div style="padding: 3rem 3rem;">
-                    <img src="{{asset('logo.JPG')}}" alt="Sari Nadi" style="border-radius: 100%; width: 130px; height: 130px; margin: 0 auto 20px; display: block;">
+                    <img src="{{asset('logo-lpd.png')}}" alt="LPD Benana" style="border-radius: 100%; width: 160px; height: 130px; margin: 0 auto 20px; display: block;">
                     <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Sistem Informasi Inventory dan Purchasing Telur Ayam Pada Peternakan Ayam Petelur Sari Nadi</h1>
+                        <h1 class="h4 text-gray-900 mb-4">Sistem Informasi Pelayanan <br> Lembaga Perkreditan Desa <br> Pakraman Benana</h1>
                     </div>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

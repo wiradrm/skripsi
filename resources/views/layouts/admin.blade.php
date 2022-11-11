@@ -31,7 +31,8 @@
         <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
-                <span>Sari Nadi</span>
+                <img src="{{asset('logo-lpd.png')}}" alt="LPD Benana" style="border-radius: 100%; width: 160px; height: 130px; margin: 0 auto 20px; display: block;">
+                <span>LPD Pakraman Benana</span>
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -43,124 +44,60 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-            @if (Auth::user()->level != 2)
-                <li class="nav-item {{ Request::routeIs('stock') ? 'active' : '' }}">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStock"
-                        aria-expanded="true" aria-controls="collapseStock">
-                        <i class='bx bxs-dashboard'></i>
-                        <span>Stock</span>
-                    </a>
-                    <div id="collapseStock" class="collapse" aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="{{ route('stock') }}">All</a>
-                            @php($jenistelur = App\JenisTelur::all())
-                            @foreach ($jenistelur as $key => $item)
-                                <a class="collapse-item"
-                                    href="{{ route('stock', ['jenis_telur' => $item->id]) }}">{{ $item->jenis_telur }}</a>
-                            @endforeach
-                        </div>
-                    </div>
-                </li>
-            @endif
-            @if (Auth::user()->level == 1)
-                <li
-                    class="nav-item {{ Request::routeIs('user', 'jenis_telur', 'toko_gudang', 'jenis_kandang') ? 'active' : '' }}">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                        aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class='bx bxs-dashboard'></i>
-                        <span>Master Data</span>
-                    </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
-                            <a class="collapse-item" href="{{ route('user') }}">User</a>
-                            <a class="collapse-item" href="{{ route('customer') }}">Customer</a>
-                            <a class="collapse-item" href="{{ route('jenis_telur') }}">Jenis Telur</a>
-                            <a class="collapse-item" href="{{ route('jenis_kandang') }}">Jenis Kandang</a>
-                            <a class="collapse-item" href="{{ route('toko_gudang') }}">Toko dan Gudang</a>
-                        </div>
-                    </div>
-                </li>
-            @endif
-            @if (Auth::user()->level == 1)
-                <li class="nav-item {{ Request::routeIs('manajemen_ayam', 'efektivitas_bertelur') ? 'active' : '' }}">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManajemenKandang"
-                        aria-expanded="true" aria-controls="collapseManajemenKandang">
-                        <i class='bx bxs-dashboard'></i>
-                        <span>Manajemen Kandang</span>
-                    </a>
-                    <div id="collapseManajemenKandang" class="collapse" aria-labelledby="headingManajemenKandang"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
-                            <a class="collapse-item" href="{{ route('manajemen_ayam') }}">Manajemen Ayam</a>
-                            <a class="collapse-item" href="{{ route('efektivitas_bertelur') }}">Efektivitas Bertelur</a>
-                        </div>
-                    </div>
-                </li>
-            @endif
-            @if (Auth::user()->level == 1)
-            <li class="nav-item {{ Request::routeIs('stock_in', 'stock_kandang') ? 'active' : '' }}">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManajemenTelur"
-                    aria-expanded="true" aria-controls="collapseManajemenTelur">
+            
+            <li
+                class="nav-item {{ Request::routeIs('user', 'nasabah') ? 'active' : '' }}">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
+                    aria-expanded="true" aria-controls="collapseUtilities2">
                     <i class='bx bxs-dashboard'></i>
-                    <span>Manajemen Telur</span>
+                    <span>Data</span>
                 </a>
-                <div id="collapseManajemenTelur" class="collapse" aria-labelledby="headingManajemenTelur"
+                <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
-                        <a class="collapse-item" href="{{ route('stock_in') }}">Telur Masuk</a>
-                        <a class="collapse-item" href="{{ route('stock_kandang') }}">Telur Kandang</a>
+                        <a class="collapse-item" href="{{ route('user') }}">User</a>
+                        <a class="collapse-item" href="{{ route('nasabah') }}">Nasabah</a>
                     </div>
                 </div>
             </li>
-        @endif
-            @if (Auth::user()->level == 2)
-                <li class="nav-item {{ Request::routeIs('user') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('user') }}">
-                        <i class='bx bxs-dashboard'></i>
-                        <span>User</span></a>
-                </li>
-            @endif
-            @if (Auth::user()->level == 0)
-            <li class="nav-item {{ Request::routeIs('customer') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('customer') }}">
-                    <i class='bx bxs-dashboard'></i>
-                    <span>Customer</span></a>
-            </li>
-            @endif
-            @if (Auth::user()->level != 2)
-                <li class="nav-item {{ Request::routeIs('harga') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('harga') }}">
-                        <i class='bx bxs-dashboard'></i>
-                        <span>Harga</span></a>
-                </li>
-            @endif
-            @if (Auth::user()->level != 2)
-                <li
-                    class="nav-item {{ Request::routeIs('stock_out', 'penjualan', 'pembelian', 'pengeluaran', 'hutang') ? 'active' : '' }}">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
-                        aria-expanded="true" aria-controls="collapseUtilities2">
-                        <i class='bx bxs-dashboard'></i>
-                        <span>Transaksi</span>
-                    </a>
-                    <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
-                            <a class="collapse-item" href="{{ route('pembelian') }}">Pembelian</a>
-                            <a class="collapse-item" href="{{ route('penjualan') }}">Penjualan</a>
-                            <a class="collapse-item" href="{{ route('pengeluaran') }}">Pengeluaran</a>
-                            <a class="collapse-item" href="{{ route('hutang') }}">Hutang</a>
-                        </div>
-                    </div>
-                </li>
-            @endif
+
             <li
-                class="nav-item {{ Request::routeIs('laporan.labarugi','laporan.penjualan','laporan.pembelian','laporan.pengeluaran','laporan.hutang','laporan.harga','laporan.stock','laporan.stock_in','laporan.stock_out')? 'active': '' }}">
+                class="nav-item {{ Request::routeIs('simpan', 'tarik') ? 'active' : '' }}">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
+                    aria-expanded="true" aria-controls="collapseUtilities2">
+                    <i class='bx bxs-dashboard'></i>
+                    <span>Simpan</span>
+                </a>
+                <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
+                        <a class="collapse-item" href="{{ route('pinjaman') }}">Data Simpanan</a>
+                        <a class="collapse-item" href="{{ route('pembayaran') }}">Penarikan Simpanan</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li
+                class="nav-item {{ Request::routeIs('stock_out', 'penjualan', 'pembelian', 'pengeluaran', 'hutang') ? 'active' : '' }}">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
+                    aria-expanded="true" aria-controls="collapseUtilities2">
+                    <i class='bx bxs-dashboard'></i>
+                    <span>Pinjaman</span>
+                </a>
+                <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
+                        <a class="collapse-item" href="{{ route('pinjaman') }}">Pinjaman</a>
+                        <a class="collapse-item" href="{{ route('pembayaran') }}">Pembayaran</a>
+                    </div>
+                </div>
+            </li>
+
+            <li
+                class="nav-item {{ Request::routeIs('laporan.simpanan','laporan.pinjaman','laporan.tunggakan','laporan.neraca','laporan.labarugi')? 'active': '' }}">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3"
                     aria-expanded="true" aria-controls="collapseUtilities3">
                     <i class='bx bxs-dashboard'></i>
@@ -170,18 +107,11 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
-                        <a class="collapse-item" href="{{ route('laporan.labarugi') }}">Laporan Laba/Rugi</a>
-                        <a class="collapse-item" href="{{ route('laporan.penjualan') }}">Laporan Penjualan</a>
-                        <a class="collapse-item" href="{{ route('laporan.pembelian') }}">Laporan Pembelian</a>
-                        <a class="collapse-item" href="{{ route('laporan.pengeluaran') }}">Laporan Pengeluaran</a>
-                        <a class="collapse-item" href="{{ route('laporan.hutang') }}">Laporan Hutang</a>
-                        <a class="collapse-item" href="{{ route('laporan.harga') }}">Laporan Harga</a>
-                        <a class="collapse-item" href="{{ route('laporan.stock') }}">Laporan Stok</a>
-                        @if (Auth::user()->level !== 0)
-                        <a class="collapse-item" href="{{ route('laporan.efektivitas_bertelur') }}">Laporan Efektivitas</a>
-                        <a class="collapse-item" href="{{ route('laporan.stock_kandang') }}">Laporan Telur Kandang</a>
-                        <a class="collapse-item" href="{{ route('laporan.stock_in') }}">Laporan Telur Masuk</a>
-                        @endif
+                        <a class="collapse-item" href="{{ route('laporan.simpanan') }}">Laporan Simpanan</a>
+                        <a class="collapse-item" href="{{ route('laporan.pinjaman') }}">Laporan Pinjaman</a>
+                        <a class="collapse-item" href="{{ route('laporan.tunggakan') }}">Tunggakan</a>
+                        <a class="collapse-item" href="{{ route('laporan.neraca') }}">Neraca</a>
+                        <a class="collapse-item" href="{{ route('laporan.labarugi') }}">Laba/Rugi</a>
                     </div>
                 </div>
             </li>
@@ -212,11 +142,6 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#editProfileModal">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -237,7 +162,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Sari Nadi 2022</span>
+                        <span>Copyright &copy; LPD Benana 2022</span>
                     </div>
                 </div>
             </footer>
@@ -275,56 +200,6 @@
             </div>
         </div>
     </div>
-    <div class="modal fade bd-example-modal-lg text-left" id="editProfileModal" tabindex="-1" role="dialog"
-        aria-labelledby="updateModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLabel">Ubah Data</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('user.update', Auth::user()->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <input type="hidden" class="form-control" id="level" name="level"
-                            value="{{ $profile->level }}">
-                        <div class="form-group">
-                            <label for="nama" class="col-form-label">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="name"
-                                value="{{ $profile->name }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                value="{{ $profile->username }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="no_telpon" class="col-form-label">No Telpon</label>
-                            <input type="text" class="form-control" id="no_telpon" name="no_telpon"
-                                value="{{ $profile->no_telpon }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-form-label">New Password</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                autocomplete="false">
-                        </div>
-                        <div class="form-group">
-                            <label for="password_confirmation" class="col-form-label">New Password Confirmation</label>
-                            <input type="password" class="form-control" id="password_confirmation"
-                                name="password_confirmation" autocomplete="false">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <!-- Bootstrap core JavaScript-->
     <script src="/admin/vendor/jquery/jquery.min.js"></script>
     <script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -353,31 +228,12 @@
             });
         });
 
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{ route('notification.checkhutang') }}",
-                type: "GET",
-                async: false,
-                data: {
-
-                },
-                success: function() {
-                    console.log("notification updated");
-                }
-            });
-        });
 
         $(document).on("click", '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
             $(this).ekkoLightbox();
         });
     </script>
-    @php($notif = App\Notification::where('id_toko_gudang', Auth::user()->id_toko_gudang)->get())
-    @foreach ($notif as $key => $item)
-        @if ($item->type == 1)
-            @include('admin.notification.accept')
-        @endif
-    @endforeach
 </body>
 
 </html>

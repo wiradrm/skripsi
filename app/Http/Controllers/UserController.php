@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\TokoGudang;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -23,8 +22,6 @@ class UserController extends Controller
     {
         $this->validate($request,
             [
-                'name'                      => 'required',
-                'id_toko_gudang'            => 'required',
                 'username'                  => 'required|string|max:255|unique:users',
                 'password'                  => 'required_with:password_confirmation|same:password_confirmation',
                 'password_confirmation'     => 'required'
@@ -34,8 +31,6 @@ class UserController extends Controller
                 'required'          => ':attribute is required.'
             ],
             [
-                'name'                      => 'Nama',
-                'id_toko_gudang'            => 'Toko/Gudang',
                 'username'                  => 'Username',
                 'password'                  => 'Password',
                 'password_confirmation'     => 'Password Confirmation'
@@ -43,10 +38,7 @@ class UserController extends Controller
         );
 
         $model = new User();
-        $model->id_toko_gudang = $request->id_toko_gudang;
-        $model->name = $request->name;
         $model->username = $request->username;
-        $model->no_telpon = $request->no_telpon;
         $model->level = $request->level;
         $model->password = Hash::make($request->password);
         $model->save();
@@ -58,8 +50,6 @@ class UserController extends Controller
     {
         $this->validate($request,
             [
-                'name'                      => 'required',
-                'id_toko_gudang'            => 'required',
                 'username'                  => 'required|string|max:255|unique:users,username,'.$request->id,
                 'password'                  => 'same:password_confirmation',
 
@@ -68,8 +58,6 @@ class UserController extends Controller
                 'required'          => ':attribute is required.'
             ],
             [
-                'name'                      => 'Nama',
-                'id_toko_gudang'            => 'Toko/Gudang',
                 'username'                  => 'Username',
                 'password'                  => 'Password',
                 'password_confirmation'     => 'Password Confirmation'
@@ -77,10 +65,7 @@ class UserController extends Controller
         );
 
         $model = User::findOrFail($id);
-        $model->id_toko_gudang = $request->id_toko_gudang;
-        $model->name = $request->name;
         $model->username = $request->username;
-        $model->no_telpon = $request->no_telpon;
         $model->level = $request->level;
         if($request->password != null){
             $model->password = Hash::make($request->password);

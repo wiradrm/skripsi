@@ -14,6 +14,8 @@ class UserSeeder extends Seeder
     {
         $user1 = new User([
             "username"          => "wulan",
+            "nama"          => "Ni Made Desy Wulandari",
+            "telp"          => "081236653258",
             "level"             => 1,
             "password"          => bcrypt('wulan1234'),
         ]);
@@ -21,6 +23,8 @@ class UserSeeder extends Seeder
 
         $user2 = new User([
             "username"          => "wira",
+            "nama"          => "I Made Wira Darma",
+            "telp"          => "081239952314",
             "level"             => 2,
             "password"          => bcrypt('wira1234'),
         ]);

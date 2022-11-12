@@ -43,7 +43,6 @@ User
                         <th>Username</th>
                         <th>No Telpon</th>
                         <th>Level</th>
-                        <th>Toko</th>
                         <th width="12%">Action</th>
                     </tr>
                 </thead>
@@ -57,66 +56,44 @@ User
                     @endif
                     @foreach($models as $key => $item)
                     <tr>
-                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->nama }}</td>
                         <td>{{ $item->username }}</td>
-                        <td>{{ $item->no_telpon }}</td>
+                        <td>{{ $item->telp }}</td>
                         <td>
-                            @if($item->level == 0)
-                            Penjaga Toko
-                            @elseif($item->level == 1)
-                            Admin Gudang
+                            @if($item->level == 1)
+                            Bendahara
                             @elseif($item->level == 2)
-                            Pemilik
+                            Kepala LPD
                             @endif
                         </td>
-                        <td>{{ $item->getTokoGudang ? $item->getTokoGudang->nama : ''}}</td>
                         <td>
                             @if(Auth::user()->id === $item->id)
-                            <a class="btn btn-circle btn-secondary" href="#"><i class='bx bx-user-x'></i></a>
-                            @elseif($item->status === 0)
-                            <a class="btn btn-circle btn-success" href="#" data-toggle="modal" data-target="#activateModal-{{$item->id}}"><i class='bx bx-user-check'></i></a>
+                            <a class="btn btn-circle btn-secondary" href="#"><i class='bx bx-trash'></i></a>
+                            <a class="btn btn-circle btn-info mx-1" href="#" data-toggle="modal" data-target="#updateModal-{{$item->id}}"><i class='bx bxs-edit'></i></a>
                             @else
-                            <a class="btn btn-circle btn-danger" href="#" data-toggle="modal" data-target="#deactivateModal-{{$item->id}}"><i class='bx bx-user-x' ></i></a>
-                            @endif
+                            <a class="btn btn-circle btn-danger" href="#" data-toggle="modal" data-target="#deactivateModal-{{$item->id}}"><i class='bx bx-trash' ></i></a>
                             <a class="btn btn-circle btn-info mx-1" href="#" data-toggle="modal" data-target="#updateModal-{{$item->id}}"><i class='bx bxs-edit'></i></a>
                             <div class="modal fade" id="deactivateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Non Aktifkan</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Hapus User</h5>
                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">Apakah anda yakin menonaktifkan "{{$item->name}}"</div>
+                                        <div class="modal-body">Apakah anda yakin menghapus "{{$item->nama}}"</div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                            <a href="{{route('user.deactivate',$item->id)}}" class="btn btn-primary">
-                                                Non Aktifkan
+                                            <a href="{{route('user.destroy',$item->id)}}" class="btn btn-primary">
+                                                Hapus
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="activateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Aktifkan</h5>
-                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">Apakah anda yakin mengaktifkan "{{$item->name}}"</div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                            <a href="{{route('user.activate',$item->id)}}" class="btn btn-primary">
-                                                Aktifkan
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                
+                            @endif
                             @include('admin.user.update')
                         </td>
                     </tr>

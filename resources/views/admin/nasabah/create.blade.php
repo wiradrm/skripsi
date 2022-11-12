@@ -7,35 +7,28 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('user.store')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('nasabah.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nik" class="col-form-label">NIK</label>
+                        <input type="text" class="form-control" id="nik" name="nik">
+                    </div>
                     <div class="form-group">
                         <label for="nama" class="col-form-label">Nama</label>
                         <input type="text" class="form-control" id="nama" name="nama">
                     </div>
                     <div class="form-group">
-                        <label for="username" class="col-form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username">
+                        <label for="createDate" class="col-form-label">Tanggal</label>
+                        <input type="date" class="form-control createDate" id="createDate" name="tanggal_lahir" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                     </div>
                     <div class="form-group">
                         <label for="telp" class="col-form-label">No Telpon</label>
                         <input type="text" class="form-control" id="telp" name="telp">
                     </div>
                     <div class="form-group">
-                        <label for="level" class="col-form-label">Level</label>
-                        <select name="level" class="form-control" id="level">
-                            <option value="1">Bendahara</option>
-                            <option value="2">Ketua LPD</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="col-form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" autocomplete="false">
-                    </div>
-                    <div class="form-group">
-                        <label for="password_confirmation" class="col-form-label">Password Confirmation</label>
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" autocomplete="false">
+                        <label for="alamat" class="col-form-label">Alamat</label>
+                        <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

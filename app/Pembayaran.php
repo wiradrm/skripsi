@@ -2,10 +2,10 @@
 
 namespace App;
 
-use App\Nasabah;
+use App\Pembayaran;
 use Illuminate\Database\Eloquent\Model;
 
-class Nasabah extends Model
+class Pembayaran extends Model
 {
-    protected $table = 'nasabah';
+    protected $table = 'pembayaran';
 }

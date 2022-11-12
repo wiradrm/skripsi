@@ -2,10 +2,10 @@
 
 namespace App;
 
-use App\Nasabah;
+use App\Tabungan;
 use Illuminate\Database\Eloquent\Model;
 
-class Nasabah extends Model
+class Tabungan extends Model
 {
-    protected $table = 'nasabah';
+    protected $table = 'tabungan';
 }

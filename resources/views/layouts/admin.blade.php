@@ -30,9 +30,9 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
-                <img src="{{asset('logo-lpd.png')}}" alt="LPD Benana" style="border-radius: 100%; width: 160px; height: 130px; margin: 0 auto 20px; display: block;">
-                <span>LPD Pakraman Benana</span>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}"> 
+                <img src="{{asset('logo-lpd.png')}}" alt="LPD Benana" style="border-radius: 50%; width: 100px; height: 60px; margin: 0 auto 20px; display: block;">
+                {{-- <span>LPD Pakraman Benana</span> --}}
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -47,12 +47,12 @@
             
             <li
                 class="nav-item {{ Request::routeIs('user', 'nasabah') ? 'active' : '' }}">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
-                    aria-expanded="true" aria-controls="collapseUtilities2">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities1"
+                    aria-expanded="true" aria-controls="collapseUtilities1">
                     <i class='bx bxs-dashboard'></i>
                     <span>Data</span>
                 </a>
-                <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapseUtilities1" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
@@ -73,24 +73,24 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
-                        <a class="collapse-item" href="{{ route('pinjaman') }}">Data Simpanan</a>
-                        <a class="collapse-item" href="{{ route('pembayaran') }}">Penarikan Simpanan</a>
+                        <a class="collapse-item" href="{{ route('simpan') }}">Data Simpanan</a>
+                        <a class="collapse-item" href="{{ route('tarik') }}">Penarikan Simpanan</a>
                     </div>
                 </div>
             </li>
             
             <li
                 class="nav-item {{ Request::routeIs('stock_out', 'penjualan', 'pembelian', 'pengeluaran', 'hutang') ? 'active' : '' }}">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
-                    aria-expanded="true" aria-controls="collapseUtilities2">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3"
+                    aria-expanded="true" aria-controls="collapseUtilities">
                     <i class='bx bxs-dashboard'></i>
                     <span>Pinjaman</span>
                 </a>
-                <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
-                        <a class="collapse-item" href="{{ route('pinjaman') }}">Pinjaman</a>
+                        <a class="collapse-item" href="{{ route('pinjam') }}">Pinjaman</a>
                         <a class="collapse-item" href="{{ route('pembayaran') }}">Pembayaran</a>
                     </div>
                 </div>
@@ -98,12 +98,12 @@
 
             <li
                 class="nav-item {{ Request::routeIs('laporan.simpanan','laporan.pinjaman','laporan.tunggakan','laporan.neraca','laporan.labarugi')? 'active': '' }}">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3"
-                    aria-expanded="true" aria-controls="collapseUtilities3">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities4"
+                    aria-expanded="true" aria-controls="collapseUtilities4">
                     <i class='bx bxs-dashboard'></i>
                     <span>Laporan</span>
                 </a>
-                <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapseUtilities4" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
@@ -129,7 +129,6 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     <ul class="navbar-nav ml-auto">
-                        @include('admin.notification.notification')
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -137,7 +136,7 @@
                                 <span
                                     class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                                 <img class="img-profile rounded-circle"
-                                    src="https://ui-avatars.com/api/?background=eb4d4b&color=ffffff&name={{ Auth::user()->name }}">
+                                    src="https://ui-avatars.com/api/?background=4e73df&color=ffffff&name={{ Auth::user()->name }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

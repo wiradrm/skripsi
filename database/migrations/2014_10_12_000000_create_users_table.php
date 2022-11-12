@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->integer('level')->default(0);
-            $table->integer('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

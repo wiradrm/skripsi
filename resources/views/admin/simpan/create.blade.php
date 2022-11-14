@@ -12,7 +12,8 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="id_nasabah" class="col-form-label">Nama Nasabah</label>
-                        <select class="form-control"  name="id_nasabah" id="id_nasabah">
+                        <select class="selectpicker form-control"  name="id_nasabah" id="id_nasabah" data-live-search="true">
+                            <option hidden></option>
                             @foreach($nasabah as $key => $item)
                             <option value="{{$item->id}}">{{$item->id}} | {{$item->nama}}</option>
                             @endforeach
@@ -35,3 +36,5 @@
         </div>
     </div>
 </div>
+
+

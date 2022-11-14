@@ -11,12 +11,7 @@ class Nasabah extends Model
     protected $table = 'nasabah';
 
     public function checkLastRecord(){
-        if(Auth::user()->level == 2){
-            $latest = Nasabah::latest('id')->pluck('id')->first();
-
-        } else {
-            $latest = Nasabah::where('id')->latest('id')->pluck('id')->first();
-        }
+        $latest = Nasabah::latest('id')->pluck('id')->first();
         return $latest;
     }
 

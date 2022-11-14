@@ -27,11 +27,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'DashboardController@index')->name('home');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-    Route::get('/laporan/simpanan', 'LaporanController@index_harga')->name('laporan.simpanan');
-    Route::get('/laporan/pinjaman', 'LaporanController@index_penjualan')->name('laporan.pinjaman');
-    Route::get('/laporan/tunggakan', 'LaporanController@index_pengeluaran')->name('laporan.tunggakan');
-    Route::get('/laporan/neraca', 'LaporanController@index_pembelian')->name('laporan.neraca');
-    Route::get('/laporan/labarugi', 'LaporanController@index_pembelian')->name('laporan.labarugi');
+    Route::get('/laporan/simpanan', 'LaporanController@index_simpanan')->name('laporan.simpanan');
+    Route::get('/laporan/pinjaman', 'LaporanController@index_pinjaman')->name('laporan.pinjaman');
+    Route::get('/laporan/tunggakan', 'LaporanController@index_tunggakan')->name('laporan.tunggakan');
+    Route::get('/laporan/neraca', 'LaporanController@index_neraca')->name('laporan.neraca');
+    Route::get('/laporan/labarugi', 'LaporanController@index_labarugi')->name('laporan.labarugi');
     
     Route::get('/nasabah', 'NasabahController@index')->name('nasabah');
     Route::post('/nasabah/store', 'NasabahController@store')->name('nasabah.store');
@@ -44,7 +44,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/simpan/destroy/{id}', 'SimpanController@destroy')->name('simpan.destroy');
 
 
-    Route::get('/tarik', 'NasabahController@index')->name('tarik');
+    Route::get('/tarik', 'TarikController@index')->name('tarik');
+    Route::post('/tarik/store', 'TarikController@store')->name('tarik.store');
+    Route::put('/tarik/update/{id}', 'TarikController@update')->name('tarik.update');
+    Route::get('/tarik/destroy/{id}', 'TarikController@destroy')->name('tarik.destroy');
 
 
     Route::get('/hutang', 'NasabahController@index')->name('hutang');

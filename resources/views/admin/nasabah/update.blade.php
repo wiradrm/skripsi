@@ -21,11 +21,11 @@
                     </div>
                     <div class="form-group">
                         <label for="created_at" class="col-form-label">Tanggal</label>
-                        <input @if($item->id != $item->checkLastRecord()) readonly @endif type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{date('Y-m-d', strtotime($item->tanggal_lahir))}}">
+                        <input @if($item->tanggal_lahir != $item->checkLastRecord()) @endif type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{date('Y-m-d', strtotime($item->tanggal_lahir))}}">
                     </div>
                     <div class="form-group">
                         <label for="telp" class="col-form-label">No Telpon</label>
-                        <input type="text" class="form-control" id="telp" name="telp" value="{{$item->telp}}">
+                        <input type="number" class="form-control" id="telp" name="telp" value="{{$item->telp}}">
                     </div>
                     <div class="form-group">
                         <label for="alamat" class="col-form-label">Alamat</label>

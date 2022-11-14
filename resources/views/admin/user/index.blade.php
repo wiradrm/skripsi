@@ -84,7 +84,7 @@ User
                                         </div>
                                         <div class="modal-body">Apakah anda yakin menghapus "{{$item->nama}}"</div>
                                         <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                                             <a href="{{route('user.destroy',$item->id)}}" class="btn btn-primary">
                                                 Hapus
                                             </a>

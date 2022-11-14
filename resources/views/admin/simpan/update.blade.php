@@ -12,16 +12,20 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name" class="col-form-label">Nama</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{$item->name}}">
+                        <label for="id_nasabah" class="col-form-label">Nama Nasabah</label> <br>
+                        <select @if($item->id != $item->checkLastRecord()) readonly @endif class="selectpicker form-control"  name="id_nasabah" id="id_nasabah" data-live-search="true">
+                            @foreach($nasabah as $key => $data)
+                            <option @if($item->id_nasabah == $data->id) selected @endif value="{{$data->id}}">{{$data->id}} | {{$data->nama}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="no_telpon" class="col-form-label">No Telpon</label>
-                        <input type="text" class="form-control" id="no_telpon" name="no_telpon" value="{{$item->no_telpon}}">
+                        <label for="createDate" class="col-form-label">Tanggal</label>
+                        <input @if($item->tanggal != $item->checkLastRecord()) @endif type="date" class="form-control" id="tanggal" name="tanggal" value="{{date('Y-m-d', strtotime($item->tanggal))}}">
                     </div>
                     <div class="form-group">
-                        <label for="alamat" class="col-form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="10">{{$item->alamat}}</textarea>
+                        <label for="jumlah" class="col-form-label">Jumlah</label>
+                        <input type="number" class="form-control" id="jumlah" name="jumlah" value="{{$item->jumlah}}">
                     </div>
                 </div>
                 <div class="modal-footer">

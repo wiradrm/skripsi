@@ -19,7 +19,7 @@ class CreatePinjamTable extends Migration
             $table->unsignedBigInteger('id_nasabah');
             $table->date('tanggal');
             $table->bigInteger('pinjaman');
-            $table->integer('bunga');
+            $table->float('bunga');
             $table->timestamps();
 
             $table->foreign('id_nasabah')->references('id')->on('nasabah')->onDelete('cascade');

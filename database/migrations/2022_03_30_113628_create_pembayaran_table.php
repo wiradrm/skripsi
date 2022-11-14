@@ -19,6 +19,10 @@ class CreatePembayaranTable extends Migration
             $table->unsignedBigInteger('id_nasabah');
             $table->date('tanggal');
             $table->bigInteger('jumlah');
+            $table->bigInteger('pokok');
+            $table->bigInteger('bunga');
+            $table->string('persen');
+            
             $table->timestamps();
 
 

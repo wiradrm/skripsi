@@ -62,7 +62,7 @@ class NasabahController extends Controller
                 'nama'                      => 'required',
                 'tanggal_lahir'                      => 'required',
                 'alamat'                    => 'required',
-                'telp'                 => 'required',
+                'telp'                 => 'required|unique:nasabah,telp',
 
             ],
             [

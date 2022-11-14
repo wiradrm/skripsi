@@ -20,6 +20,13 @@
         integrity="sha512-Velp0ebMKjcd9RiCoaHhLXkR1sFoCCWXNp6w4zj1hfMifYB5441C+sKeBl/T/Ka6NjBiRfBBQRaQq65ekYz3UQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Custom styles for this template-->
+
+    
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+
+  
     <link href="/admin/css/sb-admin-2.css" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('logo-lpd.png') }}" type="image/x-icon">
 </head>
@@ -30,9 +37,12 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
+            <span><br></span>
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}"> 
-                <img src="{{asset('logo-lpd.png')}}" alt="LPD Benana" style="border-radius: 50%; width: 100px; height: 60px; margin: 0 auto 20px; display: block;">
-                {{-- <span>LPD Pakraman Benana</span> --}}
+                <img src="{{asset('logo-lpd.png')}}" alt="LPD Benana" style="border-radius: 50%; width: 100px; height: 80px; margin: 0 auto 20px; display: block;">
+            </a>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
+                LPD Pakraman Benana
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -75,6 +85,7 @@
                         <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
                         <a class="collapse-item" href="{{ route('simpan') }}">Data Simpanan</a>
                         <a class="collapse-item" href="{{ route('tarik') }}">Penarikan Simpanan</a>
+                        <a class="collapse-item" href="{{ route('mutasi') }}">Mutasi Simpanan</a>
                     </div>
                 </div>
             </li>
@@ -199,6 +210,13 @@
             </div>
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>  
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="/admin/vendor/jquery/jquery.min.js"></script>
     <script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

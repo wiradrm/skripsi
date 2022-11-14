@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Simpan;
 use App\Nasabah;
 use App\Tabungan;
-use App\RiwayatTabungan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class SimpanController extends Controller
@@ -18,7 +18,7 @@ class SimpanController extends Controller
 
     public function index(Request $request)
     {
-        $models = Simpan::all();
+        $models = Simpan::orderBy('id', 'DESC')->get();
         $nasabah = Nasabah::all();
         return view($this->index, compact('models','nasabah'));
     }
@@ -66,17 +66,6 @@ class SimpanController extends Controller
                 $balance->save();
             }
 
-            // Insert into history saving
-            $last_balance = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
-
-            $saving_history = new RiwayatTabungan;
-            $saving_history->id_nasabah = $request->id_nasabah;
-            $saving_history->tanggal = $request->tanggal;
-            $saving_history->keterangan = 'setoran';
-            $saving_history->kredit = $request->jumlah;
-            $saving_history->saldo = $last_balance->saldo;
-            $saving_history->save();
-
         });
 
         return redirect()->back()->with('info', 'Berhasil menambah data');
@@ -87,44 +76,75 @@ class SimpanController extends Controller
         $this->validate(
             $request,
             [
-                'name'                      => 'required',
-                'alamat'                    => 'required',
-                'no_telpon'                 => 'required',
+                'id_nasabah'                    => 'required',
+                'tanggal'                   => 'required',
+                'jumlah'                 => 'required|integer',
 
             ],
             [
                 'required'          => ':attribute is required.'
             ],
             [
-                'name'                      => 'Nama',
-                'alamat'                    => 'Alamat',
-                'no_telpon'                 => 'No Telpon',
+                'id_nasabah'                    => 'Nasabah',
+                'tanggal'                      => 'Tanggal',
+                'jumlah'                 => 'Setoran',
             ]
         );
 
-        $model = Customer::findOrFail($id);
-        $model->id_toko_gudang = Auth::user()->id_toko_gudang;
-        $model->name = $request->name;
-        $model->alamat = $request->alamat;
-        $model->no_telpon = $request->no_telpon;
-        $model->save();
+            // Insert into deposit
+            $model = Simpan::findOrFail($id);
+
+            $history_jumlah = $model->jumlah;
+            
+            $balance = Tabungan::where('id_nasabah', $model->id_nasabah)->first();
+            $balance->saldo = ($balance->saldo - $history_jumlah);
+            
+            $balance->save();
+
+            if ($model->id_nasabah == $request->id_nasabah) {
+                $balance_history = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
+                $balance_history->saldo = ($balance_history->saldo + $request->jumlah);
+                $balance_history->save();
+            } 
+            
+            
+            if ($model->id_nasabah != $request->id_nasabah) {
+                
+                
+                $balance_other = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
+                $balance_other->saldo = ($balance_other->saldo + $request->jumlah);
+                
+                $balance_other->save();
+
+            }
+
+            $model->id_nasabah = $request->id_nasabah;
+            $model->tanggal = $request->tanggal;
+            $model->jumlah = $request->jumlah;
+            $model->save();
+
+
+
+
+
 
         return redirect()->back()->with('info', 'Berhasil mengubah data');
     }
 
-    public function deactivate($id)
+    public function destroy($id)
     {
-        $model = Customer::findOrFail($id);
-        $model->status = 0;
-        $model->save();
-        return redirect()->back()->with('info', 'Berhasil menonactifkan customer');
+        $model = Simpan::findOrFail($id);
+
+        $id_nasabah = $model->id_nasabah;
+
+        $balance = Tabungan::where('id_nasabah', $id_nasabah)->first();
+        $balance->saldo = ($balance->saldo - $model->jumlah);
+        $balance->save();
+        
+        DB::table('simpan')->where('id',$id)->delete();
+        
+                
+        return redirect()->route('simpan')->with('info', 'Berhasil menghapus data');
     }
 
-    public function activate($id)
-    {
-        $model = Customer::findOrFail($id);
-        $model->status = 1;
-        $model->save();
-        return redirect()->back()->with('info', 'Berhasil mengaktifkan customer');
-    }
 }

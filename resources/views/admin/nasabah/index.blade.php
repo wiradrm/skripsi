@@ -74,9 +74,9 @@ User
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">Apakah anda yakin menghapus data nasabah "{{$item->nama}}" <br><b>Menghapus data nasabah akan menghapus semua data <br> terkait simpanan dan pinjaman</b></div>
+                                        <div class="modal-body">Yakin menghapus "{{$item->nama}}"? <br><b>Menghapus data nasabah akan menghapus semua data <br> terkait simpanan dan pinjaman</b></div>
                                         <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                                             <a href="{{route('nasabah.destroy',$item->id)}}" class="btn btn-primary">
                                                 Hapus
                                             </a>

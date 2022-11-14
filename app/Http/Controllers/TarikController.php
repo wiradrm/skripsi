@@ -2,50 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use App\Customer;
-use App\TokoGudang;
+use App\Tarik;
+use App\Nasabah;
+use App\Tabungan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
-class CustomerController extends Controller
+
+class TarikController extends Controller
 {
-    protected $page = 'admin.customer.';
-    protected $index = 'admin.customer.index';
+    protected $page = 'admin.tarik.';
+    protected $index = 'admin.tarik.index';
 
     public function index(Request $request)
     {
-        $models = Customer::where('id_toko_gudang', Auth::user()->id_toko_gudang)->get();
-        return view($this->index, compact('models'));
+        $models = Tarik::orderBy('id', 'DESC')->get();
+        $nasabah = Nasabah::all();
+        return view($this->index, compact('models','nasabah'));
     }
 
     public function store(Request $request)
     {
+        // $nasabah = Nasabah::all();
+
         $this->validate(
             $request,
             [
-                'name'                      => 'required',
-                'alamat'                    => 'required',
-                'no_telpon'                 => 'required',
+                'id_nasabah'                    => 'required',
+                'tanggal'                   => 'required',
+                'jumlah'                 => 'required|integer',
 
             ],
             [
                 'required'          => ':attribute is required.'
             ],
             [
-                'name'                      => 'Nama',
-                'alamat'                    => 'Alamat',
-                'no_telpon'                 => 'No Telpon',
+                'id_nasabah'                    => 'Nasabah',
+                'tanggal'                      => 'Tanggal',
+                'jumlah'                 => 'Setoran',
             ]
         );
 
-        $model = new Customer();
-        $model->id_toko_gudang = Auth::user()->id_toko_gudang;
-        $model->name = $request->name;
-        $model->alamat = $request->alamat;
-        $model->no_telpon = $request->no_telpon;
-        $model->save();
+        $balance_check = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
+        if ($balance_check) {
+            if ($request->jumlah > $balance_check->saldo) {
+                return redirect()->route('tarik')->with('msg', 'Saldo tidak mencukupi !');
+            }
+        } else {
+            return redirect()->route('tarik')->with('msg', 'Saldo tidak mencukupi !');
+        }
 
-        return redirect()->back()->with('info', 'Berhasil menambah data');
+        DB::transaction(function () use ($request) {
+            // Insert into deposit
+            $model = new Tarik();
+            $model->id_nasabah = $request->id_nasabah;
+            $model->tanggal = $request->tanggal;
+            $model->jumlah = $request->jumlah;
+            $model->save();
+
+            // Reduce savings balance
+            $saving = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
+            $saving->saldo = ($saving->saldo - $request->jumlah);
+            $saving->save();
+
+        });
+
+        return redirect()->back()->with('info', 'Berhasil menambah data penarikan');
     }
 
     public function update(Request $request, $id)
@@ -53,44 +77,86 @@ class CustomerController extends Controller
         $this->validate(
             $request,
             [
-                'name'                      => 'required',
-                'alamat'                    => 'required',
-                'no_telpon'                 => 'required',
+                'id_nasabah'                    => 'required',
+                'tanggal'                   => 'required',
+                'jumlah'                 => 'required|integer',
 
             ],
             [
                 'required'          => ':attribute is required.'
             ],
             [
-                'name'                      => 'Nama',
-                'alamat'                    => 'Alamat',
-                'no_telpon'                 => 'No Telpon',
+                'id_nasabah'                    => 'Nasabah',
+                'tanggal'                      => 'Tanggal',
+                'jumlah'                 => 'Setoran',
             ]
         );
 
-        $model = Customer::findOrFail($id);
-        $model->id_toko_gudang = Auth::user()->id_toko_gudang;
-        $model->name = $request->name;
-        $model->alamat = $request->alamat;
-        $model->no_telpon = $request->no_telpon;
-        $model->save();
+        $balance_check = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
+        if ($balance_check) {
+            if ($request->jumlah > $balance_check->saldo) {
+                return redirect()->route('tarik')->with('msg', 'Saldo tidak mencukupi !');
+            }
+        } else {
+            return redirect()->route('tarik')->with('msg', 'Saldo tidak mencukupi !');
+        }
+            // Insert into deposit
+            
+            $model = Tarik::findOrFail($id);
+
+            $history_jumlah = $model->jumlah;
+            
+            $balance = Tabungan::where('id_nasabah', $model->id_nasabah)->first();
+            $balance->saldo = ($balance->saldo + $history_jumlah);
+            
+            $balance->save();
+
+
+            if ($model->id_nasabah == $request->id_nasabah) {
+                $balance_history = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
+                $balance_history->saldo = ($balance_history->saldo - $request->jumlah);
+                $balance_history->save();
+            } 
+            
+            
+            if ($model->id_nasabah != $request->id_nasabah) {
+                
+                
+                $balance_other = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
+                $balance_other->saldo = ($balance_other->saldo - $request->jumlah);
+                
+                $balance_other->save();
+
+            }
+
+            $model->id_nasabah = $request->id_nasabah;
+            $model->tanggal = $request->tanggal;
+            $model->jumlah = $request->jumlah;
+            $model->save();
+
+
+
+
+
+
 
         return redirect()->back()->with('info', 'Berhasil mengubah data');
     }
 
-    public function deactivate($id)
+    public function destroy($id)
     {
-        $model = Customer::findOrFail($id);
-        $model->status = 0;
-        $model->save();
-        return redirect()->back()->with('info', 'Berhasil menonactifkan customer');
+        $model = Tarik::findOrFail($id);
+
+        $id_nasabah = $model->id_nasabah;
+
+        $balance = Tabungan::where('id_nasabah', $id_nasabah)->first();
+        $balance->saldo = ($balance->saldo + $model->jumlah);
+        $balance->save();
+        
+        DB::table('tarik')->where('id',$id)->delete();
+        
+                
+        return redirect()->route('tarik')->with('info', 'Berhasil menghapus data');
     }
 
-    public function activate($id)
-    {
-        $model = Customer::findOrFail($id);
-        $model->status = 1;
-        $model->save();
-        return redirect()->back()->with('info', 'Berhasil mengaktifkan customer');
-    }
 }

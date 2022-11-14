@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group">
                         <label for="telp" class="col-form-label">No Telpon</label>
-                        <input type="text" class="form-control" id="telp" name="telp">
+                        <input type="number" class="form-control" id="telp" name="telp">
                     </div>
                     <div class="form-group">
                         <label for="alamat" class="col-form-label">Alamat</label>

@@ -13,10 +13,10 @@ return [
     |
     */
 
-    'reset' => 'Your password has been reset!',
-    'sent' => 'We have e-mailed your password reset link!',
-    'throttled' => 'Please wait before retrying.',
-    'token' => 'This password reset token is invalid.',
-    'user' => "We can't find a user with that e-mail address.",
+    'password' => 'Kata sandi minimal harus memiliki enam karakter dan cocok dengan konfirmasi.',
+    'reset' => 'Kata sandi Anda sudah direset!',
+    'sent' => 'Kami sudah mengirim surel yang berisi tautan untuk mereset kata sandi Anda!',
+    'token' => 'Token pengaturan ulang kata sandi tidak sah.',
+    'user' => 'Kami tidak dapat menemukan pengguna dengan alamat surel tersebut.',
 
 ];

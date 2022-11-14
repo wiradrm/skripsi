@@ -39,9 +39,10 @@ User
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>ID Simpan</th>
                         <th>Nama</th>
-                        <th>Alamat</th>
-                        <th>No Telpon</th>
+                        <th>Tanggal</th>
+                        <th>Jumlah</th>
                         <th width="12%">Action</th>
                     </tr>
                 </thead>
@@ -55,9 +56,10 @@ User
                     @endif
                     @foreach($models as $key => $item)
                     <tr>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->alamat }}</td>
-                        <td>{{ $item->no_telpon }}</td>
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->nasabah->nama }}</td>
+                        <td>{{ date('d/m/Y', strtotime($item->tanggal)) }}</td>
+                        <td>@currency($item->jumlah)</td>
                         <td>
                             @if($item->status === 0)
                             <a class="btn btn-circle btn-success" href="#" data-toggle="modal" data-target="#activateModal-{{$item->id}}"><i class='bx bx-user-check'></i></a>
@@ -69,41 +71,23 @@ User
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Non Aktifkan</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Hapus</h5>
                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">Apakah anda yakin menonaktifkan "{{$item->name}}"</div>
+                                        <div class="modal-body">Apakah anda yakin hapus data "{{$item->nasabah->nama}}"</div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                            <a href="{{route('customer.deactivate',$item->id)}}" class="btn btn-primary">
+                                            <a href="{{route('simpan.destroy',$item->id)}}" class="btn btn-primary">
                                                 Non Aktifkan
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="activateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Aktifkan</h5>
-                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">Apakah anda yakin mengaktifkan "{{$item->name}}"</div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                            <a href="{{route('customer.activate',$item->id)}}" class="btn btn-primary">
-                                                Aktifkan
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @include('admin.customer.update')
+                            
+                            @include('admin.simpan.update')
                         </td>
                     </tr>
                     @endforeach
@@ -112,7 +96,7 @@ User
         </div>
     </div>
 </div>
-@include('admin.customer.create')
+@include('admin.simpan.create')
 @endsection
 @section('script')
 <script></script>

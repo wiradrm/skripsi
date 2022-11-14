@@ -7,20 +7,24 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('customer.store')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('simpan.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name" class="col-form-label">Nama</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <label for="id_nasabah" class="col-form-label">Nama Nasabah</label>
+                        <select class="form-control"  name="id_nasabah" id="id_nasabah">
+                            @foreach($nasabah as $key => $item)
+                            <option value="{{$item->id}}">{{$item->id}} | {{$item->nama}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="no_telpon" class="col-form-label">No Telpon</label>
-                        <input type="text" class="form-control" id="no_telpon" name="no_telpon">
+                        <label for="createDate" class="col-form-label">Tanggal</label>
+                        <input type="date" class="form-control createDate" id="tanggal" name="tanggal" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                     </div>
                     <div class="form-group">
-                        <label for="alamat" class="col-form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="10"></textarea>
+                        <label for="jumlah" class="col-form-label">Jumlah</label>
+                        <input type="number" class="form-control" id="jumlah" name="jumlah">
                     </div>
                 </div>
                 <div class="modal-footer">

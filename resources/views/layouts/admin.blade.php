@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>@yield('title') - Sari Nadi</title>
+    <title>@yield('title') - LPD Benana</title>
     <!-- Custom fonts for this template-->
     <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -21,7 +21,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Custom styles for this template-->
     <link href="/admin/css/sb-admin-2.css" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ asset('icon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('logo-lpd.png') }}" type="image/x-icon">
 </head>
 
 <body id="page-top">
@@ -134,7 +134,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
-                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nama }}</span>
                                 <img class="img-profile rounded-circle"
                                     src="https://ui-avatars.com/api/?background=4e73df&color=ffffff&name={{ Auth::user()->name }}">
                             </a>

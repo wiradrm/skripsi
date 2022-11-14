@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('customer.update', $item->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('simpan.update', $item->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">

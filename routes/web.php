@@ -38,6 +38,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/nasabah/update/{id}', 'NasabahController@update')->name('nasabah.update');
     Route::get('/nasabah/destroy/{id}', 'NasabahController@destroy')->name('nasabah.destroy');
     
+    Route::get('/simpan', 'SimpanController@index')->name('simpan');
+    Route::post('/simpan/store', 'SimpanController@store')->name('simpan.store');
+    Route::put('/simpan/update/{id}', 'SimpanController@update')->name('simpan.update');
+    Route::get('/simpan/destroy/{id}', 'SimpanController@destroy')->name('simpan.destroy');
+
+
+    Route::get('/tarik', 'NasabahController@index')->name('tarik');
 
 
     Route::get('/hutang', 'NasabahController@index')->name('hutang');
@@ -50,9 +57,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/riwayat-tabungan', 'NasabahController@index')->name('riwayat-tabungan');
   
-    Route::get('/tarik', 'NasabahController@index')->name('tarik');
-
-    Route::get('/simpan', 'NasabahController@index')->name('simpan');
 
     Route::get('/tabungan', 'NasabahController@index')->name('tabungan');
 

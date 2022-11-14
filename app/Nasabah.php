@@ -19,4 +19,25 @@ class Nasabah extends Model
         }
         return $latest;
     }
+
+    public function tabungan()
+    {
+        return $this->hasOne('App\Tabungan', 'id_nasabah');
+    }
+
+    public function simpan()
+    {
+        return $this->hasMany('App\Simpan', 'id_nasabah');
+    }
+
+    public function tarik()
+    {
+        return $this->hasMany('App\Tarik', 'id_nasabah');
+    }
+
+    public function riwayat_tabungan()
+    {
+        return $this->hasMany('App\RiwayatTabungan', 'id_nasabah');
+    }
+
 }

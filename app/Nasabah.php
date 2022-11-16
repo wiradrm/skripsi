@@ -35,4 +35,9 @@ class Nasabah extends Model
         return $this->hasMany('App\RiwayatTabungan', 'id_nasabah');
     }
 
+    public function pinjam()
+    {
+        return $this->hasMany('App\Pinjam', 'id_nasabah');
+    }
+
 }

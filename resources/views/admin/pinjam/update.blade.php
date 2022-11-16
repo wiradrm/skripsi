@@ -1,27 +1,39 @@
-<div class="modal fade bd-example-modal-lg text-left" id="updateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg text-left" id="createModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Ubah Data</h5>
+                <h5 class="modal-title" id="createModalLabel">Tambah Data</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('customer.update', $item->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('pinjam.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name" class="col-form-label">Nama</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{$item->name}}">
+                        <label for="id_nasabah" class="col-form-label">Nama Nasabah</label>
+                        <select class="selectpicker form-control"  name="id_nasabah" id="id_nasabah" data-live-search="true">
+                            <option hidden></option>
+                            @foreach($nasabpah as $key => $item)
+                            <option value="{{$item->id}}">{{$item->id}} | {{$item->nama}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="no_telpon" class="col-form-label">No Telpon</label>
-                        <input type="text" class="form-control" id="no_telpon" name="no_telpon" value="{{$item->no_telpon}}">
+                        <label for="no_pinjam" class="col-form-label">No Pinjaman</label>
+                        <input type="text" class="form-control" id="no_pinjam" name="no_pinjam">
                     </div>
                     <div class="form-group">
-                        <label for="alamat" class="col-form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="10">{{$item->alamat}}</textarea>
+                        <label for="createDate" class="col-form-label">Tanggal Pinjaman</label>
+                        <input type="date" class="form-control createDate" id="tanggal" name="tanggal" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="pinjaman" class="col-form-label">Jumlah Pinjaman</label>
+                        <input type="number" class="form-control" id="pinjaman" name="pinjaman">
+                    </div>
+                    <div class="form-group">
+                        <label for="pinjaman" class="col-form-label">Bunga Menurun</label>
+                        <input type="number" class="form-control" id="pinjaman" name="pinjaman">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -32,3 +44,5 @@
         </div>
     </div>
 </div>
+
+

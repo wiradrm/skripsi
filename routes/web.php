@@ -50,15 +50,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tarik/destroy/{id}', 'TarikController@destroy')->name('tarik.destroy');
 
     Route::get('/mutasi', 'MutasiController@index')->name('mutasi');
-    Route::get('/filter', 'MutasiController@index')->name('filter');
+
+    Route::get('/pinjam', 'PinjamController@index')->name('pinjam');
+    Route::get('/pinjam/store', 'PinjamController@store')->name('pinjam.store');
+    Route::get('/pinjam/destroy/{id}', 'PinjamController@destroy')->name('pinjam.destroy');
 
 
-
-    Route::get('/hutang', 'NasabahController@index')->name('hutang');
-
-    Route::get('/pembayaran', 'NasabahController@index')->name('pembayaran');
-
-    Route::get('/pinjam', 'NasabahController@index')->name('pinjam');
+    Route::get('/pembayaran', 'PembayaranController@index')->name('pembayaran');
+    Route::post('/pembayaran/store', 'PembayaranController@store')->name('pembayaran.store');
+    Route::put('/pembayaran/update/{id}', 'PembayaranController@update')->name('pembayaran.update');
+    Route::get('/pembayaran/destroy/{id}', 'PembayaranController@destroy')->name('pembayaran.destroy');
+    
+    
+    Route::get('/hutang', 'HutangController@index')->name('hutang');
 
     Route::get('/riwayat-pembayaran', 'NasabahController@index')->name('riwayat-pembayaran');
 

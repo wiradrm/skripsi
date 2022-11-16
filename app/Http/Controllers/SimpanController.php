@@ -26,7 +26,6 @@ class SimpanController extends Controller
 
     public function store(Request $request)
     {
-        // $nasabah = Nasabah::all();
 
         $this->validate(
             $request,

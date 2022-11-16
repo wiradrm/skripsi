@@ -2,20 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Customer;
-use App\TokoGudang;
+use App\Pinjam;
+use App\Nasabah;
+use App\Hutang;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class CustomerController extends Controller
+class PinjamController extends Controller
 {
-    protected $page = 'admin.customer.';
-    protected $index = 'admin.customer.index';
+    protected $page = 'admin.pinjam.';
+    protected $index = 'admin.pinjam.index';
 
-    public function index(Request $request)
+    public function index()
     {
-        $models = Customer::where('id_toko_gudang', Auth::user()->id_toko_gudang)->get();
-        return view($this->index, compact('models'));
+        $models = Pinjam::all();
+        $nasabah = Nasabah::all();
+        return view($this->index, compact('models', 'nasabah'));
     }
 
     public function store(Request $request)
@@ -23,74 +27,60 @@ class CustomerController extends Controller
         $this->validate(
             $request,
             [
-                'name'                      => 'required',
-                'alamat'                    => 'required',
-                'no_telpon'                 => 'required',
+                'id_nasabah'                    => 'required',
+                'no_pinjam'                    => 'required|unique:pinjam',
+                'tanggal'                   => 'required',
+                'pinjaman'                 => 'required|integer',
+                'bunga'                 => 'required|between:0,99.99',
 
             ],
             [
                 'required'          => ':attribute is required.'
             ],
             [
-                'name'                      => 'Nama',
-                'alamat'                    => 'Alamat',
-                'no_telpon'                 => 'No Telpon',
+                'id_nasabah'                    => 'Nasabah',
+                'no_pinjam'                    => 'No Pinjam',
+                'tanggal'                   => 'Tanggal',
+                'pinjaman'                 => 'Pinjaman',
+                'bunga'                 => 'Bunga',
+
             ]
         );
 
-        $model = new Customer();
-        $model->id_toko_gudang = Auth::user()->id_toko_gudang;
-        $model->name = $request->name;
-        $model->alamat = $request->alamat;
-        $model->no_telpon = $request->no_telpon;
-        $model->save();
+        DB::transaction(function () use ($request) {
+            // Insert into pinjam
+            $model = new Pinjam();
+            $model->no_pinjam = $request->no_pinjam;
+            $model->id_nasabah = $request->id_nasabah;
+            $model->tanggal = $request->tanggal;
+            $model->pinjaman = $request->pinjaman;
+            $model->bunga = $request->bunga;
+            $model->save();
+
+
+            $hutang = new Hutang;
+            $hutang->no_pinjam = $request->no_pinjam;
+            $hutang->id_nasabah = $request->id_nasabah;
+            $hutang->hutang = $request->pinjaman;
+            $hutang->save();
+
+        });
 
         return redirect()->back()->with('info', 'Berhasil menambah data');
     }
 
-    public function update(Request $request, $id)
+    public function destroy($id)
     {
-        $this->validate(
-            $request,
-            [
-                'name'                      => 'required',
-                'alamat'                    => 'required',
-                'no_telpon'                 => 'required',
+        $model = Pinjam::findOrFail($id);
 
-            ],
-            [
-                'required'          => ':attribute is required.'
-            ],
-            [
-                'name'                      => 'Nama',
-                'alamat'                    => 'Alamat',
-                'no_telpon'                 => 'No Telpon',
-            ]
-        );
-
-        $model = Customer::findOrFail($id);
-        $model->id_toko_gudang = Auth::user()->id_toko_gudang;
-        $model->name = $request->name;
-        $model->alamat = $request->alamat;
-        $model->no_telpon = $request->no_telpon;
-        $model->save();
-
-        return redirect()->back()->with('info', 'Berhasil mengubah data');
+        $delete_all = $model->no_pinjam;
+        
+        DB::table('pinjam')->where('id',$id)->delete();
+        
+        DB::table('hutang')->where('no_pinjam', $delete_all)->delete();
+        DB::table('pembayaran')->where('no_pinjam', $delete_all)->delete();
+                
+        return redirect()->route('pinjam')->with('info', 'Berhasil menghapus data');
     }
 
-    public function deactivate($id)
-    {
-        $model = Customer::findOrFail($id);
-        $model->status = 0;
-        $model->save();
-        return redirect()->back()->with('info', 'Berhasil menonactifkan customer');
-    }
-
-    public function activate($id)
-    {
-        $model = Customer::findOrFail($id);
-        $model->status = 1;
-        $model->save();
-        return redirect()->back()->with('info', 'Berhasil mengaktifkan customer');
-    }
 }

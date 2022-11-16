@@ -49,6 +49,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/tarik/update/{id}', 'TarikController@update')->name('tarik.update');
     Route::get('/tarik/destroy/{id}', 'TarikController@destroy')->name('tarik.destroy');
 
+    Route::get('/mutasi', 'MutasiController@index')->name('mutasi');
+    Route::get('/filter', 'MutasiController@index')->name('filter');
+
+
 
     Route::get('/hutang', 'NasabahController@index')->name('hutang');
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tarik;
 use App\Nasabah;
 use App\Tabungan;
+use App\RiwayatTabungan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -67,6 +68,15 @@ class TarikController extends Controller
             $saving->saldo = ($saving->saldo - $request->jumlah);
             $saving->save();
 
+            $saving_history = new RiwayatTabungan;
+            $saving_history->id_nasabah = $request->id_nasabah;
+            $saving_history->id_tarik = $model->id;
+            $saving_history->tanggal = $request->tanggal;
+            $saving_history->keterangan = 'Penarikan';
+            $saving_history->debet = $request->jumlah;
+            $saving_history->save();
+
+
         });
 
         return redirect()->back()->with('info', 'Berhasil menambah data penarikan');
@@ -116,6 +126,13 @@ class TarikController extends Controller
                 $balance_history = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
                 $balance_history->saldo = ($balance_history->saldo - $request->jumlah);
                 $balance_history->save();
+
+                $saving_history = RiwayatTabungan::where('id_tarik', $model->id)->first();
+                $saving_history->id_nasabah = $request->id_nasabah;
+                $saving_history->tanggal = $request->tanggal;
+                $saving_history->keterangan = 'tarikan';
+                $saving_history->debet = $request->jumlah;
+                $saving_history->save();
             } 
             
             
@@ -126,6 +143,14 @@ class TarikController extends Controller
                 $balance_other->saldo = ($balance_other->saldo - $request->jumlah);
                 
                 $balance_other->save();
+
+
+                $saving_history = RiwayatTabungan::where('id_tarik', $model->id)->first();
+                $saving_history->id_nasabah = $request->id_nasabah;
+                $saving_history->tanggal = $request->tanggal;
+                $saving_history->keterangan = 'tarikan';
+                $saving_history->debet = $request->jumlah;
+                $saving_history->save();
 
             }
 
@@ -154,7 +179,8 @@ class TarikController extends Controller
         $balance->save();
         
         DB::table('tarik')->where('id',$id)->delete();
-        
+
+        DB::table('riwayat_tabungan')->where('id_tarik', $model->id)->delete();
                 
         return redirect()->route('tarik')->with('info', 'Berhasil menghapus data');
     }

@@ -29,6 +29,25 @@
   
     <link href="/admin/css/sb-admin-2.css" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('logo-lpd.png') }}" type="image/x-icon">
+
+    <style>
+        .bootstrap-select .dropdown-toggle .filter-option {
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding-top: inherit;
+                padding-right: inherit;
+                padding-bottom: inherit;
+                padding-left: inherit;
+                height: 100%;
+                width: 100%;
+                text-align: left;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid #d1d3e2;
+                border-radius: 0.35rem;
+            }
+    </style>
 </head>
 
 <body id="page-top">

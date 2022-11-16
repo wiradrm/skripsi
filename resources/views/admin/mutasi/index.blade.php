@@ -1,21 +1,30 @@
 @extends('layouts.admin')
 @section('title')
-User
+Mutasi Simpanan
 @endsection
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Data Simpanan</h1>
-<div class="row my-4">
-    <div class="col-md-6">
-        <div class="d-flex justify-content-start">
-            <button type="submit" data-target="#createModal" data-toggle="modal" class="btn btn-primary">Tambah Data</button>
-        </div>
+<h1 class="h3 mb-3 text-gray-800">Data Mutasi Simpanan</h1>
+<form class="form-row mb-4" action="{{route('mutasi')}}" method="GET">
+    <div class="form-group my-0 col-md">
+        <label for="id_nasabah" class="col-form-label">Nasabah</label>
+        <select class="form-control selectpicker" name="id_nasabah" id="id_nasabah" data-live-search="true">
+            <option value=""></option>
+            @php($nasabah = App\Nasabah::all())
+            @foreach($nasabah as $key => $item)
+            <option @if(request()->query("id") == $item->id) selected @endif value="{{$item->id}}">{{$item->id}} | {{$item->nama}}</option>
+            @endforeach
+        </select>
     </div>
-</div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary btn-block">Filter</button>
+        <a href="{{route('mutasi')}}" class="btn btn-warning btn-block ml-2">Reset Filter</a>
+    </div>
+</form>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Customer</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Data Mutasi</h6>
     </div>
     <div class="card-body">
         @if (\Session::has('info'))
@@ -26,16 +35,6 @@ User
             </button>
         </div>
         @endif
-
-        @if (\Session::has('msg'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {!! \Session::get('msg') !!}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        @endif
-
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="my-0 px-4">
@@ -46,14 +45,12 @@ User
         </div>
         @endif
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered rowspan-table" id="dataTable" width="100%">
                 <thead>
                     <tr>
-                        <th>ID Nasabah</th>
+                        <th>ID</th>
                         <th>Nama</th>
-                        <th>Tanggal</th>
-                        <th>Jumlah</th>
-                        <th width="12%">Action</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,36 +63,11 @@ User
                     @endif
                     @foreach($models as $key => $item)
                     <tr>
-                        <td>{{ $item->nasabah->id }}</td>
+                        <td>{{ $item->id_nasabah }}</td>
                         <td>{{ $item->nasabah->nama }}</td>
-                        <td>{{ date('d/m/Y', strtotime($item->tanggal)) }}</td>
-                        <td>@currency($item->jumlah)</td>
                         <td>
-                            <a class="btn btn-circle btn-danger" href="#" data-toggle="modal" data-target="#deactivateModal-{{$item->id}}"><i class='bx bx-trash'></i></a>
-                            <a class="btn btn-circle btn-info mx-1" href="#" data-toggle="modal" data-target="#updateModal-{{$item->id}}"><i class='bx bxs-edit'></i></a>
-                            <div class="modal fade" id="deactivateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Hapus</h5>
-                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">Hapus data penarikan simpanan "{{$item->nasabah->nama}}" <br>
-                                                                pada tanggal {{date('d/m/Y', strtotime($item->tanggal))}} <br>
-                                                                dengan penarikan sejumlah @currency($item->jumlah)</div> <br>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                            <a href="{{route('tarik.destroy',$item->id)}}" class="btn btn-primary">
-                                                Hapus
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            @include('admin.tarik.update')
+                            <a class="text-primary" href="#" data-toggle="modal" data-target="#detail-{{$item->id_nasabah}}">View Detail</a>
+                            @include('admin.mutasi.detail')
                         </td>
                     </tr>
                     @endforeach
@@ -104,7 +76,6 @@ User
         </div>
     </div>
 </div>
-@include('admin.tarik.create')
 @endsection
 @section('script')
 <script></script>

@@ -4,7 +4,7 @@ User
 @endsection
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Data Simpanan</h1>
+<h1 class="h3 mb-2 text-gray-800">Data Penarikan Simpanan</h1>
 <div class="row my-4">
     <div class="col-md-6">
         <div class="d-flex justify-content-start">
@@ -15,7 +15,7 @@ User
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Customer</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Data Penarikan Simpanan</h6>
     </div>
     <div class="card-body">
         @if (\Session::has('info'))

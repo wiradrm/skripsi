@@ -19,13 +19,18 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="createDate" class="col-form-label">Tanggal</label>
                         <input @if($item->tanggal != $item->checkLastRecord()) @endif type="date" class="form-control" id="tanggal" name="tanggal" value="{{date('Y-m-d', strtotime($item->tanggal))}}">
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="jumlah" class="col-form-label">Jumlah</label>
-                        <input type="number" class="form-control" id="jumlah" name="jumlah" value="{{$item->jumlah}}">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">Rp.</div>
+                            </div>
+                            <input type="number" class="form-control" id="jumlah" name="jumlah" value="{{$item->jumlah}}">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

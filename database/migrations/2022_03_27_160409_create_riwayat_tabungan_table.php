@@ -18,7 +18,6 @@ class CreateRiwayatTabunganTable extends Migration
             $table->unsignedBigInteger('id_nasabah');
             $table->unsignedBigInteger('id_simpan')->nullable();
             $table->unsignedBigInteger('id_tarik')->nullable();
-            $table->date('tanggal')->nullable();
             $table->string('keterangan')->nullable();
             $table->bigInteger('debet')->nullable();
             $table->bigInteger('kredit')->nullable();

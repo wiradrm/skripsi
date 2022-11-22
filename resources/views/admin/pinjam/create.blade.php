@@ -29,7 +29,12 @@
                     </div>
                     <div class="form-group">
                         <label for="pinjaman" class="col-form-label">Jumlah Pinjaman</label>
-                        <input type="number" class="form-control" id="pinjaman" name="pinjaman">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">Rp.</div>
+                            </div>
+                            <input type="number" class="form-control" id="rupiah" name="pinjaman">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="bunga" class="col-form-label">Bunga Menurun</label>

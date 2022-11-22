@@ -7,22 +7,42 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('customer.update', $item->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('pembayaran.update', $item->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
+                    <input type="text" name="no_pinjam" value="{{$item->no_pinjam}}" hidden>
+                    <input type="text" name="id_nasabah" value="{{$item->id_nasabah}}" hidden>
                     <div class="form-group">
-                        <label for="name" class="col-form-label">Nama</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{$item->name}}">
+                        <label for="name" class="col-form-label">Pinjaman</label> <br>
+                        <b>
+                            <span>{{ $item->no_pinjam }} | {{$item->nama}}</span>
+                        </b>
                     </div>
                     <div class="form-group">
-                        <label for="no_telpon" class="col-form-label">No Telpon</label>
-                        <input type="text" class="form-control" id="no_telpon" name="no_telpon" value="{{$item->no_telpon}}">
+                        <label for="name" class="col-form-label">Sisa Hutang</label> <br>
+                        <b>
+                            <input type="text" id="jumlahHutang" value="{{$item->hutang}}" hidden>
+                            <input type="text" id="persenBunga" value="{{$item->bunga}}" hidden>
+                            <span>@currency($item->hutang)</span>
+                        </b>
                     </div>
                     <div class="form-group">
-                        <label for="alamat" class="col-form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="10">{{$item->alamat}}</textarea>
+                        <label for="updateJumlah" class="col-form-label">Jumlah Bayar</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">Rp.</div>
+                            </div>
+                            <input type="number" class="form-control" id="updateJumlah" name="jumlah">
+                          </div>
                     </div>
+                    <b>
+                        <p for="rincian">Rincian</p>
+                        <p style="color: red">Minimal membayar bunga</p>
+                        <p>Bunga : <span id="bunga">0</span></p>
+                        <p id="subtotalWrapper">Pokok : <span id="pokok">0</span></p>
+                        <p>Sisa Hutang : <span id="sisa">0</span></p>
+                    </b>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

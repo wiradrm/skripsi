@@ -40,4 +40,9 @@ class Nasabah extends Model
         return $this->hasMany('App\Pinjam', 'id_nasabah');
     }
 
+    public function hutangs()
+    {
+        return $this->hasMany('App\Hutang', 'id_nasabah');
+    }
+
 }

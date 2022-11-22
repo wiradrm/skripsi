@@ -16,7 +16,7 @@ class CreateSimpanTable extends Migration
         Schema::create('simpan', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_nasabah');
-            $table->dateTime('tanggal');
+            // $table->dateTime('tanggal');
             $table->bigInteger('jumlah')->nullable();
             $table->timestamps();
 

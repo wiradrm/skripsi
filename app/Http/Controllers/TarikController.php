@@ -19,7 +19,7 @@ class TarikController extends Controller
 
     public function index(Request $request)
     {
-        $models = Tarik::orderBy('id', 'DESC')->get();
+        $models = Tarik::orderBy('created_at', 'DESC')->get();
         $nasabah = Nasabah::all();
         return view($this->index, compact('models','nasabah'));
     }
@@ -32,7 +32,6 @@ class TarikController extends Controller
             $request,
             [
                 'id_nasabah'                    => 'required',
-                'tanggal'                   => 'required',
                 'jumlah'                 => 'required|integer',
 
             ],
@@ -41,7 +40,6 @@ class TarikController extends Controller
             ],
             [
                 'id_nasabah'                    => 'Nasabah',
-                'tanggal'                      => 'Tanggal',
                 'jumlah'                 => 'Setoran',
             ]
         );
@@ -59,7 +57,6 @@ class TarikController extends Controller
             // Insert into deposit
             $model = new Tarik();
             $model->id_nasabah = $request->id_nasabah;
-            $model->tanggal = $request->tanggal;
             $model->jumlah = $request->jumlah;
             $model->save();
 
@@ -71,7 +68,6 @@ class TarikController extends Controller
             $saving_history = new RiwayatTabungan;
             $saving_history->id_nasabah = $request->id_nasabah;
             $saving_history->id_tarik = $model->id;
-            $saving_history->tanggal = $request->tanggal;
             $saving_history->keterangan = 'Penarikan';
             $saving_history->debet = $request->jumlah;
             $saving_history->save();
@@ -88,7 +84,6 @@ class TarikController extends Controller
             $request,
             [
                 'id_nasabah'                    => 'required',
-                'tanggal'                   => 'required',
                 'jumlah'                 => 'required|integer',
 
             ],
@@ -97,7 +92,6 @@ class TarikController extends Controller
             ],
             [
                 'id_nasabah'                    => 'Nasabah',
-                'tanggal'                      => 'Tanggal',
                 'jumlah'                 => 'Setoran',
             ]
         );
@@ -129,7 +123,6 @@ class TarikController extends Controller
 
                 $saving_history = RiwayatTabungan::where('id_tarik', $model->id)->first();
                 $saving_history->id_nasabah = $request->id_nasabah;
-                $saving_history->tanggal = $request->tanggal;
                 $saving_history->keterangan = 'tarikan';
                 $saving_history->debet = $request->jumlah;
                 $saving_history->save();
@@ -147,7 +140,6 @@ class TarikController extends Controller
 
                 $saving_history = RiwayatTabungan::where('id_tarik', $model->id)->first();
                 $saving_history->id_nasabah = $request->id_nasabah;
-                $saving_history->tanggal = $request->tanggal;
                 $saving_history->keterangan = 'tarikan';
                 $saving_history->debet = $request->jumlah;
                 $saving_history->save();
@@ -155,7 +147,6 @@ class TarikController extends Controller
             }
 
             $model->id_nasabah = $request->id_nasabah;
-            $model->tanggal = $request->tanggal;
             $model->jumlah = $request->jumlah;
             $model->save();
 

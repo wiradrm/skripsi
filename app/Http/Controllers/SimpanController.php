@@ -19,7 +19,7 @@ class SimpanController extends Controller
 
     public function index(Request $request)
     {
-        $models = Simpan::orderBy('tanggal', 'DESC')->get();
+        $models = Simpan::orderBy('created_at', 'DESC')->get();
         $nasabah = Nasabah::all();
         return view($this->index, compact('models','nasabah'));
     }
@@ -31,7 +31,6 @@ class SimpanController extends Controller
             $request,
             [
                 'id_nasabah'                    => 'required',
-                'tanggal'                   => 'required',
                 'jumlah'                 => 'required|integer',
 
             ],
@@ -40,7 +39,6 @@ class SimpanController extends Controller
             ],
             [
                 'id_nasabah'                    => 'Nasabah',
-                'tanggal'                      => 'Tanggal',
                 'jumlah'                 => 'Setoran',
             ]
         );
@@ -49,7 +47,6 @@ class SimpanController extends Controller
             // Insert into deposit
             $model = new Simpan();
             $model->id_nasabah = $request->id_nasabah;
-            $model->tanggal = $request->tanggal;
             $model->jumlah = $request->jumlah;
             $model->save();
 
@@ -69,7 +66,6 @@ class SimpanController extends Controller
             $saving_history = new RiwayatTabungan;
             $saving_history->id_nasabah = $request->id_nasabah;
             $saving_history->id_simpan = $model->id;
-            $saving_history->tanggal = $request->tanggal;
             $saving_history->keterangan = 'Setoran';
             $saving_history->kredit = $request->jumlah;
             $saving_history->save();
@@ -85,7 +81,6 @@ class SimpanController extends Controller
             $request,
             [
                 'id_nasabah'                    => 'required',
-                'tanggal'                   => 'required',
                 'jumlah'                 => 'required|integer',
 
             ],
@@ -94,7 +89,6 @@ class SimpanController extends Controller
             ],
             [
                 'id_nasabah'                    => 'Nasabah',
-                'tanggal'                      => 'Tanggal',
                 'jumlah'                 => 'Setoran',
             ]
         );
@@ -118,7 +112,6 @@ class SimpanController extends Controller
 
                 $saving_history = RiwayatTabungan::where('id_simpan', $model->id)->first();
                 $saving_history->id_nasabah = $request->id_nasabah;
-                $saving_history->tanggal = $request->tanggal;
                 $saving_history->kredit = $request->jumlah;
                 $saving_history->save();
             } 
@@ -134,14 +127,12 @@ class SimpanController extends Controller
 
                 $saving_history = RiwayatTabungan::where('id_simpan', $model->id)->first();
                 $saving_history->id_nasabah = $request->id_nasabah;
-                $saving_history->tanggal = $request->tanggal;
                 $saving_history->kredit = $request->jumlah;
                 $saving_history->save();
 
             }
 
             $model->id_nasabah = $request->id_nasabah;
-            $model->tanggal = $request->tanggal;
             $model->jumlah = $request->jumlah;
             $model->save();
 

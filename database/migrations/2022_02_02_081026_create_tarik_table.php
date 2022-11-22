@@ -16,7 +16,6 @@ class CreateTarikTable extends Migration
         Schema::create('tarik', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_nasabah');
-            $table->dateTime('tanggal');
             $table->bigInteger('jumlah')->nullable();
             $table->timestamps();
 

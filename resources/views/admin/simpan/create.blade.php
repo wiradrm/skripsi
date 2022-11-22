@@ -12,20 +12,25 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="id_nasabah" class="col-form-label">Nama Nasabah</label>
-                        <select class="selectpicker form-control"  name="id_nasabah" id="id_nasabah" data-live-search="true">
+                        <select class="form-control selectpicker"  name="id_nasabah" id="id_nasabah" data-live-search="true">
                             <option hidden></option>
                             @foreach($nasabah as $key => $item)
                             <option value="{{$item->id}}">{{$item->id}} | {{$item->nama}}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="createDate" class="col-form-label">Tanggal</label>
                         <input type="date" class="form-control createDate" id="tanggal" name="tanggal" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="jumlah" class="col-form-label">Jumlah</label>
-                        <input type="number" class="form-control" id="jumlah" name="jumlah">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">Rp.</div>
+                            </div>
+                            <input type="number" class="form-control" id="jumlah" name="jumlah">
+                        </div> 
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -36,5 +41,3 @@
         </div>
     </div>
 </div>
-
-

@@ -68,7 +68,7 @@ User
                     <tr>
                         <td>{{ $item->nasabah->id }}</td>
                         <td>{{ $item->nasabah->nama }}</td>
-                        <td>{{ date('d/m/Y', strtotime($item->tanggal)) }}</td>
+                        <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
                         <td>@currency($item->jumlah)</td>
                         <td>
                             <a class="btn btn-circle btn-danger" href="#" data-toggle="modal" data-target="#deactivateModal-{{$item->id}}"><i class='bx bx-trash'></i></a>
@@ -107,5 +107,6 @@ User
 @include('admin.simpan.create')
 @endsection
 @section('script')
-<script></script>
+
+
 @endsection

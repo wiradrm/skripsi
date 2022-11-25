@@ -17,15 +17,25 @@ class PembayaranController extends Controller
 {
     protected $page = 'admin.pembayaran.';
     protected $index = 'admin.pembayaran.index';
+    protected $updated = 'admin.pembayaran.updated';
 
     public function index(Request $request)
     {
-        $models = DB::table('pinjam')
-                        ->join('nasabah', 'pinjam.id_nasabah', '=', 'nasabah.id')
-                        ->join('hutang', 'pinjam.id_nasabah', '=', 'hutang.id_nasabah')
+        $models = Hutang::all();
+
+        $datas = DB::table('nasabah')
+                        ->join('pembayaran', 'pembayaran.id_nasabah', '=', 'nasabah.id')
                         ->get();
 
-        return view($this->index, compact('models'));
+        return view($this->index, compact('models' , 'datas'));
+    }
+
+    function edit($id){
+        $model = new Hutang();
+
+        $hutang = $model->find($id);
+
+        return view($this->updated, compact('hutang'));
     }
 
     public function update(Request $request, $id)
@@ -34,7 +44,6 @@ class PembayaranController extends Controller
             $request,
             [
                 'id_nasabah'                    => 'required',
-                'tanggal'                   => 'required',
                 'jumlah'                 => 'required|integer',
 
             ],
@@ -43,63 +52,44 @@ class PembayaranController extends Controller
             ],
             [
                 'id_nasabah'                    => 'Nasabah',
-                'tanggal'                      => 'Tanggal',
                 'jumlah'                 => 'Setoran',
             ]
         );
 
-            // Insert into deposit
-            $model = Simpan::findOrFail($id);
-
-            $history_jumlah = $model->jumlah;
-            
-            $balance = Tabungan::where('id_nasabah', $model->id_nasabah)->first();
-            $balance->saldo = ($balance->saldo - $history_jumlah);
-            
-            $balance->save();
-
-
-
-            if ($model->id_nasabah == $request->id_nasabah) {
-                $balance_history = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
-                $balance_history->saldo = ($balance_history->saldo + $request->jumlah);
-                $balance_history->save();
-
-                $saving_history = RiwayatTabungan::where('id_simpan', $model->id)->first();
-                $saving_history->id_nasabah = $request->id_nasabah;
-                $saving_history->tanggal = $request->tanggal;
-                $saving_history->kredit = $request->jumlah;
-                $saving_history->save();
-            } 
-            
-            
-            if ($model->id_nasabah != $request->id_nasabah) {
-                
-                
-                $balance_other = Tabungan::where('id_nasabah', $request->id_nasabah)->first();
-                $balance_other->saldo = ($balance_other->saldo + $request->jumlah);
-                $balance_other->save();
-
-
-                $saving_history = RiwayatTabungan::where('id_simpan', $model->id)->first();
-                $saving_history->id_nasabah = $request->id_nasabah;
-                $saving_history->tanggal = $request->tanggal;
-                $saving_history->kredit = $request->jumlah;
-                $saving_history->save();
-
+        $check = $request->hutang * $request->persen / 100;
+        if ($check) {
+            if ($request->jumlah < $check) {
+                return redirect()->route('pembayaran')->with('msg', 'Minimal membayar bunga!');
             }
+        } else {
+            return redirect()->route('pembayaran')->with('msg', 'Minimal membayar bunga!');
+        }
 
+        DB::transaction(function () use ($request) {
+            // Insert into deposit
+
+            $bunga = $request->hutang * $request->persen / 100;
+
+            $model = new Pembayaran();
+            $model->no_pinjam = $request->no_pinjam;
             $model->id_nasabah = $request->id_nasabah;
-            $model->tanggal = $request->tanggal;
             $model->jumlah = $request->jumlah;
+            $model->pokok = $request->jumlah - $bunga;
+            $model->bunga = $bunga;
+            $model->persen = $request->persen;
             $model->save();
 
+            // Reduce savings balance
+            $saving = Hutang::where('no_pinjam', $request->no_pinjam)->first();
+            $saving->hutang = ($request->hutang - $model->pokok);
+            $saving->save();
+
+        });
 
 
 
 
-
-        return redirect()->back()->with('info', 'Berhasil mengubah data');
+        return redirect()->back()->with('info', 'Berhasil menambah data pembayaran');
     }
 
     public function destroy($id)

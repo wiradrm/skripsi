@@ -97,7 +97,7 @@
                 class="nav-item {{ Request::routeIs('simpan', 'tarik') ? 'active' : '' }}">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
                     aria-expanded="true" aria-controls="collapseUtilities2">
-                    <i class='bx bxs-dashboard'></i>
+                    <i class='bx bxs-wallet'></i>
                     <span>Simpan</span>
                 </a>
                 <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
@@ -114,7 +114,7 @@
                 class="nav-item {{ Request::routeIs('stock_out', 'penjualan', 'pembelian', 'pengeluaran', 'hutang') ? 'active' : '' }}">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class='bx bxs-dashboard'></i>
+                    <i class='bx bxs-data'></i>
                     <span>Pinjaman</span>
                 </a>
                 <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities"
@@ -131,7 +131,7 @@
                 class="nav-item {{ Request::routeIs('laporan.simpanan','laporan.pinjaman','laporan.tunggakan','laporan.neraca','laporan.labarugi')? 'active': '' }}">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities4"
                     aria-expanded="true" aria-controls="collapseUtilities4">
-                    <i class='bx bxs-dashboard'></i>
+                    <i class='bx bxs-file'></i>
                     <span>Laporan</span>
                 </a>
                 <div id="collapseUtilities4" class="collapse" aria-labelledby="headingUtilities"
@@ -141,8 +141,8 @@
                         <a class="collapse-item" href="{{ route('laporan.simpanan') }}">Laporan Simpanan</a>
                         <a class="collapse-item" href="{{ route('laporan.pinjaman') }}">Laporan Pinjaman</a>
                         <a class="collapse-item" href="{{ route('laporan.tunggakan') }}">Tunggakan</a>
-                        <a class="collapse-item" href="{{ route('laporan.neraca') }}">Neraca</a>
-                        <a class="collapse-item" href="{{ route('laporan.labarugi') }}">Laba/Rugi</a>
+                        {{-- <a class="collapse-item" href="{{ route('laporan.neraca') }}">Neraca</a> --}}
+                        {{-- <a class="collapse-item" href="{{ route('laporan.labarugi') }}">Laba/Rugi</a> --}}
                     </div>
                 </div>
             </li>

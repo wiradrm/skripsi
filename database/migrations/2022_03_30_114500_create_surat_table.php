@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHutangTable extends Migration
+class CreateSuratTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateHutangTable extends Migration
      */
     public function up()
     {
-        Schema::create('hutang', function (Blueprint $table) {
+        Schema::create('surat', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('no_pinjam');
-            $table->unsignedBigInteger('id_nasabah');
-            $table->integer('hutang');
-            $table->float('bunga');
+            $table->string('nama');
+            $table->string('periode');
+            $table->date('tanggal');
+            $table->string('jumlah');
+            $table->string('lama');
             $table->timestamps();
-
-            $table->foreign('id_nasabah')->references('id')->on('nasabah')->onDelete('cascade');
 
         });
     }

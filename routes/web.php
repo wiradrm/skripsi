@@ -28,8 +28,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     Route::get('/laporan/simpanan', 'LaporanController@index_simpanan')->name('laporan.simpanan');
+    
     Route::get('/laporan/pinjaman', 'LaporanController@index_pinjaman')->name('laporan.pinjaman');
+    
     Route::get('/laporan/tunggakan', 'LaporanController@index_tunggakan')->name('laporan.tunggakan');
+    Route::post('/laporan/store', 'LaporanController@store')->name('laporan.store');
+    Route::get('/laporan/destroy/{id}', 'LaporanController@destroy')->name('laporan.destroy');
+
+    Route::get('/laporan/cetak/{id}', 'LaporanController@cetak')->name('laporan.cetak');
+
+
     Route::get('/laporan/neraca', 'LaporanController@index_neraca')->name('laporan.neraca');
     Route::get('/laporan/labarugi', 'LaporanController@index_labarugi')->name('laporan.labarugi');
     
@@ -58,13 +66,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/pembayaran', 'PembayaranController@index')->name('pembayaran');
     Route::post('/pembayaran/store', 'PembayaranController@store')->name('pembayaran.store');
+    Route::get('/edit/{id}', 'PembayaranController@edit')->name('pembayaran.edit');
     Route::put('/pembayaran/update/{id}', 'PembayaranController@update')->name('pembayaran.update');
     Route::get('/pembayaran/destroy/{id}', 'PembayaranController@destroy')->name('pembayaran.destroy');
     
     
+   
+    
+
     Route::get('/hutang', 'HutangController@index')->name('hutang');
 
-    Route::get('/riwayat-pembayaran', 'NasabahController@index')->name('riwayat-pembayaran');
 
     Route::get('/riwayat-tabungan', 'NasabahController@index')->name('riwayat-tabungan');
   

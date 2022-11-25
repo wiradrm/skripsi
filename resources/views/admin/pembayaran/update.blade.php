@@ -1,13 +1,13 @@
-<div class="modal fade bd-example-modal-lg text-left" id="updateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg text-left" id="updateModal-{{$item->no_pinjam}}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Ubah Data</h5>
+                <h5 class="modal-title" id="createModalLabel">Bayar</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('pembayaran.update', $item->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('pembayaran.update', $item->no_pinjam)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -16,14 +16,14 @@
                     <div class="form-group">
                         <label for="name" class="col-form-label">Pinjaman</label> <br>
                         <b>
-                            <span>{{ $item->no_pinjam }} | {{$item->nama}}</span>
+                            <span>{{ $item->no_pinjam }} | {{$item->nasabah->nama}}</span>
                         </b>
                     </div>
                     <div class="form-group">
                         <label for="name" class="col-form-label">Sisa Hutang</label> <br>
                         <b>
-                            <input type="text" id="jumlahHutang" value="{{$item->hutang}}" hidden>
-                            <input type="text" id="persenBunga" value="{{$item->bunga}}" hidden>
+                            <input type="text" id="jumlahHutang" name="hutang" value="{{$item->hutang}}" hidden>
+                            <input type="text" id="persenBunga" name="persen" value="{{$item->bunga}}" hidden>
                             <span>@currency($item->hutang)</span>
                         </b>
                     </div>

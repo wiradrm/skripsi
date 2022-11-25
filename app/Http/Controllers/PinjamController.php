@@ -62,6 +62,8 @@ class PinjamController extends Controller
             $hutang->no_pinjam = $request->no_pinjam;
             $hutang->id_nasabah = $request->id_nasabah;
             $hutang->hutang = $request->pinjaman;
+            $hutang->bunga = $request->bunga;
+
             $hutang->save();
 
         });

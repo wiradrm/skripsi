@@ -19,6 +19,16 @@ User
             </button>
         </div>
         @endif
+        @if (\Session::has('msg'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {!! \Session::get('msg') !!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+
+
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="my-0 px-4">
@@ -36,7 +46,7 @@ User
                         <th>Nama</th>
                         <th>Sisa Hutang</th>
                         <th>Bunga Menurun</th>
-                        <th width="12%">Action</th>
+                        <th width="7%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,22 +60,71 @@ User
                     @foreach($models as $key => $item)
                     <tr>
                         <td>{{ $item->no_pinjam }}</td>
-                        <td>{{ $item->nama }}</td>
+                        <td>{{ $item->nasabah->nama }}</td>
                         <td>@currency($item->hutang)</td>
-                        <td>{{ $item->bunga }}</td>
-
+                        <td>{{ $item->bunga }}%</td>
+    
                         <td>
-                            <a class="btn btn-circle btn-info mx-1" href="#" data-toggle="modal" data-target="#updateModal-{{$item->id}}"><i class='bx bxs-edit'></i></a>
+                            <a class="btn btn-success mx-1" href="#" data-toggle="modal" data-target="#updateModal-{{$item->no_pinjam}}" style="font-family: nunito">Bayar</a>
                             @include('admin.pembayaran.update')
                         </td>
-
+    
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+
+        
     </div>
 </div>
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Data Pembayaran</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>No Pinjam</th>
+                        <th>Nama</th>
+                        <th>Tanggal Bayar</th>
+        
+                        <th>Jumlah</th>
+                        <th>Pokok</th>
+                        <th>Bunga</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if($datas->count() == 0)
+                    <tr>
+                        <td colspan="100%" align="center">
+                            No data
+                        </td>
+                    </tr>
+                    @endif
+                    @foreach($datas as $key => $item)
+                    <tr>
+                        <td>{{ $item->no_pinjam }}</td>
+                        <td>{{ $item->nama }}</td>
+                        <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
+                        <td>@currency($item->jumlah)</td>
+                        <td>@currency($item->pokok)</td>
+                        <td>@currency($item->bunga)</td>
+        
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        
+    </div>
+</div>
+
 @endsection
 @section('script')
 <script>
@@ -107,3 +166,7 @@ User
 
 </script>
 @endsection
+
+
+
+

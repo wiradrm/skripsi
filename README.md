@@ -16,17 +16,12 @@ php artisan serve
 ```
 
 ## User and Role
-### Admin
-Name : Bagus Pramajaya \
-Username : bagus \
-Password : bagus12345 
+### Bendahara
+Name : Wulan \
+Username : wulan \
+Password : wulan12345 
 
 ### Staff
-Name : Wira Dharma \
+Name : Wira \
 Username : wira \
 Password : wira12345 
-
-### Owner
-Name : Risky \
-Username : risky \
-Password : risky12345 

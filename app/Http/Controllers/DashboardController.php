@@ -7,7 +7,10 @@ use Carbon\Carbon;
 
 use App\Nasabah;
 use App\Pinjam;
+use App\Tabungan;
+
 use App\User;
+use DB;
 
 class DashboardController extends Controller
 {   
@@ -32,10 +35,10 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {   
-        $countNasabah = new Nasabah();
-        $countPinjam = new Pinjam();
-        $countUser = new User();
+        $countNasabah = Nasabah::count();
+        $countPinjam = DB::table("pinjam")->get()->sum("pinjaman");
+        $countTabungan = DB::table("tabungan")->get()->sum("saldo");
 
-        return view($this->index, compact('countNasabah', 'countPinjam', 'countUser'));
+        return view($this->index, compact('countNasabah', 'countPinjam', 'countTabungan'));
     }
 }

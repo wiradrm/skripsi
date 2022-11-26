@@ -19,9 +19,9 @@ php artisan serve
 ### Bendahara
 Name : Wulan \
 Username : wulan \
-Password : wulan12345 
+Password : wulan1234
 
 ### Staff
 Name : Wira \
 Username : wira \
-Password : wira12345 
+Password : wira1234

@@ -14,6 +14,7 @@ class LaporanController extends Controller
 {
     protected $page = 'admin.laporan.';
     protected $index = 'admin.laporan.simpanan';
+    protected $pinjam = 'admin.laporan.pinjaman';
     protected $tunggakan = 'admin.laporan.surat.tunggakan';
     protected $print = 'admin.laporan.surat.print';
 
@@ -21,6 +22,16 @@ class LaporanController extends Controller
     {
         $models = Tabungan::all();
         return view($this->index, compact('models'));
+    }
+
+    public function index_pinjaman(Request $request)
+    {
+
+        $models = DB::table('pinjam')
+                        ->join('hutang', 'pinjam.no_pinjam', '=', 'hutang.no_pinjam')
+                        ->join('nasabah', 'nasabah.id', '=', 'pinjam.id_nasabah')
+                        ->get();
+        return view($this->pinjam, compact('models'));
     }
 
 

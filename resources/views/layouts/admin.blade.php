@@ -76,6 +76,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
             
+                
             <li
                 class="nav-item {{ Request::routeIs('user', 'nasabah') ? 'active' : '' }}">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities1"
@@ -92,6 +93,9 @@
                     </div>
                 </div>
             </li>
+
+            @if  (Auth::user()->level != 2)
+
 
             <li
                 class="nav-item {{ Request::routeIs('simpan', 'tarik') ? 'active' : '' }}">
@@ -126,6 +130,8 @@
                     </div>
                 </div>
             </li>
+
+            @endif
 
             <li
                 class="nav-item {{ Request::routeIs('laporan.simpanan','laporan.pinjaman','laporan.tunggakan','laporan.neraca','laporan.labarugi')? 'active': '' }}">

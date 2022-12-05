@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Tabungan;
+use App\Pinjam;
+use App\Hutang;
 use App\Nasabah;
 use App\Surat;
 use App\RiwayatTabungan;
+use App\Pembayaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 use App\Exports\SimpananExport;
+use App\Exports\PinjamanExport;
 
 
 class LaporanController extends Controller
@@ -22,6 +26,7 @@ class LaporanController extends Controller
     protected $index = 'admin.laporan.simpan.simpanan';
     protected $index_detail = 'admin.laporan.simpan.detail';
     protected $pinjam = 'admin.laporan.pinjaman.pinjaman';
+    protected $pinjam_detail = 'admin.laporan.pinjaman.detail';
     protected $tunggakan = 'admin.laporan.surat.tunggakan';
     protected $print = 'admin.laporan.surat.print';
 
@@ -101,11 +106,81 @@ class LaporanController extends Controller
     public function index_pinjaman(Request $request)
     {
 
-        $models = DB::table('pinjam')
-                        ->join('hutang', 'pinjam.no_pinjam', '=', 'hutang.no_pinjam')
-                        ->join('nasabah', 'nasabah.id', '=', 'pinjam.id_nasabah')
-                        ->get();
-        return view($this->pinjam, compact('models'));
+        $pinjam = Pinjam::all();
+
+        return view($this->pinjam, compact('pinjam'));
+    }
+
+
+    public function pinjam_detail(Request $request)
+    {
+        $pinjam = Pinjam::all();
+
+        $no_pinjam = $request->no_pinjam;
+        $startDate = $request->from;
+        $endDate = $request->to;
+
+        $pinjaman = Pinjam::where('no_pinjam', $no_pinjam)->first();
+
+        $past = [];
+
+        
+        if ($startDate && $endDate) {
+        $past = new Pembayaran;
+        $past = $past->where('no_pinjam', $no_pinjam);
+        $past = $past->whereDate('created_at', '<', $startDate);
+        $past = $past->get();
+        }
+
+
+        $models = new Pembayaran;
+
+        if($no_pinjam){
+            $models = $models->where('no_pinjam', $no_pinjam);
+        }
+
+        if ($startDate && $endDate) {
+        $models = $models->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        } 
+
+        $models = $models->get();
+
+        return view($this->pinjam_detail, compact('models', 'pinjam', 'pinjaman', 'past' ,'startDate', 'endDate', 'no_pinjam'));
+    }
+
+    public function pinjaman_export(Request $request)
+    {
+
+        $no_pinjam = $request->no_pinjam;
+        $startDate = $request->from;
+        $endDate = $request->to;
+
+        $pinjaman = Pinjam::where('no_pinjam', $no_pinjam)->first();
+
+        $past = [];
+
+        
+        if ($startDate && $endDate) {
+        $past = new Pembayaran;
+        $past = $past->where('no_pinjam', $no_pinjam);
+        $past = $past->whereDate('created_at', '<', $startDate);
+        $past = $past->get();
+        }
+
+
+        $item = new Pembayaran;
+
+        if($no_pinjam){
+            $item = $item->where('no_pinjam', $no_pinjam);
+        }
+
+        if ($startDate && $endDate) {
+        $item = $item->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        } 
+
+        $item = $item->get();
+
+        return Excel::download(new PinjamanExport($past, $item, $pinjaman), 'report_pinjaman_'.date('d_m_Y_H_i_s').'.xlsx');
     }
 
 

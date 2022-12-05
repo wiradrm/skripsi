@@ -7,11 +7,11 @@ User
 <h1 class="h3 mb-2 text-gray-800">Data Laporan Simpanan</h1>
 <form class="form-row mb-4" action="{{ route('laporan.detail_simpanan') }}" method="GET">
     <div class="form-group my-0 col-md">
-        <label for="id_nasabah" class="col-form-label">Nama Nasabah</label>
-            <select class="form-control selectpicker"  name="id_nasabah" id="id_nasabah" data-live-search="true">
+        <label for="no_pinjam" class="col-form-label">Pinjaman</label>
+            <select class="form-control selectpicker"  name="no_pinjam" id="no_pinjam" data-live-search="true">
                 <option hidden></option>
-                @foreach($nasabah as $key => $item)
-                <option value="{{$item->id}}">{{$item->id}} | {{$item->nama}}</option>
+                @foreach($pinjam as $key => $item)
+                <option value="{{$item->no_pinjam}}">{{$item->no_pinjam}} | {{$item->nasabah->nama}}</option>
                 @endforeach
             </select>
     </div>
@@ -25,7 +25,7 @@ User
     </div>
     <div class="col-md-3 d-flex align-items-end">
         <button type="submit" class="btn btn-primary btn-block">Filter</button>
-        <button type="submit" class="btn btn-primary">Export</button>
+        <button type="button" class="btn btn-success ml-2 btn-block" data-toggle="modal" data-target="#exportModalHarga">Export</button>
     </div>
 </form>
 
@@ -33,7 +33,7 @@ User
 {{-- <a href="{{route('laporan.simpanan.export')}}" class="btn btn-info mx-1"><i class='bx bxs-printer'></i> Cetak Laporan</a> <br> <br> --}}
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Simpanan Nasabah</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Data Pinjaman Nasabah</h6>
     </div>
     <div class="card-body">
         @if (\Session::has('info'))
@@ -63,32 +63,32 @@ User
         @endforeach
 
         <div class="table-responsive">
-            Data simpanan nasabah <b>{{$nama}}</b> dari <b>{{$startDate}}</b> sampai <b>{{$endDate}}</b>
+            Data pembayaran pinjaman <b>{{$nama}}</b> dari <b>{{$startDate}}</b> sampai <b>{{$endDate}}</b>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 @php
-                    $jumlah_saldo = 0;
-                    $saldo_awal = 0;
+                    $jumlah_hutang = 0;
+                    $hutang_sebelumnya = $pinjaman->pinjaman;
                 @endphp
                 @foreach($past as $key => $data)
                 @php
-                    $saldo_awal = $jumlah_saldo + $data->kredit - $data->debet;
-                    $jumlah_saldo += $data->kredit - $data->debet;
+                    $jumlah_hutang = $hutang_sebelumnya - $data->pokok;
+                    $hutang_sebelumnya -= $data->pokok;
                 @endphp
                 @endforeach
                 <thead>
                     <th colspan="5"></th>
-                    <th align="right">Saldo sebelumnya</th>
-                    <th>@currency($saldo_awal)</th>
+                    <th align="right">Sisa hutang sebelumnya</th>
+                    <th>@currency($hutang_sebelumnya)</th>
                 </thead>
                 <thead>
                     <tr>
-                        <th>ID Nasabah</th>
+                        <th>No Pinjam</th>
                         <th>Nama</th>
                         <th>Tanggal</th>
-                        <th>Keterangan</th>
-                        <th>Debet</th>
-                        <th>Kredit</th>
-                        <th>Saldo</th>
+                        <th>Jumlah Bayar</th>
+                        <th>Pokok</th>
+                        <th>Bunga</th>
+                        <th>Sisa Hutang</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,33 +102,33 @@ User
                         
                         
                         @php
-                            $jumlah=$saldo_awal;
+                            $sisa=$hutang_sebelumnya;
                         @endphp
                     @foreach($models as $key => $item)
                     <tr>
-                        <td>{{ $item->nasabah->id }}</td>
+                        <td>{{ $item->no_pinjam }}</td>
                         <td>{{ $item->nasabah->nama }}</td>
                         <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
-                        <td>{{ $item->keterangan }}</td>
-                        <td>@currency($item->debet)</td>
-                        <td>@currency($item->kredit)</td>
+                        <td>@currency($item->jumlah)</td>
+                        <td>@currency($item->pokok)</td>
+                        <td>@currency($item->bunga)</td>
                         
-                        <td>@currency($saldo = $jumlah + $item->kredit - $item->debet)</td>
+                        <td>@currency($jumlah = $sisa - $item->pokok)</td>
                         @php
-                            $jumlah += $item->kredit - $item->debet;
+                            $sisa -= $item->pokok;
                         @endphp
                     </tr>
                     @endforeach
                     <tr>
-                        <td colspan="6" align="right"><b>Saldo akhir</b> </td>
-                        <td><b>@currency($jumlah)</b> </td>
+                        <td colspan="6" align="right"><b>Sisa Hutang</b> </td>
+                        <td><b>@currency($sisa)</b> </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-@include('admin.laporan.simpan.modalsimpan')
+@include('admin.laporan.pinjaman.modalpinjam')
 @endsection
 @section('script')
 <script></script>

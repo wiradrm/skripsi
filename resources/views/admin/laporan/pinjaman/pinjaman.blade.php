@@ -4,64 +4,31 @@ User
 @endsection
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Data Pinjaman</h1>
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Pinjaman</h6>
-    </div>
-    <div class="card-body">
-        @if (\Session::has('info'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {!! \Session::get('info') !!}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        @endif
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="my-0 px-4">
-                @foreach ($errors->all() as $error)
-                <li class="my-0">{{ $error }}</li>
+<h1 class="h3 mb-2 text-gray-800">Data Laporan Pinjaman</h1>
+<form class="form-row mb-4" action="{{ route('laporan.detail_pinjaman') }}" method="GET">
+    <div class="form-group my-0 col-md">
+        <label for="no_pinjam" class="col-form-label">Pinjaman</label>
+            <select class="form-control selectpicker"  name="no_pinjam" id="no_pinjam" data-live-search="true">
+                <option hidden></option>
+                @foreach($pinjam as $key => $item)
+                <option value="{{$item->no_pinjam}}">{{$item->no_pinjam}} | {{$item->nasabah->nama}}</option>
                 @endforeach
-            </ul>
-        </div>
-        @endif
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>No Pinjam</th>
-                        <th>Nama</th>
-                        <th>Pinjaman</th>
-                        <th>Sisa Hutang</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if($models->count() == 0)
-                    <tr>
-                        <td colspan="100%" align="center">
-                            No data
-                        </td>
-                    </tr>
-                    @endif
-                    @foreach($models as $key => $item)
-                    <tr>
-                        <td>{{ $item->no_pinjam }}</td>
-                        <td>{{ $item->nama }}</td>
-                        <td>@currency($item->pinjaman)</td>
-                        <td>@currency($item->hutang)</td>
-                        <td hidden>
-                                                    
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+            </select>
     </div>
-</div>
+    <div class="form-group my-0 col-md">
+        <label for="from" class="col-form-label">Dari</label>
+        <input type="date" class="form-control" id="from" name="from" required>
+    </div>
+    <div class="form-group my-0 col-md">
+        <label for="to" class="col-form-label">Sampai</label>
+        <input type="date" class="form-control" id="to" name="to" required>
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary btn-block">Filter</button>
+        <button type="button" class="btn btn-success ml-2 btn-block" data-toggle="modal" data-target="#exportModalHarga">Export</button>
+    </div>
+</form>
+@include('admin.laporan.pinjaman.modalpinjam')
 @endsection
 @section('script')
 <script></script>

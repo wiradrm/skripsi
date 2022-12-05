@@ -13,19 +13,20 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class SimpananExport implements FromView, ShouldAutoSize, WithEvents, WithColumnFormatting
+class PinjamanExport implements FromView, ShouldAutoSize, WithEvents, WithColumnFormatting
 {
     /**
      * @return \Illuminate\Support\Collection
      */
 
-     protected $view = 'admin.laporan.export.simpanan';
+     protected $view = 'admin.laporan.export.pinjaman';
     protected $item;
 
 
-    function __construct ($item, $past) {
+    function __construct ($item, $past, $pinjaman) {
       $this->item = $item;
       $this->past = $past;
+      $this->pinjaman = $pinjaman;
     }
 
     public function view(): View
@@ -33,6 +34,7 @@ class SimpananExport implements FromView, ShouldAutoSize, WithEvents, WithColumn
         return view($this->view, [
             'models' => $this->item,
             'past' => $this->past,
+            'pinjaman' => $this->pinjaman,
             'count' => count($this->item)
         ]);
     }

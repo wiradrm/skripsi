@@ -36,13 +36,13 @@
                             <input type="number" class="form-control" id="updateJumlah" name="jumlah">
                           </div>
                     </div>
-                    <b>
+                    {{-- <b>
                         <p for="rincian">Rincian</p>
                         <p style="color: red">Minimal membayar bunga</p>
                         <p>Bunga : <span id="bunga">0</span></p>
                         <p id="subtotalWrapper">Pokok : <span id="pokok">0</span></p>
                         <p>Sisa Hutang : <span id="sisa">0</span></p>
-                    </b>
+                    </b> --}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

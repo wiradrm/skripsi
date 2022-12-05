@@ -13,24 +13,26 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class StockInExport implements FromView, ShouldAutoSize, WithEvents, WithColumnFormatting
+class SimpananExport implements FromView, ShouldAutoSize, WithEvents, WithColumnFormatting
 {
     /**
      * @return \Illuminate\Support\Collection
      */
 
-     protected $view = 'admin.laporan.export.stockin';
+     protected $view = 'admin.laporan.export.simpanan';
     protected $item;
 
 
-    function __construct ($item) {
+    function __construct ($item, $past) {
       $this->item = $item;
+      $this->past = $past;
     }
 
     public function view(): View
     {
         return view($this->view, [
             'models' => $this->item,
+            'past' => $this->past,
             'count' => count($this->item)
         ]);
     }
@@ -41,7 +43,7 @@ class StockInExport implements FromView, ShouldAutoSize, WithEvents, WithColumnF
             AfterSheet::class => function (AfterSheet $event) {
                 $all = count($this->item);
                 $total = $all + 1;
-                $event->sheet->getDelegate()->getStyle('A1:F' . $total)->getFont()->setSize(12);
+                $event->sheet->getDelegate()->getStyle('A1:J' . $total)->getFont()->setSize(12);
                 $styleArray = [
                     'borders' => [
                         'allBorders' => [
@@ -52,8 +54,8 @@ class StockInExport implements FromView, ShouldAutoSize, WithEvents, WithColumnF
                     'alignment' => [
                         'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
                     ],
-                ];
-                $event->sheet->getStyle('A1:F' . $total)->applyFromArray($styleArray);
+                ];      
+                $event->sheet->getStyle('A1:G' . $total)->applyFromArray($styleArray);
             },
         ];
     }

@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     Route::get('/laporan/simpanan', 'LaporanController@index_simpanan')->name('laporan.simpanan');
+    Route::get('/laporan/detail_simpanan', 'LaporanController@detail_simpanan')->name('laporan.detail_simpanan');
+    Route::get('/laporan/simpanan/export', 'LaporanController@simpanan_export')->name('laporan.simpanan.export');
     
     Route::get('/laporan/pinjaman', 'LaporanController@index_pinjaman')->name('laporan.pinjaman');
     

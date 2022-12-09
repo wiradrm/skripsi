@@ -2,6 +2,8 @@
 
 namespace App\Exports;
 
+use DB;
+use App\RiwayatTabungan;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -20,20 +22,41 @@ class SimpananExport implements FromView, ShouldAutoSize, WithEvents, WithColumn
      */
 
     protected $view = 'admin.laporan.export.simpanan';
-    protected $item;
+    protected $id_nasabah;
+    protected $endDate;
+    protected $startDate;
 
 
-    function __construct ($item, $past) {
-      $this->item = $item;
-      $this->past = $past;
+    function __construct ($id_nasabah, $startDate, $endDate) {
+      $this->id_nasabah = $id_nasabah;
+      $this->startDate = $startDate;
+      $this->endDate = $endDate;
     }
 
     public function view(): View
     {
+        $nama = DB::table('nasabah')->where('id', $this->id_nasabah)->value('nama');
+
+        $past = new RiwayatTabungan;
+        $past = $past->where('id_nasabah', $this->id_nasabah);
+        $past = $past->whereDate('created_at', '<', $this->startDate);
+        $past = $past->get();
+
+        $models = new RiwayatTabungan;
+
+        $models = $models->where('id_nasabah', $this->id_nasabah);
+        $models = $models->whereDate('created_at', '>=', $this->startDate)->whereDate('created_at', '<=', $this->endDate);
+         
+
+        $models = $models->get();
+
         return view($this->view, [
-            'models' => $this->item,
-            'past' => $this->past,
-            'count' => count($this->item)
+            'models' => $models,
+            'nama' => $nama,
+            'startDate' => $this->startDate,
+            'endDate' => $this->endDate,
+            'past' => $past,
+            'count' => count($models)
         ]);
     }
 
@@ -41,8 +64,17 @@ class SimpananExport implements FromView, ShouldAutoSize, WithEvents, WithColumn
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
-                $all = count($this->item);
-                $total = $all + 3;
+
+                $models = new RiwayatTabungan;
+
+                $models = $models->where('id_nasabah', $this->id_nasabah);
+                $models = $models->whereDate('created_at', '>=', $this->startDate)->whereDate('created_at', '<=', $this->endDate);
+                 
+        
+                $models = $models->get();
+                
+                $all = count($models);
+                $total = $all + 4;
                 $event->sheet->getDelegate()->getStyle('A1:J' . $total)->getFont()->setSize(12);
                 $styleArray = [
                     'borders' => [

@@ -11,6 +11,11 @@
     @endforeach
     <thead>
         <tr>
+            <td colspan="7">
+            Data pembayaran pinjaman   {{$nama}}   dari   {{date('d/m/Y', strtotime($startDate))}}   sampai   {{ date('d/m/Y', strtotime($endDate)) }}
+            </td>
+        </tr>
+        <tr>
         <th align="right" colspan="6">Sisa hutang sebelumnya</th>
         <th>@currency($hutang_sebelumnya)</th>
         </tr>
@@ -29,6 +34,14 @@
     $sisa=$hutang_sebelumnya;
 @endphp
     <tbody>
+        @if($models->count() == 0)
+                    <tr>
+                        <td colspan="7" align="center">
+                            Tidak ada data transaksi
+                        </td>
+                    </tr>
+                    @endif
+
         @foreach($models as $key => $item)
                     <tr>
                         <td>{{ $item->no_pinjam }}</td>

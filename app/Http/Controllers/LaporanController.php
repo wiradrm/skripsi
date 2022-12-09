@@ -79,26 +79,7 @@ class LaporanController extends Controller
         $startDate = $request->from;
         $endDate = $request->to;
 
-        if ($startDate && $endDate) {
-        $past = new RiwayatTabungan;
-        $past = $past->where('id_nasabah', $id_nasabah);
-        $past = $past->whereDate('created_at', '<', $startDate);
-        $past = $past->get();
-        }
-
-        $item = new RiwayatTabungan;
-
-        if($id_nasabah){
-        $item = $item->where('id_nasabah', $id_nasabah);
-        }
-
-        if ($startDate && $endDate) {
-        $item = $item->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate); 
-        }
-        
-        $item = $item->get();
-
-        return Excel::download(new SimpananExport($past, $item), 'report_simpanan_'.date('d_m_Y_H_i_s').'.xlsx');
+        return Excel::download(new SimpananExport($id_nasabah, $startDate, $endDate), 'report_simpanan_'.date('d_m_Y_H_i_s').'.xlsx');
     }
 
     public function index_pinjaman(Request $request)
@@ -159,24 +140,7 @@ class LaporanController extends Controller
 
         $pinjaman = Pinjam::where('no_pinjam', $no_pinjam)->first();
 
-        $past = [];
-
-        
-        $past = new Pembayaran;
-        $past = $past->where('no_pinjam', $no_pinjam);
-        $past = $past->whereDate('created_at', '<', $startDate);
-        $past = $past->get();
-
-
-        $item = new Pembayaran;
-
-        $item = $item->where('no_pinjam', $no_pinjam);
-
-        $item = $item->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
-
-        $item = $item->get();
-
-        return Excel::download(new PinjamanExport($past, $item, $pinjaman), 'report_pinjaman_'.date('d_m_Y_H_i_s').'.xlsx');
+        return Excel::download(new PinjamanExport($no_pinjam, $startDate, $endDate, $pinjaman), 'report_pinjaman_'.date('d_m_Y_H_i_s').'.xlsx');
     }
 
 

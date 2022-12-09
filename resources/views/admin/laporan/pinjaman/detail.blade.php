@@ -4,7 +4,7 @@ User
 @endsection
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Data Laporan Simpanan</h1>
+<h1 class="h3 mb-2 text-gray-800">Data Laporan Pinjaman</h1>
 <form class="form-row mb-4" action="{{ route('laporan.detail_simpanan') }}" method="GET">
     <div class="form-group my-0 col-md">
         <label for="no_pinjam" class="col-form-label">Pinjaman</label>
@@ -55,7 +55,7 @@ User
         @endif
 
         <div class="table-responsive">
-            Data pembayaran pinjaman <b>{{$nama}}</b> dari <b>{{$startDate}}</b> sampai <b>{{$endDate}}</b>
+            Data pembayaran pinjaman <b>{{$nama}}</b> dari <b>{{date('d/m/Y', strtotime($startDate))}}</b> sampai <b>{{date('d/m/Y', strtotime($endDate))}}</b>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 @php
                     $jumlah_hutang = 0;

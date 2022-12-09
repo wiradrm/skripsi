@@ -55,7 +55,7 @@ User
         @endif
 
         <div class="table-responsive">
-            Data simpanan nasabah <b>{{$nama}}</b> dari <b>{{$startDate}}</b> sampai <b>{{$endDate}}</b>
+            Data simpanan nasabah <b>{{$nama}}</b> dari <b>{{date('d/m/Y', strtotime($startDate))}}</b> sampai <b>{{date('d/m/Y', strtotime($endDate))}}</b>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 @php
                     $jumlah_saldo = 0;

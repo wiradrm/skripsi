@@ -11,6 +11,11 @@
                 @endforeach
     <thead>
         <tr>
+            <td colspan="7">
+            Data simpanan nasabah   {{$nama}}   dari   {{date('d/m/Y', strtotime($startDate))}}   sampai   {{ date('d/m/Y', strtotime($endDate)) }}
+            </td>
+        </tr>
+        <tr>
                     <th align="right" colspan="6">Saldo sebelumnya</th>
                     <th>@currency($saldo_awal)</th>
         </tr>
@@ -29,6 +34,14 @@
         $jumlah = $saldo_awal;
     @endphp
     <tbody>
+        @if($models->count() == 0)
+                    <tr>
+                        <td colspan="7" align="center">
+                            Tidak ada data transaksi
+                        </td>
+                    </tr>
+                    @endif
+
         @foreach($models as $key => $item)
                     <tr>
                         <td>{{ $item->nasabah->id }}</td>

@@ -44,6 +44,8 @@ class LaporanController extends Controller
         $startDate = $request->from;
         $endDate = $request->to;
 
+        $nama = DB::table('nasabah')->where('id', $id_nasabah)->value('nama');
+
         $past = [];
 
         
@@ -67,7 +69,7 @@ class LaporanController extends Controller
 
         $models = $models->get();
 
-        return view($this->index_detail, compact('models', 'nasabah', 'past' ,'startDate', 'endDate', 'id_nasabah'));
+        return view($this->index_detail, compact('models', 'nasabah', 'past' ,'startDate', 'endDate', 'id_nasabah' ,'nama'));
     }
 
     public function simpanan_export(Request $request)
@@ -77,9 +79,6 @@ class LaporanController extends Controller
         $startDate = $request->from;
         $endDate = $request->to;
 
-        $past = [];
-
-        
         if ($startDate && $endDate) {
         $past = new RiwayatTabungan;
         $past = $past->where('id_nasabah', $id_nasabah);
@@ -87,17 +86,16 @@ class LaporanController extends Controller
         $past = $past->get();
         }
 
-
         $item = new RiwayatTabungan;
 
         if($id_nasabah){
-            $item = $item->where('id_nasabah', $id_nasabah);
+        $item = $item->where('id_nasabah', $id_nasabah);
         }
 
         if ($startDate && $endDate) {
-        $item = $item->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
-        } 
-
+        $item = $item->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate); 
+        }
+        
         $item = $item->get();
 
         return Excel::download(new SimpananExport($past, $item), 'report_simpanan_'.date('d_m_Y_H_i_s').'.xlsx');
@@ -119,6 +117,10 @@ class LaporanController extends Controller
         $no_pinjam = $request->no_pinjam;
         $startDate = $request->from;
         $endDate = $request->to;
+
+        $id = DB::table('pinjam')->where('no_pinjam', $no_pinjam)->value('id_nasabah');
+        $nama = DB::table('nasabah')->where('id', $id)->value('nama');
+
 
         $pinjaman = Pinjam::where('no_pinjam', $no_pinjam)->first();
 
@@ -145,7 +147,7 @@ class LaporanController extends Controller
 
         $models = $models->get();
 
-        return view($this->pinjam_detail, compact('models', 'pinjam', 'pinjaman', 'past' ,'startDate', 'endDate', 'no_pinjam'));
+        return view($this->pinjam_detail, compact('models', 'pinjam', 'pinjaman', 'past' ,'startDate', 'endDate', 'no_pinjam', 'nama'));
     }
 
     public function pinjaman_export(Request $request)
@@ -160,23 +162,17 @@ class LaporanController extends Controller
         $past = [];
 
         
-        if ($startDate && $endDate) {
         $past = new Pembayaran;
         $past = $past->where('no_pinjam', $no_pinjam);
         $past = $past->whereDate('created_at', '<', $startDate);
         $past = $past->get();
-        }
 
 
         $item = new Pembayaran;
 
-        if($no_pinjam){
-            $item = $item->where('no_pinjam', $no_pinjam);
-        }
+        $item = $item->where('no_pinjam', $no_pinjam);
 
-        if ($startDate && $endDate) {
         $item = $item->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
-        } 
 
         $item = $item->get();
 

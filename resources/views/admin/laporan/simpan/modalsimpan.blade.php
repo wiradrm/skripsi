@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('laporan.simpanan.export')}}" method="GET" enctype="multipart/form-data">
+            <form action="{{route('laporan.simpanan.export')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">

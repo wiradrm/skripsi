@@ -25,7 +25,7 @@ User
     </div>
     <div class="col-md-3 d-flex align-items-end">
         <button type="submit" class="btn btn-primary btn-block">Filter</button>
-        <button type="submit" class="btn btn-primary">Export</button>
+        <button type="button" class="btn btn-success ml-2 btn-block" data-toggle="modal" data-target="#exportModalHarga">Export</button>
     </div>
 </form>
 
@@ -53,14 +53,6 @@ User
             </ul>
         </div>
         @endif
-
-        @foreach($models as $key => $item)
-        @php
-        
-        $nama = $item->nasabah->nama
-    
-        @endphp
-        @endforeach
 
         <div class="table-responsive">
             Data simpanan nasabah <b>{{$nama}}</b> dari <b>{{$startDate}}</b> sampai <b>{{$endDate}}</b>

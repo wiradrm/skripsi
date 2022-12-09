@@ -54,14 +54,6 @@ User
         </div>
         @endif
 
-        @foreach($models as $key => $item)
-        @php
-        
-        $nama = $item->nasabah->nama
-    
-        @endphp
-        @endforeach
-
         <div class="table-responsive">
             Data pembayaran pinjaman <b>{{$nama}}</b> dari <b>{{$startDate}}</b> sampai <b>{{$endDate}}</b>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

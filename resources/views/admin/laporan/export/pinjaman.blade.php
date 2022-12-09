@@ -10,11 +10,10 @@
     @endphp
     @endforeach
     <thead>
-        <th colspan="5"></th>
-        <th align="right">Sisa hutang sebelumnya</th>
+        <tr>
+        <th align="right" colspan="6">Sisa hutang sebelumnya</th>
         <th>@currency($hutang_sebelumnya)</th>
-    </thead>
-    <thead>
+        </tr>
         <tr>
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">No Pinjam</th>
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">Nama</th>

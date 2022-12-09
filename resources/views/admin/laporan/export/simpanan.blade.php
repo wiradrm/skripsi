@@ -9,12 +9,11 @@
                     $jumlah_saldo += $data->kredit - $data->debet;
                 @endphp
                 @endforeach
-                <thead>
-                    <th colspan="5"></th>
-                    <th align="right">Saldo sebelumnya</th>
-                    <th>@currency($saldo_awal)</th>
-                </thead>
     <thead>
+        <tr>
+                    <th align="right" colspan="6">Saldo sebelumnya</th>
+                    <th>@currency($saldo_awal)</th>
+        </tr>
         <tr>
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">ID Nasabah</th>
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">Nama</th>
@@ -50,4 +49,6 @@
                         <td><b>@currency($jumlah)</b> </td>
                     </tr>
     </tbody>
+
+    
 </table>

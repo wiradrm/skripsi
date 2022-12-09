@@ -29,11 +29,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/laporan/simpanan', 'LaporanController@index_simpanan')->name('laporan.simpanan');
     Route::get('/laporan/detail_simpanan', 'LaporanController@detail_simpanan')->name('laporan.detail_simpanan');
-    Route::get('/laporan/simpanan/export', 'LaporanController@simpanan_export')->name('laporan.simpanan.export');
+    Route::post('/laporan/simpanan/export', 'LaporanController@simpanan_export')->name('laporan.simpanan.export');
     
     Route::get('/laporan/pinjaman', 'LaporanController@index_pinjaman')->name('laporan.pinjaman');
     Route::get('/laporan/detail_pinjaman', 'LaporanController@pinjam_detail')->name('laporan.detail_pinjaman');
-    Route::get('/laporan/pinjam/export', 'LaporanController@pinjaman_export')->name('laporan.pinjam.export');
+    Route::post('/laporan/pinjam/export', 'LaporanController@pinjaman_export')->name('laporan.pinjam.export');
 
     
     Route::get('/laporan/tunggakan', 'LaporanController@index_tunggakan')->name('laporan.tunggakan');

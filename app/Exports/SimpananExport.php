@@ -19,7 +19,7 @@ class SimpananExport implements FromView, ShouldAutoSize, WithEvents, WithColumn
      * @return \Illuminate\Support\Collection
      */
 
-     protected $view = 'admin.laporan.export.simpanan';
+    protected $view = 'admin.laporan.export.simpanan';
     protected $item;
 
 
@@ -42,7 +42,7 @@ class SimpananExport implements FromView, ShouldAutoSize, WithEvents, WithColumn
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $all = count($this->item);
-                $total = $all + 2;
+                $total = $all + 3;
                 $event->sheet->getDelegate()->getStyle('A1:J' . $total)->getFont()->setSize(12);
                 $styleArray = [
                     'borders' => [

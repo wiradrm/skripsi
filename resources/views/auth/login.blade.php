@@ -29,11 +29,11 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <div class="custom-control custom-checkbox small">
+                            {{-- <div class="custom-control custom-checkbox small">
                                 <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} class="custom-control-input" id="customCheck">
                                 <label style="line-height: 25px" class="custom-control-label" for="customCheck">Remember
                                     Me</label>
-                            </div>
+                            </div> --}}
                         </div>
                         <button type="submit" class="btn btn-primary btn-user btn-block">
                             {{ __('Login') }}

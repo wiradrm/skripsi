@@ -25,9 +25,15 @@ User
     </div>
     <div class="col-md-3 d-flex align-items-end">
         <button type="submit" class="btn btn-primary btn-block">Filter</button>
-        <button type="button" class="btn btn-success ml-2 btn-block" data-toggle="modal" data-target="#exportModalHarga">Export</button>
+    </form>
+    <form action="{{route('laporan.pinjam.export')}}" method="POST" enctype="multipart/form-data">
+        @csrf
+            <input type="text" id="no_pinjam" name="no_pinjam" value="{{$no_pinjam}}" hidden>
+            <input type="date" id="from" name="from" value="{{$startDate}}" hidden>
+            <input type="date" id="to" name="to" value="{{$endDate}}" hidden>
+            <button type="submit" class="btn btn-success ml-2 btn-block">Export</button>
+    </form>    
     </div>
-</form>
 
 <!-- DataTales Example -->
 {{-- <a href="{{route('laporan.simpanan.export')}}" class="btn btn-info mx-1"><i class='bx bxs-printer'></i> Cetak Laporan</a> <br> <br> --}}

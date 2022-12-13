@@ -23,11 +23,18 @@ User
         <label for="to" class="col-form-label">Sampai</label>
         <input type="date" class="form-control" id="to" name="to" required>
     </div>
+
     <div class="col-md-3 d-flex align-items-end">
         <button type="submit" class="btn btn-primary btn-block">Filter</button>
-        <button type="button" class="btn btn-success ml-2 btn-block" data-toggle="modal" data-target="#exportModalHarga">Export</button>
+    </form>
+        <form action="{{route('laporan.simpanan.export')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+                <input type="text" id="id_nasabah" name="id_nasabah" value="{{$id_nasabah}}" hidden>
+                <input type="date" id="from" name="from" value="{{$startDate}}" hidden>
+                <input type="date" id="to" name="to" value="{{$endDate}}" hidden>
+                <button type="submit" class="btn btn-success ml-2 btn-block">Export</button>
+        </form>
     </div>
-</form>
 
 <!-- DataTales Example -->
 {{-- <a href="{{route('laporan.simpanan.export')}}" class="btn btn-info mx-1"><i class='bx bxs-printer'></i> Cetak Laporan</a> <br> <br> --}}

@@ -66,8 +66,8 @@ User
 
         $(document).ready(function() {
             $("#updateJumlah").on("input", function() {
-                var hutang = $("#jumlahHutang").val();
-                var bunga = $("#persenBunga").val();
+                var hutang = $("#jumlahHutang").var();
+                var bunga = $("#persenBunga").var();
                 var pokok
                 var jumlahBunga
                 var sisaHutang
@@ -81,7 +81,7 @@ User
                 }).format(jumlahBunga);
                 $("#bunga").text(output);
 
-                pokok = $(this).val() - jumlahBunga
+                pokok = $(this).var() - jumlahBunga
 
                 var output = new Intl.NumberFormat("id-ID", {
                     style: "currency",
@@ -97,6 +97,9 @@ User
                 }).format(sisaHutang);
                 $("#sisa").text(output);
             });
+
+
+
         });
 
 </script>

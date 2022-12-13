@@ -127,42 +127,78 @@ User
 
 @endsection
 @section('script')
+
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	    // Format mata uang.
+	    $( '.uang' ).mask('0.000.000.000', {reverse: true});
+	})
+</script> --}}
 <script>
+    
 
-        $(document).ready(function() {
-            $("#updateJumlah").on("input", function() {
-                var hutang = $("#jumlahHutang").val();
-                var bunga = $("#persenBunga").val();
-                var pokok
-                var jumlahBunga
-                var sisaHutang
+        // $(document).ready(function() {
+        //     $("#updateJumlah").on("input", function() {
+        //         var hutang = $("#jumlahHutang").val();
+        //         var bunga = $("#persenBunga").val();
+        //         var pokok
+        //         var jumlahBunga
+        //         var sisaHutang
                 
-                jumlahBunga = hutang * bunga / 100
+        //         jumlahBunga = hutang * bunga / 100
                 
                 
-                var output = new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR"
-                }).format(jumlahBunga);
-                $("#bunga").text(output);
+        //         var output = new Intl.NumberFormat("id-ID", {
+        //             style: "currency",
+        //             currency: "IDR"
+        //         }).format(jumlahBunga);
+        //         $("#bunga").text(output);
 
-                pokok = $(this).val() - jumlahBunga
+        //         pokok = $(this).val() - jumlahBunga
 
-                var output = new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR"
-                }).format(pokok);
-                $("#pokok").text(output);
+        //         var output = new Intl.NumberFormat("id-ID", {
+        //             style: "currency",
+        //             currency: "IDR"
+        //         }).format(pokok);
+        //         $("#pokok").text(output);
 
-                sisaHutang = hutang - pokok 
+        //         sisaHutang = hutang - pokok 
 
-                var output = new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR"
-                }).format(sisaHutang);
-                $("#sisa").text(output);
-            });
-        });
+        //         var output = new Intl.NumberFormat("id-ID", {
+        //             style: "currency",
+        //             currency: "IDR"
+        //         }).format(sisaHutang);
+        //         $("#sisa").text(output);
+        //     });
+        // });
+
+         /* Tanpa Rupiah */
+    // var tanpa_rupiah = document.getElementById('updateJumlah');
+    // tanpa_rupiah.addEventListener('keyup', function(e)
+    // {
+    //     tanpa_rupiah.value = formatRupiah(this.value);
+    // });
+    
+    
+    // /* Fungsi */
+    // function formatRupiah(angka, prefix)
+    // {
+    //     var number_string = angka.replace(/[^,\d]/g, '').toString(),
+    //         split    = number_string.split(','),
+    //         sisa     = split[0].length % 3,
+    //         rupiah     = split[0].substr(0, sisa),
+    //         ribuan     = split[0].substr(sisa).match(/\d{3}/gi);
+            
+    //     if (ribuan) {
+    //         separator = sisa ? '.' : '';
+    //         rupiah += separator + ribuan.join('.');
+    //     }
+        
+    //     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+    //     return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    // }
 
 </script>
 @endsection

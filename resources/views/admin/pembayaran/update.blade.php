@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('pembayaran.update', $item->no_pinjam)}}" method="POST" enctype="multipart/form-data">
+            <form id="myForm" action="{{route('pembayaran.update', $item->no_pinjam)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -33,7 +33,7 @@
                             <div class="input-group-prepend">
                               <div class="input-group-text">Rp.</div>
                             </div>
-                            <input type="number" class="form-control" id="updateJumlah" name="jumlah">
+                            <input type="number" class="form-control" id="uang" name="jumlah">
                           </div>
                     </div>
                     <b>

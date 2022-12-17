@@ -128,6 +128,22 @@ User
 @endsection
 @section('script')
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
+<script type="text/javascript">
+	$("#myForm").ready(function(){
+	    // Format mata uang.
+	    $( "#uang" ).mask('0.000.000.000', {reverse: true, autoUnmask: true});
+
+        
+	})
+
+    $("#myForm").submit(function() {
+            $("#uang").unmask();
+        });
+
+</script>
+
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
 <script type="text/javascript">

@@ -18,6 +18,61 @@ User
         <h6 class="m-0 font-weight-bold text-primary">Data Surat Tunggakan</h6>
     </div>
     <div class="card-body">
+
+        <form id="myForm" target="__blank" action="{{route('laporan.cetak')}}" method="GET" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nama" class="col-form-label">Nama Nasabah</label>
+                    <select class="selectpicker form-control"  name="nama" id="id_nasabah" data-live-search="true">
+                        <option hidden></option>
+                        @foreach($nasabah as $key => $item)
+                        <option value="{{$item->nama}}">{{$item->id}} | {{$item->nama}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="createDate" class="col-form-label">Tanggal</label>
+                    <input type="date" class="form-control createDate" id="createDate" name="tanggal" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                </div>
+                <div class="form-group">
+                    <label for="createDate" class="col-form-label">Periode</label>
+                    <select class="form-control selectpicker"  name="periode" id="id_nasabah" data-live-search="true">
+                        <option hidden></option>
+                        <option value="Januari">Januari</option>
+                        <option value="Februari">Februari</option>
+                        <option value="Maret">Maret</option>
+                        <option value="April">April</option>
+                        <option value="Mei">Mei</option>
+                        <option value="Juni">Juni</option>
+                        <option value="Juli">Juli</option>
+                        <option value="Agustus">Agustus</option>
+                        <option value="September">September</option>
+                        <option value="Oktober">Oktober</option>
+                        <option value="November">November</option>
+                        <option value="Desember">Desember</option>
+    
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah" class="col-form-label">Jumlah Tunggakan</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">Rp.</div>
+                        </div>
+                        <input type="text" class="form-control uang" id="uang" name="jumlah">
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <label for="alamat" class="col-form-label">Lama Penunggakan</label>
+                    <input class="form-control" name="lama" id="alamat" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"><i class='bx bx-printer'></i> Cetak</button>
+            </div>
+        </form>
+
         @if (\Session::has('info'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {!! \Session::get('info') !!}
@@ -36,7 +91,7 @@ User
         </div>
         @endif
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            {{-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Nama</th>
@@ -88,12 +143,26 @@ User
                     </tr>
                     @endforeach
                 </tbody>
-            </table>
+            </table> --}}
         </div>
     </div>
 </div>
 @include('admin.laporan.surat.create')
 @endsection
 @section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
+<script type="text/javascript">
+	$("#myForm").ready(function(){
+	    // Format mata uang.
+	    $( "#uang" ).mask('0.000.000.000', {reverse: true, autoUnmask: true});
+
+        
+	})
+
+    $("#myForm").submit(function() {
+            $("#uang").unmask();
+        });
+</script>
 <script></script>
 @endsection

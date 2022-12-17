@@ -59,11 +59,11 @@
 				<td>Atas perhatiannya saya ucapkan terimakasi</td>
 			</tr>
 		</table>
-		<br><br>
+		<br><br><br><br>
 		
 		<table>
 			<tr>
-				<td>TTD Bendahara LPD Benana</td>
+				<td>Bendahara LPD Benana</td>
 			</tr>
 
 		</table>

@@ -167,9 +167,18 @@ class LaporanController extends Controller
     }
 
 
-    public function cetak($id)
+    public function cetak(Request $request)
     {
-        $data = Surat::where('id', $id)->first();
+
+        $data = (object)[];
+        $data->nama = $request->nama;
+        $data->jumlah = $request->jumlah;
+        $data->tanggal = $request->tanggal;
+        $data->periode = $request->periode;
+        $data->lama = $request->lama;
+        // $input['mobile'] = substr(str_replace(" ","",$input['mobile']),1);
+        // $request->replace($input);
+        // $data = Surat::where('id', $id)->first();
 
 
         $pdf = PDF::loadview($this->print, ['data' => $data]);

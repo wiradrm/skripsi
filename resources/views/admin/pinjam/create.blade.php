@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('pinjam.store')}}" method="GET" enctype="multipart/form-data">
+            <form id="myForm" action="{{route('pinjam.store')}}" method="GET" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -33,7 +33,7 @@
                             <div class="input-group-prepend">
                               <div class="input-group-text">Rp.</div>
                             </div>
-                            <input type="number" class="form-control" id="rupiah" name="pinjaman">
+                            <input type="text" class="form-control uang" id="uang" name="pinjaman">
                         </div>
                     </div>
                     <div class="form-group">

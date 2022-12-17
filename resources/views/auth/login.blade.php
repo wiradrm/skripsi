@@ -13,7 +13,12 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group">
-                            <input id="username" type="text" class="form-control form-control-user @error('email') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="Username" autofocus placeholder="Username">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text"><i class='bx bxs-user'></i></div>
+                                </div>
+                                <input id="username" type="text" class="form-control form-control-user @error('email') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="Username" autofocus placeholder="Username">
+                              </div>
                             @error('username')
                                 <span class="invalid-feedback d-block" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -21,7 +26,12 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <input id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text"><i class='bx bxs-key'></i></div>
+                                </div>
+                                <input id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
+                              </div>
                             @error('password')
                                 <span class="invalid-feedback d-block" role="alert">
                                     <strong>{{ $message }}</strong>

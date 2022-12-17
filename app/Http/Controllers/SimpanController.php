@@ -26,6 +26,9 @@ class SimpanController extends Controller
 
     public function store(Request $request)
     {
+        // $input = $request->all();
+        // $input['jumlah'] = substr(str_replace(".","",$input['jumlah']),0);
+        // $request->replace($input);
 
         $this->validate(
             $request,

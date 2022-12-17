@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/laporan/store', 'LaporanController@store')->name('laporan.store');
     Route::get('/laporan/destroy/{id}', 'LaporanController@destroy')->name('laporan.destroy');
 
-    Route::get('/laporan/cetak/{id}', 'LaporanController@cetak')->name('laporan.cetak');
+    Route::get('/laporan/cetak/', 'LaporanController@cetak')->name('laporan.cetak');
 
 
     Route::get('/laporan/neraca', 'LaporanController@index_neraca')->name('laporan.neraca');

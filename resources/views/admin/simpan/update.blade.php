@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('simpan.update', $item->id)}}" method="POST" enctype="multipart/form-data">
+            <form id="myForm" action="{{route('simpan.update', $item->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -29,7 +29,7 @@
                             <div class="input-group-prepend">
                               <div class="input-group-text">Rp.</div>
                             </div>
-                            <input type="number" class="form-control" id="jumlah" name="jumlah" value="{{$item->jumlah}}">
+                            <input type="text" class="form-control uang" id="uang" name="jumlah" value="{{$item->jumlah}}">
                         </div>
                     </div>
                 </div>

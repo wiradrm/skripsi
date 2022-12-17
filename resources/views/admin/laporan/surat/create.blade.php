@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('laporan.store')}}" method="POST" enctype="multipart/form-data">
+            <form id="myForm" action="{{route('laporan.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -48,7 +48,7 @@
                             <div class="input-group-prepend">
                               <div class="input-group-text">Rp.</div>
                             </div>
-                            <input type="number" class="form-control" id="jumlah" name="jumlah">
+                            <input type="text" class="form-control uang" id="jumlah" name="jumlah">
                         </div> 
                     </div>
                     <div class="form-group">

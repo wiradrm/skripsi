@@ -22,6 +22,9 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+
+
+
     /**
      * Where to redirect users after login.
      *
@@ -44,8 +47,10 @@ class LoginController extends Controller
         return 'username';
     }
 
-    protected function credentials(Request $request)
-    {
-        return ['username' => $request->{$this->username()}, 'password' => $request->password];
-    }
+    // protected function credentials(Request $request)
+    // {
+    //     return ['username' => $request->{$this->username()}, 'password' => $request->password];
+    // }
+
+    
 }

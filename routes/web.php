@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Artisan;
 
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/failed', 'FailedController@failed')->name('failed');
+
 Auth::routes([
     'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
@@ -24,6 +26,7 @@ Auth::routes([
 ]);
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/success', 'DashboardController@success')->name('success');
     Route::get('/home', 'DashboardController@index')->name('home');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 

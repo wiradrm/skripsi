@@ -16,6 +16,7 @@ class DashboardController extends Controller
 {   
     protected $page = 'admin.dashboard.';
     protected $index = 'admin.dashboard.index';
+    protected $success = 'auth.success';
 
     /**
      * Create a new controller instance.
@@ -41,4 +42,11 @@ class DashboardController extends Controller
 
         return view($this->index, compact('countNasabah', 'countPinjam', 'countTabungan'));
     }
+
+    public function success()
+    {   
+        return view($this->success);
+    }
+
+    
 }

@@ -121,5 +121,16 @@ User
     $("#myForm").submit(function() {
             $("#uang").unmask();
     });
+
+    $("#myFormUpdate").ready(function(){
+	    // Format mata uang.
+	    $( "#uangUpdate" ).mask('0.000.000.000', {reverse: true, autoUnmask: true});
+
+        
+	})
+
+    $("#myFormUpdate").submit(function() {
+            $("#uangUpdate").unmask();
+    });
 </script>
 @endsection

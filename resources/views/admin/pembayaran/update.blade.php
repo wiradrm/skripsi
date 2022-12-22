@@ -33,7 +33,7 @@
                             <div class="input-group-prepend">
                               <div class="input-group-text">Rp.</div>
                             </div>
-                            <input type="number" class="form-control" id="uang" name="jumlah">
+                            <input type="text" class="form-control" id="uang" name="jumlah">
                           </div>
                     </div>
                     <b>

@@ -94,7 +94,7 @@ class PinjamanExport implements FromView, ShouldAutoSize, WithEvents, WithColumn
                         'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
                     ],
                 ];      
-                $event->sheet->getStyle('A1:G' . $total)->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:H' . $total)->applyFromArray($styleArray);
             },
         ];
     }

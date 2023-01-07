@@ -29,6 +29,8 @@ class LaporanController extends Controller
     protected $pinjam_detail = 'admin.laporan.pinjaman.detail';
     protected $tunggakan = 'admin.laporan.surat.tunggakan';
     protected $print = 'admin.laporan.surat.print';
+    protected $index_neraca = 'admin.laporan.neraca.index';
+    protected $index_laba = 'admin.laporan.labarugi.index';
 
     public function index_simpanan(Request $request)
     {
@@ -194,5 +196,79 @@ class LaporanController extends Controller
         return redirect()->route('laporan.tunggakan')->with('info', 'Berhasil menghapus data');
     }
 
+    public function index_neraca()
+    {
+        //tabungan wajib
+        $tabungan = new Tabungan();
+        $tabungan = $tabungan->get();
+        $totalTabungan = $tabungan->sum('saldo');
+
+        $pokok = new Pembayaran();
+        $poko = $pokok->get();
+        $totalPokok = $pokok->sum('pokok');
+
+        $tabunganWajib = $totalTabungan + $totalPokok;
+
+        //tabungan sukarela
+        $sukarela = new Hutang();
+        $sukarela = $sukarela->get();
+        $totalHutang = $sukarela->sum('hutang');
+
+        //
+        $pinjaman = new Pinjam();
+        $pinjaman = $pinjaman->get();
+        $totalPinjaman = $pinjaman->sum('pinjaman');
+
+        //laba
+        $bunga = new Pembayaran();
+        $bunga = $bunga->get();
+        $pendapatanBunga = $bunga->sum('bunga');
+
+        $administrasi = new Pembayaran();
+        $administrasi = $administrasi->get();
+        $pendapatanAdmin = $administrasi->sum('administrasi');
+
+
+        $labaKotor = $pendapatanBunga + $pendapatanAdmin;
+        $labaOperasi = 0;
+        $labaBersih = $labaKotor - $labaOperasi;
+
+        $totalAktiva = $totalTabungan + $totalPinjaman + $labaBersih;
+        $totalPassiva = $totalHutang + $tabunganWajib + $labaBersih;
+
+        $mytime = date('d-m-Y');
+        return view($this->index_neraca, compact('mytime','tabunganWajib', 'totalTabungan' , 'totalPinjaman', 'totalHutang', 'labaBersih', 'totalAktiva', 'totalPassiva'));
+    }
+
+    public function index_laba(Request $request)
+    {
+        $startDate = $request->from;
+        $endDate = $request->to;
+
+        $bunga = new Pembayaran();
+        if ($startDate && $endDate) {
+            $bunga = $bunga->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
+
+        $bunga = $bunga->get();
+        $pendapatanBunga = $bunga->sum('bunga');
+
+        $administrasi = new Pembayaran();
+        if ($startDate && $endDate) {
+            $administrasi = $administrasi->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
+
+        $administrasi = $administrasi->get();
+        $pendapatanAdmin = $administrasi->sum('administrasi');
+
+
+        $labaKotor = $pendapatanBunga + $pendapatanAdmin;
+        $labaOperasi = 0;
+        $labaBersih = $labaKotor - $labaOperasi;
+        
+        $mytime =  date('d-m-Y');
+
+        return view($this->index_laba, compact('mytime', 'startDate', 'endDate' ,'pendapatanBunga' , 'pendapatanAdmin', 'labaKotor', 'labaOperasi', 'labaBersih'));
+    }
 
 }

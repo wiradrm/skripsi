@@ -147,8 +147,8 @@
                         <a class="collapse-item" href="{{ route('laporan.simpanan') }}">Laporan Simpanan</a>
                         <a class="collapse-item" href="{{ route('laporan.pinjaman') }}">Laporan Pinjaman</a>
                         <a class="collapse-item" href="{{ route('laporan.tunggakan') }}">Tunggakan</a>
-                        {{-- <a class="collapse-item" href="{{ route('laporan.neraca') }}">Neraca</a> --}}
-                        {{-- <a class="collapse-item" href="{{ route('laporan.labarugi') }}">Laba/Rugi</a> --}}
+                        <a class="collapse-item" href="{{ route('laporan.labarugi') }}">Laba/Rugi</a>
+                        <a class="collapse-item" href="{{ route('laporan.neraca') }}">Neraca</a>
                     </div>
                 </div>
             </li>

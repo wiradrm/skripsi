@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/laporan/neraca', 'LaporanController@index_neraca')->name('laporan.neraca');
-    Route::get('/laporan/labarugi', 'LaporanController@index_labarugi')->name('laporan.labarugi');
+    Route::get('/laporan/labarugi', 'LaporanController@index_laba')->name('laporan.labarugi');
     
     Route::get('/nasabah', 'NasabahController@index')->name('nasabah');
     Route::post('/nasabah/store', 'NasabahController@store')->name('nasabah.store');

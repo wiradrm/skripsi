@@ -56,10 +56,10 @@ User
                         <td></td>
                     </tr>
                     <tr>
-                        <b><td>Jumlah</td>
-                        <td>@currency($totalAktiva)</td>
-                        <td>Jumlah</td>
-                        <td>@currency($totalPassiva)</td></b>
+                        <td style="font-weight: bold;">Jumlah</td>
+                        <td style="font-weight: bold;">@currency($totalAktiva)</td>
+                        <td style="font-weight: bold;">Jumlah</td>
+                        <td style="font-weight: bold;">@currency($totalPassiva)</td>
                     </tr>
                 </tbody>
             </table>

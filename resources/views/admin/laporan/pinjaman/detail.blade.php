@@ -74,7 +74,7 @@ User
                 @endphp
                 @endforeach
                 <thead>
-                    <th colspan="5"></th>
+                    <th colspan="6"></th>
                     <th align="right">Sisa hutang sebelumnya</th>
                     <th>@currency($hutang_sebelumnya)</th>
                 </thead>
@@ -84,6 +84,7 @@ User
                         <th>Nama</th>
                         <th>Tanggal</th>
                         <th>Jumlah Bayar</th>
+                        <th>Biaya Administrasi</th>
                         <th>Pokok</th>
                         <th>Bunga</th>
                         <th>Sisa Hutang</th>
@@ -108,6 +109,7 @@ User
                         <td>{{ $item->nasabah->nama }}</td>
                         <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
                         <td>@currency($item->jumlah)</td>
+                        <td>@currency($item->administrasi)</td>
                         <td>@currency($item->pokok)</td>
                         <td>@currency($item->bunga)</td>
                         
@@ -118,7 +120,7 @@ User
                     </tr>
                     @endforeach
                     <tr>
-                        <td colspan="6" align="right"><b>Sisa Hutang</b> </td>
+                        <td colspan="7" align="right"><b>Sisa Hutang</b> </td>
                         <td><b>@currency($sisa)</b> </td>
                     </tr>
                 </tbody>

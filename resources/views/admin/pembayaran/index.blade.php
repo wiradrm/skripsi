@@ -92,8 +92,8 @@ User
                         <th>No Pinjam</th>
                         <th>Nama</th>
                         <th>Tanggal Bayar</th>
-        
                         <th>Jumlah</th>
+                        <th>Biaya Admin</th>
                         <th>Pokok</th>
                         <th>Bunga</th>
                     </tr>
@@ -112,6 +112,7 @@ User
                         <td>{{ $item->nama }}</td>
                         <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
                         <td>@currency($item->jumlah)</td>
+                        <td>@currency($item->administrasi)</td>
                         <td>@currency($item->pokok)</td>
                         <td>@currency($item->bunga)</td>
         

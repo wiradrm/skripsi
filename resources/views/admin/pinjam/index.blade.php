@@ -44,7 +44,7 @@ User
                         <th>Alamat</th>
                         <th>Tanggal</th>
                         <th>Besar Pinjaman</th>
-                        <th>Bunga Menurun</th>
+                        <th>Bunga</th>
                         <th width="12%">Action</th>
                     </tr>
                 </thead>
@@ -102,7 +102,169 @@ User
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
 <script type="text/javascript">
-	$("#myForm").ready(function(){
+	
+    $(document).ready(function() {
+            $("#uang").on("input", function() {
+                var pinjam = $("#uang").unmask().val()
+                var pinjaman
+
+                pinjaman = pinjam
+
+                var output = new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR"
+                }).format(pinjaman)
+                $("#pinjaman").text(output)
+            });
+        });
+
+        $(document).ready(function() {
+            $("#simulasi").on("input", function() {
+                var simulasi = $("#simulasi").val()
+                var lama_pinjaman
+
+                lama_pinjaman = simulasi
+
+                var output = lama_pinjaman;
+                $("#lama_pinjaman").text(output)
+            });
+        });
+
+    
+        $(document).ready(function() {
+            $("#uang").on("input", function() {
+                var pinjam = $("#uang").unmask().val()
+                var bunga = $("#bunga").val()
+                var angsuran_bunga
+
+                angsuran_bunga = pinjam * (bunga / 100)
+
+                var output = new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR"
+                }).format(angsuran_bunga)
+                $("#angsuran_bunga").text(output)
+            });
+        });
+
+        $(document).ready(function() {
+            $("#simulasi").on("input", function() {
+                var pinjam = $("#uang").unmask().val()
+                var lama_pinjaman = $("#simulasi").val()
+                var angsuran_pokok
+
+                angsuran_pokok = pinjam / lama_pinjaman
+
+                var output = new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR"
+                }).format(angsuran_pokok)
+                $("#angsuran_pokok").text(output)
+            });
+        });
+
+        $(document).ready(function() {
+            $("#uang").on("input", function() {
+                var pinjam = $("#uang").unmask().val()
+                var lama_pinjaman = $("#simulasi").val()
+                var angsuran_pokok
+
+                angsuran_pokok = pinjam / lama_pinjaman
+
+                var output = new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR"
+                }).format(angsuran_pokok)
+                $("#angsuran_pokok").text(output)
+            });
+        });
+
+        $(document).ready(function() {
+            $("#uang").on("input", function() {
+                var pinjam = $("#uang").unmask().val()
+                var lama_pinjaman = $("#simulasi").val()
+                var bunga = $("#bunga").val()
+                var angsuran_pokok
+                var total_angsuran
+                var angsuran_bunga
+
+                angsuran_bunga = pinjam * (bunga / 100)
+
+                angsuran_pokok = pinjam / lama_pinjaman
+
+                total_angsuran = angsuran_pokok + angsuran_bunga
+
+                var output = new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR"
+                }).format(total_angsuran)
+                $("#total_angsuran").text(output)
+            });
+        });
+
+        $(document).ready(function() {
+            $("#simulasi").on("input", function() {
+                var pinjam = $("#uang").unmask().val()
+                var lama_pinjaman = $("#simulasi").val()
+                var bunga = $("#bunga").val()
+                var angsuran_pokok
+                var total_angsuran
+                var angsuran_bunga
+
+                angsuran_bunga = pinjam * (bunga / 100)
+
+                angsuran_pokok = pinjam / lama_pinjaman
+
+                total_angsuran = angsuran_pokok + angsuran_bunga
+
+                var output = new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR"
+                }).format(total_angsuran)
+                $("#total_angsuran").text(output)
+            });
+        });
+
+        $(document).ready(function() {
+            $("#bunga").on("input", function() {
+                var pinjam = $("#uang").unmask().val()
+                var lama_pinjaman = $("#simulasi").val()
+                var bunga = $("#bunga").val()
+                var angsuran_pokok
+                var total_angsuran
+                var angsuran_bunga
+
+                angsuran_bunga = pinjam * (bunga / 100)
+
+                angsuran_pokok = pinjam / lama_pinjaman
+
+                total_angsuran = angsuran_pokok + angsuran_bunga
+
+                var output = new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR"
+                }).format(total_angsuran)
+                $("#total_angsuran").text(output)
+            });
+        });
+
+    $(document).ready(function() {
+            $("#bunga").on("input", function() {
+                var pinjam = $("#uang").unmask().val()
+                var bunga = $("#bunga").val()
+                var angsuran_bunga
+
+                angsuran_bunga = pinjam * (bunga / 100)
+
+                var output = new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR"
+                }).format(angsuran_bunga)
+                $("#angsuran_bunga").text(output)
+            });
+        });
+    
+    $("#myForm").ready(function(){
 	    // Format mata uang.
 	    $( "#uang" ).mask('0.000.000.000', {reverse: true, autoUnmask: true});
 
@@ -113,5 +275,7 @@ User
             $("#uang").unmask();
         });
 </script>
-<script></script>
+<script>
+    
+</script>
 @endsection

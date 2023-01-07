@@ -61,6 +61,7 @@ class PinjamController extends Controller
             $hutang = new Hutang;
             $hutang->no_pinjam = $request->no_pinjam;
             $hutang->id_nasabah = $request->id_nasabah;
+            $hutang->pinjaman = $request->pinjaman;
             $hutang->hutang = $request->pinjaman;
             $hutang->bunga = $request->bunga;
 

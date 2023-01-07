@@ -56,7 +56,7 @@ class PembayaranController extends Controller
             ]
         );
 
-        $check = $request->hutang * $request->persen / 100;
+        $check = $request->pinjaman * $request->persen / 100;
         if ($check) {
             if ($request->jumlah < $check) {
                 return redirect()->route('pembayaran')->with('msg', 'Minimal membayar bunga!');
@@ -68,16 +68,30 @@ class PembayaranController extends Controller
         DB::transaction(function () use ($request) {
             // Insert into deposit
 
-            $bunga = $request->hutang * $request->persen / 100;
+            $bunga = $request->pinjaman * $request->persen / 100;
+            $admin = $request->pinjaman * 1 / 100;
 
-            $model = new Pembayaran();
-            $model->no_pinjam = $request->no_pinjam;
-            $model->id_nasabah = $request->id_nasabah;
-            $model->jumlah = $request->jumlah;
-            $model->pokok = $request->jumlah - $bunga;
-            $model->bunga = $bunga;
-            $model->persen = $request->persen;
-            $model->save();
+            $check_paid = Pembayaran::where('no_pinjam', $request->no_pinjam)->first();
+            if ($check_paid) {
+                $model = new Pembayaran();
+                $model->no_pinjam = $request->no_pinjam;
+                $model->id_nasabah = $request->id_nasabah;
+                $model->jumlah = $request->jumlah;
+                $model->pokok = $request->jumlah - $bunga;
+                $model->bunga = $bunga;
+                $model->persen = $request->persen;
+                $model->save();
+            } else {
+                $model = new Pembayaran();
+                $model->no_pinjam = $request->no_pinjam;
+                $model->id_nasabah = $request->id_nasabah;
+                $model->jumlah = $request->jumlah;
+                $model->pokok = $request->jumlah - $bunga - $admin;
+                $model->bunga = $bunga;
+                $model->administrasi = $admin;
+                $model->persen = $request->persen;
+                $model->save();
+            }
 
             // Reduce savings balance
             $saving = Hutang::where('no_pinjam', $request->no_pinjam)->first();

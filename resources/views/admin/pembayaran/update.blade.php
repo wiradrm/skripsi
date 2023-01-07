@@ -20,8 +20,15 @@
                         </b>
                     </div>
                     <div class="form-group">
+                        <label for="name" class="col-form-label">Total Pinjaman</label> <br>
+                        <b>
+                            <span>@currency($item->pinjaman) </span>
+                        </b>
+                    </div>
+                    <div class="form-group">
                         <label for="name" class="col-form-label">Sisa Hutang</label> <br>
                         <b>
+                            <input type="text" id="jumlahPinjaman" name="pinjaman" value="{{$item->pinjaman}}" hidden>
                             <input type="text" id="jumlahHutang" name="hutang" value="{{$item->hutang}}" hidden>
                             <input type="text" id="persenBunga" name="persen" value="{{$item->bunga}}" hidden>
                             <span>@currency($item->hutang)</span>
@@ -38,9 +45,9 @@
                     </div>
                     <b>
                         <p for="rincian">Rincian</p>
-                        <p style="color: red">Minimal membayar bunga</p>
+                        <p style="color: red">Bunga yang harus dibayar</p>
                         @php
-                            $bunga = $item->hutang * $item->bunga / 100;
+                            $bunga = $item->pinjaman * $item->bunga / 100;
                         @endphp
                         <p>Bunga : <span id="bunga">@currency($item->hutang) x {{$item->bunga}}% = @currency($bunga)</span></p>
                     </b>

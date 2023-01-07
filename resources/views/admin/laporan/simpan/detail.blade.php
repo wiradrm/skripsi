@@ -109,9 +109,19 @@ User
                         <td>{{ $item->nasabah->nama }}</td>
                         <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
                         <td>{{ $item->keterangan }}</td>
+                        {{-- @if ($item->debet == null)
+                        <td>-</td>
+                        @else
+                        <td>@currency($item->debet)</td>
+                        @endif
+                        @if ($item->kredit == null)
+                        <td>-</td>
+                        @else
+                            
+                        <td>@currency($item->kredit)</td>
+                        @endif --}}
                         <td>@currency($item->debet)</td>
                         <td>@currency($item->kredit)</td>
-                        
                         <td>@currency($saldo = $jumlah + $item->kredit - $item->debet)</td>
                         @php
                             $jumlah += $item->kredit - $item->debet;

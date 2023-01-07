@@ -11,12 +11,12 @@
     @endforeach
     <thead>
         <tr>
-            <td colspan="7">
+            <td colspan="8">
             Data pembayaran pinjaman   {{$nama}}   dari   {{date('d/m/Y', strtotime($startDate))}}   sampai   {{ date('d/m/Y', strtotime($endDate)) }}
             </td>
         </tr>
         <tr>
-        <th align="right" colspan="6">Sisa hutang sebelumnya</th>
+        <th align="right" colspan="7">Sisa hutang sebelumnya</th>
         <th>@currency($hutang_sebelumnya)</th>
         </tr>
         <tr>
@@ -24,6 +24,7 @@
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">Nama</th>
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">Tanggal</th>
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">Jumlah Bayar</th>
+            <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">Biaya Administrasi</th>
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">Pokok</th>
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">Bunga</th>
             <th style="vertical-align : middle; text-align:center; font-weight: bold; background : #d9d9d9;">Sisa Hutang</th>
@@ -48,6 +49,7 @@
                         <td>{{ $item->nasabah->nama }}</td>
                         <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
                         <td>@currency($item->jumlah)</td>
+                        <td>@currency($item->administrasi)</td>
                         <td>@currency($item->pokok)</td>
                         <td>@currency($item->bunga)</td>
                         
@@ -58,7 +60,7 @@
                     </tr>
                     @endforeach
                     <tr>
-                        <td colspan="6" align="right"><b>Sisa Hutang</b> </td>
+                        <td colspan="7" align="right"><b>Sisa Hutang</b> </td>
                         <td><b>@currency($sisa)</b> </td>
                     </tr>
     </tbody>

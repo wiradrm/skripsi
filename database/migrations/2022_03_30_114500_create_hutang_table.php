@@ -17,6 +17,7 @@ class CreateHutangTable extends Migration
             $table->bigIncrements('id');
             $table->integer('no_pinjam');
             $table->unsignedBigInteger('id_nasabah');
+            $table->bigInteger('pinjaman');
             $table->integer('hutang');
             $table->float('bunga');
             $table->timestamps();

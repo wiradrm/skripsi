@@ -37,9 +37,43 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="bunga" class="col-form-label">Bunga Menurun</label>
+                        <label for="bunga" class="col-form-label">Bunga</label>
                         <input type="number" step="0.01" class="form-control" id="bunga" name="bunga">
                     </div>
+                    
+                    <b>Simulasi</b>
+                    <div>
+                        <label for="simulasi" class="col-form-label">Lama Pinjaman</label>
+                        <input type="number" class="form-control" id="simulasi" name="simulasi">
+                    </div>
+                    <br>
+                    <table>
+                        <tr>
+                            <td>Pinjaman</td>
+                            <td>:</td>
+                            <td><span id="pinjaman"><b>0</b></span></td>
+                        </tr>
+                        <tr>
+                            <td>Lama Pinjam</td>
+                            <td>:</td>
+                            <td><span id="lama_pinjaman"><b>0</span> Bulan</b></td>
+                        </tr>
+                        <tr>
+                            <td>Angsuran Pokok per Bulan</td>
+                            <td>:</td>
+                            <td><span id="angsuran_pokok">0</span></td>
+                        </tr>
+                        <tr>
+                            <td>Angsuran Bunga per Bulan</td>
+                            <td>:</td>
+                            <td><span id="angsuran_bunga">0</span></td>
+                        </tr>
+                        <tr>
+                            <td>Total Angsutan per Bulan</td>
+                            <td>:</td>
+                            <td><span id="total_angsuran">0</span></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -50,4 +84,7 @@
     </div>
 </div>
 
+<script>
+    
+</script>
 

@@ -14,10 +14,11 @@ class CreateLabaTable extends Migration
     public function up()
     {
         Schema::create('laba', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->string('perkiraan')->nullable();
             $table->string('sandi')->nullable();
             $table->string('jumlah')->nullable();
+            $table->timestamps();
+
 
             
         });

@@ -38,7 +38,7 @@ User
 <div class="card shadow mb-4">
     
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Laba/Rugi per </h6>
+        <h6 class="m-0 font-weight-bold text-primary">Data Laba/Rugi </h6>
     </div>
     <div class="card-body">
         @if (\Session::has('info'))
@@ -68,7 +68,13 @@ User
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    @foreach($laba as $key => $item)
+                    <tr>
+                        <td>{{ $item->perkiraan }}</td>
+                        <td>{{ $item->sandi }}</td>
+                        <td align="right">{{ $item->jumlah }}</td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

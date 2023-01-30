@@ -296,14 +296,16 @@ class LaporanController extends Controller
 
     public function laba_import(Request $request) 
     {
+        DB::table('laba')->delete();  
         Excel::import(new LabaImport, $request->file('file')->store('temp'));
-        return back()->with('info', 'Berhasil Menambah data');
+        return back()->with('info', 'Berhasil Import Laporan Laba');
     }
 
     public function neraca_import(Request $request) 
     {
+        DB::table('neraca')->delete();  
         Excel::import(new NeracaImport, $request->file('file')->store('temp'));
-        return back()->with('info', 'Berhasil Menambah data');
+        return back()->with('info', 'Berhasil Import Laporan Neraca');
     }
 
 }

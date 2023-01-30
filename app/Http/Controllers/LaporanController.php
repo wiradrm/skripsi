@@ -9,10 +9,17 @@ use App\Nasabah;
 use App\Surat;
 use App\RiwayatTabungan;
 use App\Pembayaran;
+use App\Laba;
+use App\Neraca;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+
+use App\Imports\NeracaImport;
+use App\Imports\LabaImport;
+
 
 use PDF;
 
@@ -31,6 +38,8 @@ class LaporanController extends Controller
     protected $print = 'admin.laporan.surat.print';
     protected $index_neraca = 'admin.laporan.neraca.index';
     protected $index_laba = 'admin.laporan.labarugi.index';
+    protected $neraca = 'admin.laporan.neraca.neraca';
+    protected $laba = 'admin.laporan.labarugi.laba';
 
     public function index_simpanan(Request $request)
     {
@@ -269,6 +278,32 @@ class LaporanController extends Controller
         $mytime =  date('d-m-Y');
 
         return view($this->index_laba, compact('mytime', 'startDate', 'endDate' ,'pendapatanBunga' , 'pendapatanAdmin', 'labaKotor', 'labaOperasi', 'labaBersih'));
+    }
+
+    public function laba(Request $request)
+    {
+        $laba = Laba::all();
+
+        return view($this->laba, compact('laba'));
+    }
+
+    public function neraca(Request $request)
+    {
+        $neraca = Neraca::all();
+
+        return view($this->neraca, compact('neraca'));
+    }
+
+    public function laba_import(Request $request) 
+    {
+        Excel::import(new LabaImport, $request->file('file')->store('temp'));
+        return back()->with('info', 'Berhasil Menambah data');
+    }
+
+    public function neraca_import(Request $request) 
+    {
+        Excel::import(new NeracaImport, $request->file('file')->store('temp'));
+        return back()->with('info', 'Berhasil Menambah data');
     }
 
 }

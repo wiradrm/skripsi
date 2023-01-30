@@ -46,8 +46,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/laporan/cetak/', 'LaporanController@cetak')->name('laporan.cetak');
 
 
-    Route::get('/laporan/neraca', 'LaporanController@index_neraca')->name('laporan.neraca');
-    Route::get('/laporan/labarugi', 'LaporanController@index_laba')->name('laporan.labarugi');
+    Route::get('/laporan/neraca_past', 'LaporanController@index_neraca')->name('laporan.neracapast');
+    Route::get('/laporan/labarugi_past', 'LaporanController@index_laba')->name('laporan.labarugipast');
+
+    Route::get('/laporan/neraca', 'LaporanController@neraca')->name('laporan.neraca');
+    Route::get('/laporan/labarugi', 'LaporanController@laba')->name('laporan.labarugi');
+    
+    Route::post('/laporan/labarugi/import', 'LaporanController@laba_import')->name('laporan.laba_import');
+    Route::post('/laporan/neraca/import', 'LaporanController@neraca_import')->name('laporan.neraca_import');
+
+
     
     Route::get('/nasabah', 'NasabahController@index')->name('nasabah');
     Route::post('/nasabah/store', 'NasabahController@store')->name('nasabah.store');

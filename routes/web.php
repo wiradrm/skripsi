@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/laporan/print/', 'LaporanController@print')->name('laporan.print');
 
     Route::get('/buktibayar/{id}', 'LaporanController@buktibayar')->name('laporan.buktibayar');
-    Route::put('/buktitarik/{id}', 'LaporanController@buktitarik')->name('laporan.buktitarik');
+    Route::get('/buktitarik/{id}', 'LaporanController@buktitarik')->name('laporan.buktitarik');
 
 
     Route::get('/laporan/neraca_past', 'LaporanController@index_neraca')->name('laporan.neraca_past');

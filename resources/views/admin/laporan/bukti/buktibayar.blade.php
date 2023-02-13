@@ -30,7 +30,9 @@
 		<table width="100%">
 			<center>
 				<font size="4">LPD Desa Pakraman Benana</font><br>
-				<font size="4">BUKTI BAYAR</font>
+				<font size="4">BUKTI BAYAR</font><br>
+				<font size="4">{{date('d M Y, H:i', strtotime($data->tanggal))}}</font>
+
 			</center>
 		</table> <br><br>
 		<table width="350">
@@ -41,22 +43,28 @@
 		<br>
 		<table >
 			<tr>
-				<th>Nama :</th>
-				<td>{{$data->nama}}</td>
-				<th>No Pinjam :</th>
-				<td>{{$data->no}}</td>
-                <th>Jumlah Bayar :</th>
-				<td>{{$data->jumlah}}</td>
-                <th>Biaya Admin :</th>
-				<td>{{$data->administrasi}}</td>
-                <th>Pokok :</th>
-				<td>{{$data->pokok}}</td>
-                <th>Bunga :</th>
-				<td>{{$data->bunga}}</td>
-                <th>Sisa Hutang :</th>
-				<td>{{$data->hutang}}</td>
+                <td><b>Jumlah Bayar</b> </td>
+                <td>:</td>
+				<td>@currency($data->jumlah)</td>
+                
+                
 			</tr>
-			
+            <tr>
+                <td><b>Biaya Admin</b></td>
+                <td>:</td>
+				<td>@currency($data->administrasi)</td>
+            </tr>
+            <tr>
+                <td><b>Pokok</b></td>
+                <td>:</td>
+				<td>@currency($data->pokok)</td>
+            </tr>
+			<tr>
+                
+                <td><b>Bunga</b></td>
+                <td>:</td>
+				<td>@currency($data->bunga)</td>
+            </tr>
 		</table>
 		<table>
 			<tr>

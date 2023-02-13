@@ -196,27 +196,44 @@ class LaporanController extends Controller
     public function buktibayar(Request $request, $id)
     {
 
-        $model = Pembayaran::findOrFail($id);
-        $hutang = Hutang::findOrFail($model->no_pinjam);
-        $nasabah = Nasabah::findOrFail($model->id_nasabah);
+        $model = DB::table('pembayaran')->where('id', $id)->first();
         
         // $hutang = DB::table('pembayaran')->where('no_pinjam',$model->no_pinjam)->get();
         // $nasabah = DB::table('nasabah')->where('id_nasabah',$model->id_nasabah)->get();
 
         $data = (object)[];
-        $data->nama = $nasabah->nama;
-        $data->no = $model->no_pinjam;
         $data->jumlah = $model->jumlah;
         $data->administrasi = $model->administrasi;
         $data->pokok = $model->pokok;
+        $data->tanggal = $model->created_at;
         $data->bunga = $model->bunga;
-        $data->hutang = $hutang->hutang;
         // $input['mobile'] = substr(str_replace(" ","",$input['mobile']),1);
         // $request->replace($input);
         // $data = Surat::where('id', $id)->first();
 
 
-        $pdf = PDF::loadview($this->print, ['data' => $data]);
+        $pdf = PDF::loadview($this->buktibayar, ['data' => $data]);
+
+        return $pdf->stream('cetak_bukti.pdf');
+    }
+
+    public function buktitarik(Request $request, $id)
+    {
+
+        $model = DB::table('tarik')->where('id', $id)->first();
+        
+        // $hutang = DB::table('pembayaran')->where('no_pinjam',$model->no_pinjam)->get();
+        // $nasabah = DB::table('nasabah')->where('id_nasabah',$model->id_nasabah)->get();
+
+        $data = (object)[];
+        $data->jumlah = $model->jumlah;
+        $data->tanggal = $model->created_at;
+        // $input['mobile'] = substr(str_replace(" ","",$input['mobile']),1);
+        // $request->replace($input);
+        // $data = Surat::where('id', $id)->first();
+
+
+        $pdf = PDF::loadview($this->buktitarik, ['data' => $data]);
 
         return $pdf->stream('cetak_bukti.pdf');
     }

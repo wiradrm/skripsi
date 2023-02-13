@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-User
+Pinjam
 @endsection
 @section('content')
 <!-- Page Heading -->

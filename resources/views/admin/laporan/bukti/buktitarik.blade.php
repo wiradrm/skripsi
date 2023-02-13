@@ -30,7 +30,9 @@
 		<table width="100%">
 			<center>
 				<font size="4">LPD Desa Pakraman Benana</font><br>
-				<font size="4">BUKTI TARIK</font>
+				<font size="4">BUKTI TARIK</font><br>
+				<font size="4">{{date('d M Y, H:i', strtotime($data->tanggal))}}</font>
+
 			</center>
 		</table> <br><br>
 		<table width="350">
@@ -41,18 +43,16 @@
 		<br>
 		<table >
 			<tr>
-				<th>Nama :</th>
-				<td>{{$data->nama}}</td>
-				<th>Jumlah Penarikan :</th>
-				<td>{{$data->no}}</td>
-                <th>Sisa Tabungan :</th>
-				<td>{{$data->no}}</td>
+                <td><b>Jumlah Tarik</b> </td>
+                <td>:</td>
+				<td>@currency($data->jumlah)</td>
+                
+                
 			</tr>
-			
 		</table>
 		<table>
 			<tr>
-				<td>Mohon untuk disimpan bukti bayar ini, terimakasi.</td>
+				<td>Mohon untuk disimpan bukti tarik ini, terimakasi.</td>
 			</tr>
 		</table>
 <br>

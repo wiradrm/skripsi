@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-User
+Pembayaran
 @endsection
 @section('content')
 <!-- Page Heading -->

@@ -131,6 +131,23 @@
                 </div>
             </li>
 
+            <li
+                class="nav-item {{ Request::routeIs('pemasukan', 'pengeluaran') ? 'active' : '' }}">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities5"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class='bx bxs-data'></i>
+                    <span>Kas</span>
+                </a>
+                <div id="collapseUtilities5" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
+                        <a class="collapse-item" href="{{ route('pemasukan') }}">Pemasukan</a>
+                        <a class="collapse-item" href="{{ route('pengeluaran') }}">Pengeluaran</a>
+                    </div>
+                </div>
+            </li>
+
             @endif
 
             <li
@@ -146,9 +163,10 @@
                         <!-- <h6 class="collapse-header">Data Mapping:</h6> -->
                         <a class="collapse-item" href="{{ route('laporan.simpanan') }}">Laporan Simpanan</a>
                         <a class="collapse-item" href="{{ route('laporan.pinjaman') }}">Laporan Pinjaman</a>
+                        <a class="collapse-item" href="{{ route('laporan.persetujuan') }}">Persetujuan Pinjaman</a>
                         <a class="collapse-item" href="{{ route('laporan.tunggakan') }}">Tunggakan</a>
-                        <a class="collapse-item" href="{{ route('laporan.labarugi') }}">Laba/Rugi</a>
-                        <a class="collapse-item" href="{{ route('laporan.neraca') }}">Neraca</a>
+                        <a class="collapse-item" href="{{ route('laporan.labarugi_past') }}">Laba/Rugi</a>
+                        <a class="collapse-item" href="{{ route('laporan.neraca_past') }}">Neraca</a>
                     </div>
                 </div>
             </li>

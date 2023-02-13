@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('title')
-User
+Kas Masuk
 @endsection
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Data Penarikan Simpanan</h1>
+<h1 class="h3 mb-2 text-gray-800">Data Pemasukan</h1>
 <div class="row my-4">
     <div class="col-md-6">
         <div class="d-flex justify-content-start">
@@ -15,7 +15,7 @@ User
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Penarikan Simpanan</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Data Pemasukan</h6>
     </div>
     <div class="card-body">
         @if (\Session::has('info'))
@@ -26,16 +26,6 @@ User
             </button>
         </div>
         @endif
-
-        @if (\Session::has('msg'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {!! \Session::get('msg') !!}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        @endif
-
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="my-0 px-4">
@@ -49,10 +39,9 @@ User
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>ID Nasabah</th>
-                        <th>Nama</th>
+                        <th>Jenis Pemasukan</th>
+                        <th>Nominal</th>
                         <th>Tanggal</th>
-                        <th>Jumlah</th>
                         <th width="12%">Action</th>
                     </tr>
                 </thead>
@@ -66,37 +55,33 @@ User
                     @endif
                     @foreach($models as $key => $item)
                     <tr>
-                        <td>{{ $item->nasabah->id }}</td>
-                        <td>{{ $item->nasabah->nama }}</td>
-                        <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
+                        <td>{{ $item->jenis_transaksi }}</td>
                         <td>@currency($item->jumlah)</td>
+                        <td>{{ $item->created_at }}</td>
                         <td>
-                            <a class="btn btn-circle btn-info mx-1" target="__blank" href="{{route('laporan.buktitarik',$item->id)}}"><i class='bx bxs-printer'></i></a>
-                            <a class="btn btn-circle btn-danger" href="#" data-toggle="modal" data-target="#deactivateModal-{{$item->id}}"><i class='bx bx-trash'></i></a>
+                            <a class="btn btn-circle btn-danger" href="#" data-toggle="modal" data-target="#deactivateModal-{{$item->id}}"><i class='bx bx-trash' ></i></a>
                             <a class="btn btn-circle btn-info mx-1" href="#" data-toggle="modal" data-target="#updateModal-{{$item->id}}"><i class='bx bxs-edit'></i></a>
                             <div class="modal fade" id="deactivateModal-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Hapus</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">Hapus data penarikan simpanan "{{$item->nasabah->nama}}" <br>
-                                                                pada tanggal {{date('d/m/Y', strtotime($item->tanggal))}} <br>
-                                                                dengan penarikan sejumlah @currency($item->jumlah)</div> <br>
+                                        <div class="modal-body">Apakah anda yakin menghapus "{{$item->jenis_transaksi}}"</div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                            <a href="{{route('tarik.destroy',$item->id)}}" class="btn btn-primary">
+                                            <a href="{{route('pemasukan.destroy',$item->id)}}" class="btn btn-primary">
                                                 Hapus
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
-                            @include('admin.tarik.update')
+                                
+                            @include('admin.pemasukan.update')
                         </td>
                     </tr>
                     @endforeach
@@ -105,11 +90,10 @@ User
         </div>
     </div>
 </div>
-@include('admin.tarik.create')
+@include('admin.pemasukan.create')
 @endsection
 @section('script')
-<script></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
 <script type="text/javascript">
 	$("#myForm").ready(function(){
@@ -121,9 +105,9 @@ User
 
     $("#myForm").submit(function() {
             $("#uang").unmask();
-    });
+        });
 
-    $("#myFormUpdate").ready(function(){
+        $("#myFormUpdate").ready(function(){
 	    // Format mata uang.
 	    $( "#uangUpdate" ).mask('0.000.000.000', {reverse: true, autoUnmask: true});
 
@@ -132,6 +116,8 @@ User
 
     $("#myFormUpdate").submit(function() {
             $("#uangUpdate").unmask();
-    });
-</script>
+        });
+
+</script> --}}
+
 @endsection

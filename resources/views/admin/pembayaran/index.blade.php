@@ -96,6 +96,7 @@ User
                         <th>Biaya Admin</th>
                         <th>Pokok</th>
                         <th>Bunga</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,7 +116,10 @@ User
                         <td>@currency($item->administrasi)</td>
                         <td>@currency($item->pokok)</td>
                         <td>@currency($item->bunga)</td>
-        
+                        <td>
+                            <a class="btn btn-circle btn-info mx-1" target="__blank" href="{{route('laporan.buktibayar',$item->id)}}"><i class='bx bxs-printer'></i></a>
+                        </td>
+                        
                     </tr>
                     @endforeach
                 </tbody>

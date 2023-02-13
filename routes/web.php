@@ -42,12 +42,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/laporan/tunggakan', 'LaporanController@index_tunggakan')->name('laporan.tunggakan');
     Route::post('/laporan/store', 'LaporanController@store')->name('laporan.store');
     Route::get('/laporan/destroy/{id}', 'LaporanController@destroy')->name('laporan.destroy');
-
+    
     Route::get('/laporan/cetak/', 'LaporanController@cetak')->name('laporan.cetak');
 
+    Route::get('/laporan/persetujuan', 'LaporanController@index_persetujuan')->name('laporan.persetujuan');
+    Route::get('/laporan/print/', 'LaporanController@print')->name('laporan.print');
 
-    Route::get('/laporan/neraca_past', 'LaporanController@index_neraca')->name('laporan.neracapast');
-    Route::get('/laporan/labarugi_past', 'LaporanController@index_laba')->name('laporan.labarugipast');
+    Route::get('/buktibayar/{id}', 'LaporanController@buktibayar')->name('laporan.buktibayar');
+    Route::put('/buktitarik/{id}', 'LaporanController@buktitarik')->name('laporan.buktitarik');
+
+
+    Route::get('/laporan/neraca_past', 'LaporanController@index_neraca')->name('laporan.neraca_past');
+    Route::get('/laporan/labarugi_past', 'LaporanController@index_laba')->name('laporan.labarugi_past');
 
     Route::get('/laporan/neraca', 'LaporanController@neraca')->name('laporan.neraca');
     Route::get('/laporan/labarugi', 'LaporanController@laba')->name('laporan.labarugi');
@@ -72,6 +78,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/tarik/store', 'TarikController@store')->name('tarik.store');
     Route::put('/tarik/update/{id}', 'TarikController@update')->name('tarik.update');
     Route::get('/tarik/destroy/{id}', 'TarikController@destroy')->name('tarik.destroy');
+
+    Route::get('/pemasukan', 'PemasukanController@index')->name('pemasukan');
+    Route::post('/pemasukan/store', 'PemasukanController@store')->name('pemasukan.store');
+    Route::put('/pemasukan/update/{id}', 'PemasukanController@update')->name('pemasukan.update');
+    Route::get('/pemasukan/destroy/{id}', 'PemasukanController@destroy')->name('pemasukan.destroy');
+
+    Route::get('/pengeluaran', 'PengeluaranController@index')->name('pengeluaran');
+    Route::post('/pengeluaran/store', 'PengeluaranController@store')->name('pengeluaran.store');
+    Route::put('/pengeluaran/update/{id}', 'PengeluaranController@update')->name('pengeluaran.update');
+    Route::get('/pengeluaran/destroy/{id}', 'PengeluaranController@destroy')->name('pengeluaran.destroy');
 
     Route::get('/mutasi', 'MutasiController@index')->name('mutasi');
 

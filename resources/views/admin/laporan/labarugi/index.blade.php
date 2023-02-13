@@ -69,16 +69,36 @@ User
                 </thead>
                 <tbody>
                     <tr>
+                        <td colspan="2">Pendapatan</td>
+                    </tr>
+                    <tr>
                         <td>Pendapatan Bunga</td>
                         <td>@currency($pendapatanBunga)</td>
                     </tr>
                     <tr>
-                        <td>Administrasi</td>
+                        <td>Pendapatan Biaya Administrasi</td>
                         <td>@currency($pendapatanAdmin)</td>
                     </tr>
                     <tr>
-                        <td>Biaya Operasional</td>
+                        <td>Pemasukan</td>
+                        <td>@currency($totalPemasukan)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Pengeluaran</td>
+                    </tr>
+                    <tr>
+                        <td>Biaya Pengeluaran Operasional</td>
                         <td>@currency($labaOperasi)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>Laba Kotor</td>
+                        <td>@currency($labaKotor)</td>
                     </tr>
                     <tr>
                         <th>Laba Bersih</th>

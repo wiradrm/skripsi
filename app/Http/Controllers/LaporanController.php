@@ -6,6 +6,8 @@ use App\Tabungan;
 use App\Pinjam;
 use App\Hutang;
 use App\Nasabah;
+use App\Pemasukan;
+use App\Pengeluaran;
 use App\Surat;
 use App\RiwayatTabungan;
 use App\Pembayaran;
@@ -35,7 +37,11 @@ class LaporanController extends Controller
     protected $pinjam = 'admin.laporan.pinjaman.pinjaman';
     protected $pinjam_detail = 'admin.laporan.pinjaman.detail';
     protected $tunggakan = 'admin.laporan.surat.tunggakan';
+    protected $persetujuan = 'admin.laporan.persetujuan.persetujuan';
     protected $print = 'admin.laporan.surat.print';
+    protected $buktibayar = 'admin.laporan.bukti.buktibayar';
+    protected $buktitarik = 'admin.laporan.bukti.buktitarik';
+    protected $cetak = 'admin.laporan.persetujuan.print';
     protected $index_neraca = 'admin.laporan.neraca.index';
     protected $index_laba = 'admin.laporan.labarugi.index';
     protected $neraca = 'admin.laporan.neraca.neraca';
@@ -178,6 +184,44 @@ class LaporanController extends Controller
     }
 
 
+
+    public function index_persetujuan()
+    {
+        $nasabah = nasabah::all();
+
+        return view($this->persetujuan, compact('nasabah' ));
+    }
+
+
+    public function buktibayar(Request $request, $id)
+    {
+
+        $model = Pembayaran::findOrFail($id);
+        $hutang = Hutang::findOrFail($model->no_pinjam);
+        $nasabah = Nasabah::findOrFail($model->id_nasabah);
+        
+        // $hutang = DB::table('pembayaran')->where('no_pinjam',$model->no_pinjam)->get();
+        // $nasabah = DB::table('nasabah')->where('id_nasabah',$model->id_nasabah)->get();
+
+        $data = (object)[];
+        $data->nama = $nasabah->nama;
+        $data->no = $model->no_pinjam;
+        $data->jumlah = $model->jumlah;
+        $data->administrasi = $model->administrasi;
+        $data->pokok = $model->pokok;
+        $data->bunga = $model->bunga;
+        $data->hutang = $hutang->hutang;
+        // $input['mobile'] = substr(str_replace(" ","",$input['mobile']),1);
+        // $request->replace($input);
+        // $data = Surat::where('id', $id)->first();
+
+
+        $pdf = PDF::loadview($this->print, ['data' => $data]);
+
+        return $pdf->stream('cetak_bukti.pdf');
+    }
+
+
     public function cetak(Request $request)
     {
 
@@ -197,6 +241,26 @@ class LaporanController extends Controller
         return $pdf->stream('cetak_surat.pdf');
     }
 
+    public function print(Request $request)
+    {
+        $data = (object)[];
+        $data->nama = $request->nama;
+        $data->jumlah = $request->jumlah;
+        $data->no = $request->no;
+        $data->tanggal = $request->tanggal;
+        $data->bunga = $request->bunga;
+        // $input['mobile'] = substr(str_replace(" ","",$input['mobile']),1);
+        // $request->replace($input);
+        // $data = Surat::where('id', $id)->first();
+
+
+        $pdf = PDF::loadview($this->cetak, ['data' => $data]);
+
+        return $pdf->stream('surat_persetujuan.pdf');
+
+        
+    }
+
     public function destroy($id)
     {
         $model = Surat::findOrFail($id);
@@ -213,8 +277,16 @@ class LaporanController extends Controller
         $totalTabungan = $tabungan->sum('saldo');
 
         $pokok = new Pembayaran();
-        $poko = $pokok->get();
+        $pokok = $pokok->get();
         $totalPokok = $pokok->sum('pokok');
+
+        $pemasukan = new Pemasukan();
+        $pemasukan = $pemasukan->get();
+        $totalPemasukan = $pemasukan->sum('jumlah');
+
+        $pengeluaran = new Pengeluaran();
+        $pengeluaran = $pengeluaran->get();
+        $totalPengeluaran = $pengeluaran->sum('jumlah');
 
         $tabunganWajib = $totalTabungan + $totalPokok;
 
@@ -238,8 +310,8 @@ class LaporanController extends Controller
         $pendapatanAdmin = $administrasi->sum('administrasi');
 
 
-        $labaKotor = $pendapatanBunga + $pendapatanAdmin;
-        $labaOperasi = 0;
+        $labaKotor = $pendapatanBunga + $pendapatanAdmin + $totalPemasukan;
+        $labaOperasi = $totalPengeluaran;
         $labaBersih = $labaKotor - $labaOperasi;
 
         $totalAktiva = $totalTabungan + $totalPinjaman + $labaBersih;
@@ -270,14 +342,28 @@ class LaporanController extends Controller
         $administrasi = $administrasi->get();
         $pendapatanAdmin = $administrasi->sum('administrasi');
 
+        $pemasukan = new Pemasukan();
+        if ($startDate && $endDate) {
+            $pemasukan = $pemasukan->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
+        $pemasukan = $pemasukan->get();
+        $totalPemasukan = $pemasukan->sum('jumlah');
 
-        $labaKotor = $pendapatanBunga + $pendapatanAdmin;
-        $labaOperasi = 0;
+        $pengeluaran = new Pengeluaran();
+        if ($startDate && $endDate) {
+            $pengeluaran = $pengeluaran->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
+        $pengeluaran = $pengeluaran->get();
+        $totalPengeluaran = $pengeluaran->sum('jumlah');
+
+
+        $labaKotor = $pendapatanBunga + $pendapatanAdmin + $totalPemasukan;
+        $labaOperasi = $totalPengeluaran;
         $labaBersih = $labaKotor - $labaOperasi;
         
         $mytime =  date('d-m-Y');
 
-        return view($this->index_laba, compact('mytime', 'startDate', 'endDate' ,'pendapatanBunga' , 'pendapatanAdmin', 'labaKotor', 'labaOperasi', 'labaBersih'));
+        return view($this->index_laba, compact('mytime', 'startDate', 'endDate', 'totalPemasukan', 'totalPengeluaran' ,'pendapatanBunga' , 'pendapatanAdmin', 'labaKotor', 'labaOperasi', 'labaBersih'));
     }
 
     public function laba(Request $request)

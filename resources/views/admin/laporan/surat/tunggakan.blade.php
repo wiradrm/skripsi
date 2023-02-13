@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 @section('title')
-User
+Surat
 @endsection
 @section('content')
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Data Tunggakan</h1>
-<div class="row my-4">
+{{-- <div class="row my-4">
     <div class="col-md-6">
         <div class="d-flex justify-content-start">
             <button type="submit" data-target="#createModal" data-toggle="modal" class="btn btn-primary">Tambah Data</button>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">

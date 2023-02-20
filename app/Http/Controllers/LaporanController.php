@@ -26,6 +26,8 @@ use App\Imports\LabaImport;
 use PDF;
 
 use App\Exports\SimpananExport;
+use App\Exports\LabaExport;
+use App\Exports\NeracaExport;
 use App\Exports\PinjamanExport;
 
 
@@ -286,22 +288,37 @@ class LaporanController extends Controller
         return redirect()->route('laporan.tunggakan')->with('info', 'Berhasil menghapus data');
     }
 
-    public function index_neraca()
+    public function index_neraca(Request $request)
     {
-        //tabungan wajib
+        $startDate = $request->from;
+        $endDate = $request->to;
+
         $tabungan = new Tabungan();
+        if ($startDate && $endDate) {
+            $tabungan = $tabungan->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
+        //tabungan wajib
         $tabungan = $tabungan->get();
         $totalTabungan = $tabungan->sum('saldo');
 
         $pokok = new Pembayaran();
+        if ($startDate && $endDate) {
+            $pokok = $pokok->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
         $pokok = $pokok->get();
         $totalPokok = $pokok->sum('pokok');
 
         $pemasukan = new Pemasukan();
+        if ($startDate && $endDate) {
+            $pemasukan = $pemasukan->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
         $pemasukan = $pemasukan->get();
         $totalPemasukan = $pemasukan->sum('jumlah');
 
         $pengeluaran = new Pengeluaran();
+        if ($startDate && $endDate) {
+            $pengeluaran = $pengeluaran->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
         $pengeluaran = $pengeluaran->get();
         $totalPengeluaran = $pengeluaran->sum('jumlah');
 
@@ -309,20 +326,32 @@ class LaporanController extends Controller
 
         //tabungan sukarela
         $sukarela = new Hutang();
+        if ($startDate && $endDate) {
+            $sukarela = $sukarela->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
         $sukarela = $sukarela->get();
         $totalHutang = $sukarela->sum('hutang');
 
         //
         $pinjaman = new Pinjam();
+        if ($startDate && $endDate) {
+            $pinjam = $pinjam->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
         $pinjaman = $pinjaman->get();
         $totalPinjaman = $pinjaman->sum('pinjaman');
 
         //laba
         $bunga = new Pembayaran();
+        if ($startDate && $endDate) {
+            $bunga = $bunga->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
         $bunga = $bunga->get();
         $pendapatanBunga = $bunga->sum('bunga');
 
         $administrasi = new Pembayaran();
+        if ($startDate && $endDate) {
+            $administrasi = $administrasi->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+        }
         $administrasi = $administrasi->get();
         $pendapatanAdmin = $administrasi->sum('administrasi');
 
@@ -335,7 +364,7 @@ class LaporanController extends Controller
         $totalPassiva = $totalHutang + $tabunganWajib + $labaBersih;
 
         $mytime = date('d-m-Y');
-        return view($this->index_neraca, compact('mytime','tabunganWajib', 'totalTabungan' , 'totalPinjaman', 'totalHutang', 'labaBersih', 'totalAktiva', 'totalPassiva'));
+        return view($this->index_neraca, compact('startDate','endDate', 'mytime','tabunganWajib', 'totalTabungan' , 'totalPinjaman', 'totalHutang', 'labaBersih', 'totalAktiva', 'totalPassiva'));
     }
 
     public function index_laba(Request $request)
@@ -375,12 +404,52 @@ class LaporanController extends Controller
 
 
         $labaKotor = $pendapatanBunga + $pendapatanAdmin + $totalPemasukan;
+    
+        
         $labaOperasi = $totalPengeluaran;
         $labaBersih = $labaKotor - $labaOperasi;
         
         $mytime =  date('d-m-Y');
 
         return view($this->index_laba, compact('mytime', 'startDate', 'endDate', 'totalPemasukan', 'totalPengeluaran' ,'pendapatanBunga' , 'pendapatanAdmin', 'labaKotor', 'labaOperasi', 'labaBersih'));
+    }
+
+    public function laba_export(Request $request)
+    {
+
+        $startDate = $request->from;
+        $endDate = $request->to;
+        $totalPemasukan = $request->totalPemasukan;
+        $totalPengeluaran = $request->totalPengeluaran;
+        $pendapatanBunga = $request->pendapatanBunga;
+        $pendapatanAdmin = $request->pendapatanAdmin;
+        $labaKotor = $request->labaKotor;
+        $labaOperasi = $request->labaOperasi;
+        $labaBersih = $request->labaBersih;
+
+        
+        $mytime =  date('d-m-Y');
+
+        return Excel::download(new LabaExport($mytime, $startDate, $endDate, $totalPemasukan, $totalPengeluaran ,$pendapatanBunga , $pendapatanAdmin, $labaKotor, $labaOperasi, $labaBersih), 'report_laba_'.date('d_m_Y_H_i_s').'.xlsx');
+    }
+
+    public function neraca_export(Request $request)
+    {
+
+        $startDate = $request->from;
+        $endDate = $request->to;
+        $totalPemasukan = $request->totalPemasukan;
+        $totalPengeluaran = $request->totalPengeluaran;
+        $pendapatanBunga = $request->pendapatanBunga;
+        $pendapatanAdmin = $request->pendapatanAdmin;
+        $labaKotor = $request->labaKotor;
+        $labaOperasi = $request->labaOperasi;
+        $labaBersih = $request->labaBersih;
+
+        
+        $mytime =  date('d-m-Y');
+
+        return Excel::download(new NeracaExport($mytime, $startDate, $endDate, $totalPemasukan, $totalPengeluaran ,$pendapatanBunga , $pendapatanAdmin, $labaKotor, $labaOperasi, $labaBersih), 'report_neraca_'.date('d_m_Y_H_i_s').'.xlsx');
     }
 
     public function laba(Request $request)

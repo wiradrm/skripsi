@@ -5,7 +5,7 @@ User
 @section('content')
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Laba Rugi</h1>
-<form class="form-row mb-4" action="{{route('laporan.labarugi')}}" method="GET">
+<form class="form-row mb-4" action="{{route('laporan.labarugi_past')}}" method="GET">
     <div class="form-group my-0 col-md">
         <label for="from" class="col-form-label">Dari</label>
         <input type="date" class="form-control" id="from" name="from" required>
@@ -14,11 +14,28 @@ User
         <label for="to" class="col-form-label">Sampai</label>
         <input type="date" class="form-control" id="to" name="to" required>
     </div>
-    <div class="col-md-3 d-flex align-items-end">
+    <div class="col-md-6 d-flex align-items-end">
         <button type="submit" class="btn btn-primary btn-block">Filter</button>
-        <a href="{{route('laporan.labarugi')}}" class="btn btn-warning btn-block ml-2">Reset Filter</a>
+        <a href="{{route('laporan.labarugi_past')}}" class="btn btn-warning btn-block ml-2">Reset Filter</a>
+
+        
+    </form>
+        <form action="{{route('laporan.laba.export')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            
+                <input type="text" name="totalPemasukan" value="{{$totalPemasukan}}" hidden>
+                <input type="text" name="totalPengeluaran" value="{{$totalPengeluaran}}" hidden>
+                <input type="text" name="pendapatanBunga" value="{{$pendapatanBunga}}" hidden>
+                <input type="text" name="pendapatanAdmin" value="{{$pendapatanAdmin}}" hidden>
+                <input type="text" name="labaKotor" value="{{$labaKotor}}" hidden>
+                <input type="text" name="labaOperasi" value="{{$labaOperasi}}" hidden>
+                <input type="text" name="labaBersih" value="{{$labaBersih}}" hidden>
+                
+                <input type="date" id="from" name="from" value="{{$startDate}}" hidden>
+                <input type="date" id="to" name="to" value="{{$endDate}}" hidden>
+                <button type="submit" class="btn btn-success ml-2 btn-block">Export</button>
+        </form>
     </div>
-</form>
 <div class="mb-4">
     <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
@@ -64,45 +81,139 @@ User
                 <thead>
                     <tr>
                         <th>Data</th>
+                        <th>Sandi</th>
                         <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="2">Pendapatan</td>
+                        <td colspan="3">A. Pendapatan Operasional</td>
                     </tr>
                     <tr>
-                        <td>Pendapatan Bunga</td>
-                        <td>@currency($pendapatanBunga)</td>
+                        <td style="padding-left: 20px">1. Hasil</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td>Pendapatan Biaya Administrasi</td>
+                        <td style="padding-left: 40px">a. Dari Bank-Bank Lain</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">i. Giro</td>
+                        <td>120</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">ii. Tabungan</td>
+                        <td>121</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">iii. Simpanan Berjangka</td>
+                        <td>122</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">iv. Pinjaman Yang Diberikan</td>
+                        <td>123</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">v. Lainnya</td>
+                        <td>124</td>
                         <td>@currency($pendapatanAdmin)</td>
                     </tr>
                     <tr>
-                        <td>Pemasukan</td>
+                        <td style="padding-left: 40px">b. Dari Pihak Ketiga Bukan Bank</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">i. Pinjaman Yang Diberikan</td>
+                        <td>126</td>
+                        <td>@currency($pendapatanBunga)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">ii. Lainnya</td>
+                        <td>126</td>
                         <td>@currency($totalPemasukan)</td>
                     </tr>
                     <tr>
-                        <td colspan="2"></td>
+                        <td><b>JUMLAH PENDAPATAN OPERASIONAL</b></td>
+                        <td><b>100</b></td>
+                        <td><b>@currency($labaKotor)</b></td>
                     </tr>
                     <tr>
-                        <td colspan="2">Pengeluaran</td>
+                        <td colspan="3"></td>
                     </tr>
                     <tr>
-                        <td>Biaya Pengeluaran Operasional</td>
+                        <td colspan="3">B. Biaya Operasional</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px">1. Biaya Bunga</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 40px">a. Kepada Bank-Bank Lain</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">i. Simpanan Berjangka</td>
+                        <td>194</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">ii. Pinjaman Yang Diterima</td>
+                        <td>195</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">iii. Lainnya</td>
+                        <td>199</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 40px">b. Kepada Pihak Ketiga Bukan Bank</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">i. Simpanan Berjangka</td>
+                        <td>203</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">ii. Tabungan</td>
+                        <td>206</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 60px">iii. Lainnya</td>
+                        <td>209</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px">2. Pemeliharaan dan Perbaikan</td>
+                        <td>280</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 20px">3. Biaya Operasional Lainnya</td>
+                        <td>301</td>
                         <td>@currency($labaOperasi)</td>
                     </tr>
                     <tr>
-                        <td colspan="2"></td>
+                        <td><b>JUMLAH BIAYA OPERASIONAL</b></td>
+                        <td><b>100</b></td>
+                        <td><b>@currency($labaOperasi)</b></td>
                     </tr>
                     <tr>
-                        <td>Laba Kotor</td>
-                        <td>@currency($labaKotor)</td>
-                    </tr>
-                    <tr>
-                        <th>Laba Bersih</th>
-                        <th>@currency($labaBersih)</th>
+                        <td><b>JUMLAH LABA RUGI TAHUN BERJALAN</b></td>
+                        <td><b>470</b></td>
+                        <td><b>@currency($labaBersih)</b></td>
                     </tr>
                 </tbody>
             </table>

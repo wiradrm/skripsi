@@ -84,7 +84,7 @@ User
                                             </button>
                                         </div>
                                         <div class="modal-body">Hapus data penarikan simpanan "{{$item->nasabah->nama}}" <br>
-                                                                pada tanggal {{date('d/m/Y', strtotime($item->tanggal))}} <br>
+                                                                pada tanggal {{date('d/m/Y', strtotime($item->created_at))}} <br>
                                                                 dengan penarikan sejumlah @currency($item->jumlah)</div> <br>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>

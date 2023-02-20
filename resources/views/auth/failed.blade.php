@@ -9,9 +9,9 @@
                     <div class="text-center">
                         <img src="{{asset('cancel.png')}}" alt="">
                         <h1 class="h4 text-green-900 mb-4" style="color: red">Username atau Password Salah!</h1>
-                        <a class="btn btn-primary" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        {{-- <a class="btn btn-primary" href="{{ route('logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
+                        {{ __('Logout') }} --}}
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf

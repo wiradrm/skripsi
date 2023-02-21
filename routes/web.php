@@ -84,11 +84,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tarik/destroy/{id}', 'TarikController@destroy')->name('tarik.destroy');
 
     Route::get('/pemasukan', 'PemasukanController@index')->name('pemasukan');
+    Route::get('/pemasukan/detail', 'PemasukanController@detail_pemasukan')->name('pemasukan.detail');
     Route::post('/pemasukan/store', 'PemasukanController@store')->name('pemasukan.store');
     Route::put('/pemasukan/update/{id}', 'PemasukanController@update')->name('pemasukan.update');
     Route::get('/pemasukan/destroy/{id}', 'PemasukanController@destroy')->name('pemasukan.destroy');
-
+    
     Route::get('/pengeluaran', 'PengeluaranController@index')->name('pengeluaran');
+    Route::get('/pengeluaran/detail', 'PengeluaranController@detail_pengeluaran')->name('pengeluaran.detail');
     Route::post('/pengeluaran/store', 'PengeluaranController@store')->name('pengeluaran.store');
     Route::put('/pengeluaran/update/{id}', 'PengeluaranController@update')->name('pengeluaran.update');
     Route::get('/pengeluaran/destroy/{id}', 'PengeluaranController@destroy')->name('pengeluaran.destroy');

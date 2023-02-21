@@ -11,6 +11,7 @@ class PengeluaranController extends Controller
 {
     protected $page = 'admin.pengeluaran.';
     protected $index = 'admin.pengeluaran.index';
+    protected $index_detail = 'admin.pengeluaran.detail';
 
     public function index(Request $request)
     {
@@ -75,6 +76,24 @@ class PengeluaranController extends Controller
         DB::table('pengeluaran')->where('id',$id)->delete();
   
         return redirect()->route('pengeluaran')->with('info', 'Berhasil menghapus data');
+    }
+
+    
+    public function detail_pengeluaran(Request $request)
+    {
+        
+        $startDate = $request->from;
+        $endDate = $request->to;
+        $models = new Pengeluaran;
+        
+        
+        $models = $models->whereDate('created_at', '>=', $startDate)->whereDate('created_at', '<=', $endDate);
+
+        $models = $models->get();
+
+        $hasil = $models->sum('jumlah');
+
+        return view($this->index_detail, compact('models','startDate', 'hasil'));
     }
 
 }

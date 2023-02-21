@@ -4,7 +4,7 @@ Kas Masuk
 @endsection
 @section('content')
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Data Pemasukan</h1>
+<h1 class="h3 mb-2 text-gray-800">Data Pengeluaran</h1>
 <div class="row my-4">
     <div class="col-md-6">
         <div class="d-flex justify-content-start">
@@ -12,7 +12,7 @@ Kas Masuk
         </div>
     </div>
 </div>
-<form class="form-row mb-4" action="{{ route('pemasukan.detail') }}" method="GET">
+<form class="form-row mb-4" action="{{ route('pengeluaran.detail') }}" method="GET">
     <div class="form-group my-0 col-md">
         <label for="from" class="col-form-label">Dari</label>
         <input type="date" class="form-control" id="from" name="from" required>
@@ -23,13 +23,13 @@ Kas Masuk
     </div>
     <div class="col-md-3 d-flex align-items-end">
         <button type="submit" class="btn btn-primary btn-block">Filter</button>
-        <a href="{{route('pemasukan')}}" class="btn btn-warning btn-block ml-2">Reset Filter</a>
+        <a href="{{route('pengeluaran')}}" class="btn btn-warning btn-block ml-2">Reset Filter</a>
     </div>
 </form>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Pemasukan</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Data Pengeluaran</h6>
     </div>
     <div class="card-body">
         @if (\Session::has('info'))
@@ -53,7 +53,7 @@ Kas Masuk
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Jenis Pemasukan</th>
+                        <th>Jenis Pengeluaran</th>
                         <th>Nominal</th>
                         <th>Tanggal</th>
                         <th width="12%">Action</th>
@@ -71,6 +71,7 @@ Kas Masuk
                     <tr>
                         <td>{{ $item->jenis_transaksi }}</td>
                         <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
+
                         <td>@currency($item->jumlah)</td>
                         <td>
                             <a class="btn btn-circle btn-danger" href="#" data-toggle="modal" data-target="#deactivateModal-{{$item->id}}"><i class='bx bx-trash' ></i></a>
@@ -87,7 +88,7 @@ Kas Masuk
                                         <div class="modal-body">Apakah anda yakin menghapus "{{$item->jenis_transaksi}}"</div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                            <a href="{{route('pemasukan.destroy',$item->id)}}" class="btn btn-primary">
+                                            <a href="{{route('pengeluaran.destroy',$item->id)}}" class="btn btn-primary">
                                                 Hapus
                                             </a>
                                         </div>
@@ -95,19 +96,23 @@ Kas Masuk
                                 </div>
                             </div>
                                 
-                            @include('admin.pemasukan.update')
+                            @include('admin.pengeluaran.update')
                         </td>
                     </tr>
                     @endforeach
+                    <tr>
+                        <td colspan="2" align="right"><b>Total Pengeluaran</b></td>
+                        <td colspan="2"><b>@currency($hasil)</b></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-@include('admin.pemasukan.create')
+@include('admin.pengeluaran.create')
 @endsection
-@section('script')
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{{-- @section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
 <script type="text/javascript">
 	$("#myForm").ready(function(){
@@ -132,6 +137,6 @@ Kas Masuk
             $("#uangUpdate").unmask();
         });
 
-</script> --}}
+</script>
 
-@endsection
+@endsection --}}

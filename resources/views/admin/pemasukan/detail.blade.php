@@ -14,7 +14,7 @@ Kas Masuk
 </div>
 <form class="form-row mb-4" action="{{ route('pemasukan.detail') }}" method="GET">
     <div class="form-group my-0 col-md">
-        <label for="from" class="col-form-label">Dari</label>
+        <label for="from" class="col-form-label">Tanggal</label>
         <input type="date" class="form-control" id="from" name="from" required>
     </div>
     <div class="form-group my-0 col-md">
@@ -99,6 +99,10 @@ Kas Masuk
                         </td>
                     </tr>
                     @endforeach
+                    <tr>
+                        <td colspan="2" align="right"><b>Total Pemasukan</b></td>
+                        <td colspan="2"><b>@currency($hasil)</b></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

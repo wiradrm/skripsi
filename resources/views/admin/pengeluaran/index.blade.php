@@ -12,6 +12,20 @@ Kas Masuk
         </div>
     </div>
 </div>
+<form class="form-row mb-4" action="{{ route('pengeluaran.detail') }}" method="GET">
+    <div class="form-group my-0 col-md">
+        <label for="from" class="col-form-label">Dari</label>
+        <input type="date" class="form-control" id="from" name="from" required>
+    </div>
+    <div class="form-group my-0 col-md">
+        <label for="to" class="col-form-label">Sampai</label>
+        <input type="date" class="form-control" id="to" name="to" required>
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary btn-block">Filter</button>
+        <a href="{{route('pengeluaran')}}" class="btn btn-warning btn-block ml-2">Reset Filter</a>
+    </div>
+</form>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -56,8 +70,9 @@ Kas Masuk
                     @foreach($models as $key => $item)
                     <tr>
                         <td>{{ $item->jenis_transaksi }}</td>
+                        <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
+
                         <td>@currency($item->jumlah)</td>
-                        <td>{{ $item->created_at }}</td>
                         <td>
                             <a class="btn btn-circle btn-danger" href="#" data-toggle="modal" data-target="#deactivateModal-{{$item->id}}"><i class='bx bx-trash' ></i></a>
                             <a class="btn btn-circle btn-info mx-1" href="#" data-toggle="modal" data-target="#updateModal-{{$item->id}}"><i class='bx bxs-edit'></i></a>
